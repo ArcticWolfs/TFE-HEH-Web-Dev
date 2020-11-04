@@ -7,6 +7,8 @@ TFE d'un site web pour la HEH
 
 Création du répertoire comme un répertoire de projet node : "npm init"
 
+Création du répertoire comme un répertoire de projet React : "npx create-react-app client"
+
 Installation de node postgresql et cors : "npm i express pg cors"
 
 Express : Permet de créer rapidement un serveur en NodeJs
