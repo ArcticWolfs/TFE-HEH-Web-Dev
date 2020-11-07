@@ -1,8 +1,8 @@
 CREATE DATABASE school_website;
 
-CREATE TABLE user(
+CREATE TABLE table_user(
     user_id SERIAL PRIMARY KEY,
-    class_id int;
+    class_id int,
     name VARCHAR(50),
     surname VARCHAR(50),
     birthdate date,
@@ -11,19 +11,19 @@ CREATE TABLE user(
     inscriptionDate timestamp
 );
 
-CREATE TABLE class(
+CREATE TABLE table_class(
     class_id SERIAL PRIMARY KEY,
     tutor_id int,
     year VARCHAR(50)
 );
 
-CREATE TABLE interTable(
+CREATE TABLE table_interTable(
     inter_id SERIAL PRIMARY KEY,
     class_id int,
     employee_id int
 );
 
-CREATE TABLE employee(
+CREATE TABLE table_employee(
     employee_id SERIAL PRIMARY KEY,
     name VARCHAR(50),
     surname VARCHAR(50),
@@ -36,15 +36,15 @@ CREATE TABLE employee(
     emailAddress VARCHAR(60)
 );
 
-CREATE TABLE question(
+CREATE TABLE table_question(
     question_id SERIAL PRIMARY KEY,
     image VARCHAR(100),
     time int
 );
 
-CREATE TABLE answer(
+CREATE TABLE table_answer(
     answer_id int,
     question_id int,
     answer VARCHAR(100),
-    trueAnswerOrNot boolean,
+    trueAnswerOrNot boolean
 );
