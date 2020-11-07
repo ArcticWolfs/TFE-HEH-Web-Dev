@@ -5,6 +5,8 @@ CREATE TABLE table_user(
     class_id int,
     name VARCHAR(50),
     surname VARCHAR(50),
+    emailAddress VARCHAR(60),
+    password VARCHAR(50),
     birthdate date,
     address VARCHAR(100),
     phoneNumber VARCHAR(50),
