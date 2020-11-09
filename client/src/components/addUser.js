@@ -10,35 +10,34 @@ export class AddUser extends Component {
         this.state = {
             name: null,
             surname: null,
-            email: null,
+            emailaddress: null,
             password: null,
-            confirmPassword: null,
+            confirmpassword: null,
             address: null,
             student: null,
-            phoneNumberTutor1: null,
-            phoneNumberTutor2: null,
-            emailAddressTutor1: null,
-            emailAddressTutor2: null
+            phonenumbertutor1: null,
+            phonenumbertutor2: null,
+            emailaddresstutor1: null,
+            emailaddresstutor2: null
         }
     }
-
 
     render() {
         return (
             <div>
                 <h1>Inscription</h1>
 
-                <p>Prénom : <input name="name" type="text" value={this.state.name} onChange={this.onChange} /></p>
-                <p>Nom : <input name="surname" type="text" value={this.state.surname} onChange={this.onChange} /></p>
-                <p>Email : <input name="email" type="text" value={this.state.email} onChange={this.onChange} /></p>
-                <p>Mot de Passe : <input name="password" type="text" value={this.state.password} onChange={this.onChange} /></p>
-                <p>Confirmation du mot de passe : <input name="confirmPassword" type="text" value={this.state.confirmPassword} onChange={this.onChange} /></p>
-                <p>Adresse : <input name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
-                <p>Etudiant : <input name="student" type="boolean" value={this.state.student} onChange={this.onChange} /></p>
-                <p>Téléphone du tuteur 1 : <input name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
-                <p>Téléphone du tuteur 2 : <input name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
-                <p>Mail du tuteur 1 : <input name="emailAddressTutor1" type="text" value={this.state.emailAddressTutor1} onChange={this.onChange} /></p>
-                <p>Mail du tuteur 2 : <input name="emailAddressTutor2" type="text" value={this.state.emailAddressTutor2} onChange={this.onChange} /></p>
+                <p><input placeholder="Prénom" name="name" type="text" value={this.state.name} onChange={this.onChange} /></p>
+                <p><input placeholder="Nom" name="surname" type="text" value={this.state.surname} onChange={this.onChange} /></p>
+                <p><input placeholder="Email" name="emailaddress" type="text" value={this.state.emailaddress} onChange={this.onChange} /></p>
+                <p><input placeholder="Mot de passe" name="password" type="text" value={this.state.password} onChange={this.onChange} /></p>
+                <p><input placeholder="Confirmation du mot de passe" name="confirmpassword" type="text" value={this.state.confirmpassword} onChange={this.onChange} /></p>
+                <p><input placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
+                <p><input placeholder="Etudiant" name="student" type="boolean" value={this.state.student} onChange={this.onChange} /></p>
+                <p><input placeholder="Téléphone du tuteur 2" name="phonenumbertutor1" type="text" value={this.state.phonenumbertutor1} onChange={this.onChange} /></p>
+                <p><input placeholder="Téléphone du tuteur 1" name="phonenumbertutor2" type="text" value={this.state.phonenumbertutor2} onChange={this.onChange} /></p>
+                <p><input placeholder="Mail du tuteur 1" name="emailaddresstutor1" type="text" value={this.state.emailaddresstutor1} onChange={this.onChange} /></p>
+                <p><input placeholder="Mail du tuteur 2" name="emailaddresstutor2" type="text" value={this.state.emailaddresstutor2} onChange={this.onChange} /></p>
                
                 <button onClick={this.onClick} className="btn btn-success">S'inscrire</button>
                 
@@ -53,24 +52,20 @@ export class AddUser extends Component {
     }
 
     onClick = () =>{
-        Axios.post(`http://localhost:5000/users`, {
-            name: "Martin",
-            surname: "Martin"
-        
-        
-            /*user_id: null,
+        Axios.post(`http://localhost:5000/users`, {   
+            user_id: null,
             class_id: null,
             name: this.state.name,
             surname: this.state.surname,
-            emailaddress: this.state.email,
+            emailaddress: this.state.emailaddress,
             password: this.state.password,
             address: this.state.address,
             inscriptiondate: null,
             student: this.state.student,
-            phonenumbertutor1: this.state.phoneNumberTutor1,
-            phonenumbertutor2: this.state.phoneNumberTutor2,
-            emailaddresstutor1: this.state.emailaddresstutor1,
-            emailaddresstutor2: this.state.emailAddressTutor2*/
+            phonenumbertutor1: this.state.phonenumbertutor1,
+            phonenumbertutor2: this.state.phonenumbertutor2
+            /*emailaddresstutor1: this.state.emailaddresstutor1,
+            emailaddresstutor2: this.state.emailaddresstutor2*/
         })
         .then(function (res) {
             console.log(res);
