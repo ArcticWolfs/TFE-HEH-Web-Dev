@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const User = require("./function/User")
+const Function = require("./function/Functions");
 
     //////////////////
     //  MIDDLEWARE  //
@@ -14,7 +14,9 @@ app.use(express.json());
     //  Class  ///
     //////////////
 
-const user = new User;
+const user = new Function.User;
+const security = new Function.Security;
+//console.log(security.nameVerification("Marc"));
 
     //////////////
     //  ROUTES  //

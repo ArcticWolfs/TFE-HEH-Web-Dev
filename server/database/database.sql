@@ -7,10 +7,11 @@ CREATE TABLE table_user(
     surname VARCHAR(50),
     emailAddress VARCHAR(60),
     password VARCHAR(50),
-    birthdate date,
     address VARCHAR(100),
-    phoneNumber VARCHAR(50),
-    inscriptionDate timestamp
+    inscriptionDate timestamp,
+    student boolean,
+    phoneNumberTutor1 VARCHAR(20),
+    phoneNumberTutor2 VARCHAR(20)
 );
 
 CREATE TABLE table_class(
