@@ -2,7 +2,8 @@ const index = require("../index");
 
 const LowerCase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 const UpperCase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-const AllLetters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+const AllLetters = LowerCase.concat(UpperCase);
+const SpecialLetters = ["â","ä","à","á","é","è","ë","ê","ç","û","ü","ù","ú","ï","î","ö","ô"];
 const Numbers = ["0","1","2","3","4","5","6","7","8","9"];
 
 class Security
@@ -14,8 +15,6 @@ class Security
 
     classIdVerification(class_id)
     {
-        class_id = class_id.toString().trim();
-
         if (class_id >= 1)
         {
             for (let c=0;c<class_id.length;c++)
@@ -33,12 +32,10 @@ class Security
 
     nameVerification(name)
     {
-        name = name.trim();
-
         if (name.length > 1)
         {
-            let nameCharactersSup = ["-"];
-            let goodNameCharacters = AllLetters.concat(nameCharactersSup);
+            let nameCharactersSup = ["-"," "];
+            let goodNameCharacters = AllLetters.concat(nameCharactersSup.concat(SpecialLetters));
 
             for (let c=0;c<name.length;c++)
             {
@@ -55,12 +52,10 @@ class Security
 
     surnameVerification(surname)
     {
-        surname = surname.trim();
-
         if (surname.length > 1)
         {
             let surnameCharactersSup = ["-"];
-            let goodSurnameCharacters = AllLetters.concat(surnameCharactersSup);
+            let goodSurnameCharacters = AllLetters.concat(surnameCharactersSup.concat(SpecialLetters));
 
             for (let c=0;c<surname.length;c++)
             {
@@ -77,12 +72,10 @@ class Security
 
     addressVerification(address)
     {
-        address = address.trim();
-
         if (address.length > 5)
         {
             let addressCharactersSup = [".","-"," "];
-            let goodAddressCharacters = AllLetters.concat(Numbers.concat(addressCharactersSup));
+            let goodAddressCharacters = AllLetters.concat(Numbers.concat(addressCharactersSup.concat(SpecialLetters)));
 
             for (let c=0;c<address.length;c++)
             {
@@ -99,9 +92,6 @@ class Security
 
     emailVerification(email)
     {
-        //Delete the extra space before and after
-        email = email.trim();
-
         if (email.includes("@") && email.length > 4)
         {
             let part = email.split("@");
@@ -144,7 +134,7 @@ class Security
 
     studentVerification(student)
     {
-        if (student === true || student === false || student === 1 || student === 0)
+        if (student === true || student === false || student === 1 || student === 0 || student === "1" || student === "0")
         {
             return false;
         }
@@ -155,7 +145,7 @@ class Security
     {
         // Allow to delete all the extra space
         phone = phone.replace(/ /g,"");
-        if (phone.trim().length > 8)
+        if (phone.length > 8)
         {
             for (let c=0;c<phone.length;c++)
             {

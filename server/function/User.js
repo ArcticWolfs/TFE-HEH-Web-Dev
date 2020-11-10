@@ -18,7 +18,7 @@ class User
             //console.log(req.body);
 
             //////////////
-            //   CONST  //
+            //    Var   //
             //////////////
 
             let { class_id } = req.body;
@@ -32,6 +32,34 @@ class User
             let { phoneNumberTutor2 } = req.body;
             let { emailTutor1 } = req.body;
             let { emailTutor2 } = req.body;
+
+            if (student === 1 || student === true || student === "1")
+            {
+                try
+                {
+                    //////////////
+                    //   TRIM   //
+                    //////////////
+
+                    phoneNumberTutor1 = phoneNumberTutor1.trim();
+                    phoneNumberTutor2 = phoneNumberTutor2.trim();
+                    emailTutor1 = emailTutor1.trim();
+                    emailTutor2 = emailTutor2.trim();
+                }
+                catch (error)
+                {
+                    console.log("trying to trim nonexistent data");
+                }
+            }
+
+            class_id = class_id.toString().trim();
+            name = name.trim();
+            surname = surname.trim();
+            address = address.trim();
+            emailAddress = emailAddress.trim();
+            password = password.trim();
+
+
 
             /////////////////
             //   Security  //
@@ -51,18 +79,29 @@ class User
                             {
                                 if (security.studentVerification(student) === false)
                                 {
-                                    if (security.phoneVerification(phoneNumberTutor1) === false)
+                                    if (student === 1 || student === true || student === "1")
                                     {
-                                        if (security.phoneVerification(phoneNumberTutor2) === false)
+                                        if (security.phoneVerification(phoneNumberTutor1) === false)
                                         {
-                                            if (security.emailVerification(emailTutor1) === false)
+                                            if (security.phoneVerification(phoneNumberTutor2) === false)
                                             {
-                                                if (security.emailVerification(emailTutor2) === false)
+                                                if (security.emailVerification(emailTutor1) === false)
                                                 {
-                                                    testOk = true;
+                                                    if (security.emailVerification(emailTutor2) === false)
+                                                    {
+                                                        testOk = true;
+                                                    }
                                                 }
                                             }
                                         }
+                                    }
+                                    else
+                                    {
+                                        emailTutor1 = "undefined";
+                                        emailTutor2 = "undefined";
+                                        phoneNumberTutor1 = "undefined";
+                                        phoneNumberTutor2 = "undefined";
+                                        testOk = true;
                                     }
                                 }
                             }
@@ -77,13 +116,24 @@ class User
 
             if (testOk === true)
             {
-                const newUser = await pool.query(
-                    "INSERT INTO table_user (class_id,name,surname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING * ",
-                    [class_id,name,surname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
-                );
-
-                //Allow us to see the response in postman
-                res.json(newUser.rows[0]);
+                if (student === 1 || student === true || student === "1")
+                {
+                    const newUser = await pool.query(
+                        "INSERT INTO table_user (class_id,name,surname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING * ",
+                        [class_id,name,surname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
+                    );
+                    //Allow us to see the response in postman
+                    res.json(newUser.rows[0]);
+                }
+                else
+                {
+                    const newUser = await pool.query(
+                        "INSERT INTO table_user (class_id,name,surname,address,emailaddress,password,student) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING * ",
+                        [class_id,name,surname,address,emailAddress,password,student]
+                    );
+                    //Allow us to see the response in postman
+                    res.json(newUser.rows[0]);
+                }
             }
             else
             {
