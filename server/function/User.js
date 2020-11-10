@@ -30,6 +30,8 @@ class User
             let { student } = req.body;
             let { phoneNumberTutor1 } = req.body;
             let { phoneNumberTutor2 } = req.body;
+            let { emailTutor1 } = req.body;
+            let { emailTutor2 } = req.body;
 
             /////////////////
             //   Security  //
@@ -53,9 +55,12 @@ class User
                                     {
                                         if (security.phoneVerification(phoneNumberTutor2) === false)
                                         {
-                                            if (security.classIdVerification(class_id) === false)
+                                            if (security.emailVerification(emailTutor1) === false)
                                             {
-                                                testOk = true;
+                                                if (security.emailVerification(emailTutor2) === false)
+                                                {
+                                                    testOk = true;
+                                                }
                                             }
                                         }
                                     }
@@ -73,8 +78,8 @@ class User
             if (testOk === true)
             {
                 const newUser = await pool.query(
-                    "INSERT INTO table_user (class_id,name,surname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING * ",
-                    [class_id,name,surname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2]
+                    "INSERT INTO table_user (class_id,name,surname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING * ",
+                    [class_id,name,surname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
                 );
 
                 //Allow us to see the response in postman

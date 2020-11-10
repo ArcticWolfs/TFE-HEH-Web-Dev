@@ -11,7 +11,9 @@ CREATE TABLE table_user(
     inscriptionDate timestamp,
     student boolean,
     phoneNumberTutor1 VARCHAR(20),
-    phoneNumberTutor2 VARCHAR(20)
+    phoneNumberTutor2 VARCHAR(20),
+    emailTutor1 VARCHAR(60),
+    emailTutor2 VARCHAR(60)
 );
 
 CREATE TABLE table_class(
