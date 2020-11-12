@@ -92,7 +92,7 @@ class Security
 
     emailVerification(email)
     {
-        if (email.includes("@") && email.length > 4)
+        if (email.includes("@") && email.length > 5)
         {
             let part = email.split("@");
             let emailCharactersSupPart1 = ["-","_"];
