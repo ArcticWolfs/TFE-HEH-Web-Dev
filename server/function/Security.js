@@ -95,7 +95,7 @@ class Security
         if (email.includes("@") && email.length > 5)
         {
             let part = email.split("@");
-            let emailCharactersSupPart1 = ["-","_"];
+            let emailCharactersSupPart1 = ["-","_","."];
             let emailCharactersSupPart2 = [".","-"];
             let goodEmailCharactersPart1 = AllLetters.concat(Numbers.concat(emailCharactersSupPart1));
             let goodEmailCharactersPart2 = AllLetters.concat(Numbers.concat(emailCharactersSupPart2));
@@ -149,7 +149,7 @@ class Security
         {
             for (let c=0;c<phone.length;c++)
             {
-                let phoneCharactersSup = ["+","#"," "];
+                let phoneCharactersSup = ["+","#"," ",".","/"];
                 let goodPhoneCharacters = Numbers.concat(phoneCharactersSup);
                 let testPhone = goodPhoneCharacters.includes(phone.charAt(c));
                 if (testPhone === false)
