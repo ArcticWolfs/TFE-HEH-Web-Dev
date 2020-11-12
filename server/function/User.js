@@ -115,7 +115,7 @@ class User
                 if (student === 1 || student === true || student === "1")
                 {
                     const newUser = await pool.query(
-                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING * ",
+                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING * ",
                         [firstname,lastname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
                     );
                     //Allow us to see the response in postman
@@ -124,7 +124,7 @@ class User
                 else
                 {
                     const newUser = await pool.query(
-                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING * ",
+                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student) VALUES($1,$2,$3,$4,$5,$6) RETURNING * ",
                         [firstname,lastname,address,emailAddress,password,student]
                     );
                     //Allow us to see the response in postman
