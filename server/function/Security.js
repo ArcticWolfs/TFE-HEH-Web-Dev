@@ -30,7 +30,7 @@ class Security
         else return true;
     }
 
-    nameVerification(name)
+    firstNameVerification(name)
     {
         if (name.length > 1)
         {
@@ -39,7 +39,7 @@ class Security
 
             for (let c=0;c<name.length;c++)
             {
-                let testName = goodNameCharacters.includes(name.charAt(c))
+                let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
                     return true;
@@ -50,7 +50,7 @@ class Security
         else return true;
     }
 
-    surnameVerification(surname)
+    lastNameVerification(surname)
     {
         if (surname.length > 1)
         {
@@ -59,7 +59,7 @@ class Security
 
             for (let c=0;c<surname.length;c++)
             {
-                let testSurname = goodSurnameCharacters.includes(surname.charAt(c))
+                let testSurname = goodSurnameCharacters.includes(surname.charAt(c));
                 if (testSurname === false)
                 {
                     return true;
@@ -74,12 +74,12 @@ class Security
     {
         if (address.length > 5)
         {
-            let addressCharactersSup = [".","-"," "];
+            let addressCharactersSup = [".","-"," ",","];
             let goodAddressCharacters = AllLetters.concat(Numbers.concat(addressCharactersSup.concat(SpecialLetters)));
 
             for (let c=0;c<address.length;c++)
             {
-                let testAddress = goodAddressCharacters.includes(address.charAt(c))
+                let testAddress = goodAddressCharacters.includes(address.charAt(c));
                 if (testAddress === false)
                 {
                     return true;

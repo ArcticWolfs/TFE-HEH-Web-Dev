@@ -21,9 +21,8 @@ class User
             //    Var   //
             //////////////
 
-            let { class_id } = req.body;
-            let { name } = req.body;
-            let { surname } = req.body;
+            let { lastname } = req.body;
+            let { firstname } = req.body;
             let { address } = req.body;
             let { emailAddress } = req.body;
             let { password } = req.body;
@@ -52,14 +51,11 @@ class User
                 }
             }
 
-            class_id = class_id.toString().trim();
-            name = name.trim();
-            surname = surname.trim();
+            firstname = firstname.trim();
+            lastname = lastname.trim();
             address = address.trim();
             emailAddress = emailAddress.trim();
             password = password.trim();
-
-
 
             /////////////////
             //   Security  //
@@ -67,9 +63,9 @@ class User
 
             let testOk = false;
 
-            if (security.nameVerification(name) === false)
+            if (security.firstNameVerification(firstname) === false)
             {
-                if (security.surnameVerification(surname) === false)
+                if (security.lastNameVerification(lastname) === false)
                 {
                     if (security.addressVerification(address) === false)
                     {
@@ -119,8 +115,8 @@ class User
                 if (student === 1 || student === true || student === "1")
                 {
                     const newUser = await pool.query(
-                        "INSERT INTO table_user (class_id,name,surname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING * ",
-                        [class_id,name,surname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
+                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING * ",
+                        [firstname,lastname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
                     );
                     //Allow us to see the response in postman
                     res.json(newUser.rows[0]);
@@ -128,8 +124,8 @@ class User
                 else
                 {
                     const newUser = await pool.query(
-                        "INSERT INTO table_user (class_id,name,surname,address,emailaddress,password,student) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING * ",
-                        [class_id,name,surname,address,emailAddress,password,student]
+                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING * ",
+                        [firstname,lastname,address,emailAddress,password,student]
                     );
                     //Allow us to see the response in postman
                     res.json(newUser.rows[0]);
@@ -137,7 +133,7 @@ class User
             }
             else
             {
-                console.log("Bad character detected aborting the query, please try again!")
+                console.log("Bad character detected aborting the query, please try again!");
             }
         }
         catch (err)

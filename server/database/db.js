@@ -1,8 +1,8 @@
 const Pool = require("pg").Pool;
 
-    ////////////////////////
-    // Connection à la DB //
-    ////////////////////////
+    ///////////////////////////
+    // Connexion to DataBase //
+    ///////////////////////////
 
 const pool = new Pool({
     user : "postgres",
