@@ -33,15 +33,24 @@ export class AddUser extends Component {
                 <p><input placeholder="Mot de passe" name="password" type="text" value={this.state.password} onChange={this.onChange} /></p>
                 <p><input placeholder="Confirmation du mot de passe" name="confirmPassword" type="text" value={this.state.confirmPassword} onChange={this.onChange} /></p>
                 <p><input placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
-                <p><input id="isStudent" placeholder="Etudiant" name="student" type="checkbox" value={this.state.student} onChange={this.onChange} />Étudiant</p>
-                <p><input placeholder="Téléphone du tuteur 2" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
-                <p><input placeholder="Téléphone du tuteur 1" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
-                <p><input placeholder="Mail du tuteur 1" name="emailTutor1" type="text" value={this.state.emailTutor1} onChange={this.onChange} /></p>
-                <p><input placeholder="Mail du tuteur 2" name="emailTutor2" type="text" value={this.state.emailTutor2} onChange={this.onChange} /></p>
+                <p><input id="isStudent" placeholder="Etudiant" name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
+
+                <div id="isShow" style={{display:"none"}}>
+                    <p><input placeholder="Téléphone du tuteur 2" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
+                    <p><input placeholder="Téléphone du tuteur 1" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
+                    <p><input placeholder="Mail du tuteur 1" name="emailTutor1" type="text" value={this.state.emailTutor1} onChange={this.onChange} /></p>
+                    <p><input placeholder="Mail du tuteur 2" name="emailTutor2" type="text" value={this.state.emailTutor2} onChange={this.onChange} /></p>
+                </div>
                
                 <button onClick={this.onClick} className="btn btn-success">S'inscrire</button>
             </div>
         )
+    }
+
+    toggleDisplay = () => {
+        this.elmt = document.getElementById('isShow');
+        if(document.getElementById('isStudent').checked == true) this.elmt.style.display = "";
+        else this.elmt.style.display = "none";
     }
 
     onChange = (event) => {
