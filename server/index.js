@@ -48,9 +48,29 @@ console.log("Password : " + security.passwordVerification(password));
             // Create a user //
             ///////////////////
 
-app.post("/users",async(req, res) =>
+app.post("/createUser",async(req, res) =>
 {
     await user.addUser(req,res);
+});
+
+app.get("/getUser/:id", async(req, res) =>
+{
+    await user.getUser(req,res);
+});
+
+app.get("/getAllUsers", async(req, res) =>
+{
+    await user.getAllUser(req,res);
+});
+
+app.put("/modifyUser/:id", async(req, res) =>
+{
+    await user.modifyUser(req,res);
+});
+
+app.delete("/deleteUser/:id", async(req,res) =>
+{
+    await user.deleteUser(req,res);
 });
 
 app.listen(5000, () => 

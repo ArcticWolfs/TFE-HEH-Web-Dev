@@ -138,7 +138,172 @@ class User
         }
         catch (err)
         {
-            console.error("Error while creating an user" + err.message);
+            console.error("Error while creating an user : " + err.message);
+        }
+    }
+
+    async getUser(req,res)
+    {
+        try
+        {
+            const {id} = req.params;
+            console.log("id");
+            const getUser = await pool.query("SELECT * FROM table_user WHERE user_id = $1", [id]);
+
+            res.json(getUser.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting the user with a specific ID : " + err.message)
+        }
+    }
+
+    async getAllUser(req, res)
+    {
+        try
+        {
+            const getAllUsers = await pool.query("SELECT * FROM table_user");
+
+            //Allow us to see the response in postman
+            res.json(getAllUsers.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting all the user : " + err.message)
+        }
+    }
+
+    async modifyUser(req,res)
+    {
+        try
+        {
+            let { id } = req.params;
+            let { firstname } = req.body;
+            let { lastname } = req.body;
+            let { address } = req.body;
+            let { emailAddress } = req.body;
+            let { password } = req.body;
+            let { student } = req.body;
+            let { phoneNumberTutor1 } = req.body;
+            let { phoneNumberTutor2 } = req.body;
+            let { emailTutor1 } = req.body;
+            let { emailTutor2 } = req.body;
+
+            if (student === 1 || student === true || student === "1")
+            {
+                try
+                {
+                    //////////////
+                    //   TRIM   //
+                    //////////////
+
+                    phoneNumberTutor1 = phoneNumberTutor1.trim();
+                    phoneNumberTutor2 = phoneNumberTutor2.trim();
+                    emailTutor1 = emailTutor1.trim();
+                    emailTutor2 = emailTutor2.trim();
+                }
+                catch (error)
+                {
+                    console.log("trying to trim nonexistent data");
+                }
+            }
+
+            firstname = firstname.trim();
+            lastname = lastname.trim();
+            address = address.trim();
+            emailAddress = emailAddress.trim();
+            password = password.trim();
+
+            /////////////////
+            //   Security  //
+            /////////////////
+
+            if (security.firstNameVerification(firstname) === false)
+            {
+                if (security.lastNameVerification(lastname) === false)
+                {
+                    if (security.addressVerification(address) === false)
+                    {
+                        if (security.emailVerification(emailAddress) === false)
+                        {
+                            if (security.passwordVerification(password) === false)
+                            {
+                                if (security.studentVerification(student) === false)
+                                {
+                                    if (student === 1 || student === true || student === "1")
+                                    {
+                                        if (security.phoneVerification(phoneNumberTutor1) === false)
+                                        {
+                                            if (security.phoneVerification(phoneNumberTutor2) === false)
+                                            {
+                                                if (security.emailVerification(emailTutor1) === false)
+                                                {
+                                                    if (security.emailVerification(emailTutor2) === false)
+                                                    {
+                                                        const updateUser = await pool.query(
+                                                            "UPDATE table_user SET firstname = $1, lastname = $2, address = $3, emailaddress = $4, password = $5, student = $6, phonenumbertutor1 = $7, phonenumbertutor2 = $8, emailtutor1 = $9, emailtutor2 = $10 WHERE user_id = $11",
+                                                            [firstname,lastname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2,id]
+                                                        );
+
+                                                        //Allow us to see the response in postman
+                                                        res.json("User Updated");
+                                                    }
+                                                    else console.log("Bad email");
+                                                }
+                                                else console.log("Bad email");
+                                            }
+                                            else console.log("Bad phone number");
+                                        }
+                                        else console.log("Bad phone number");
+                                    }
+                                    else
+                                    {
+                                        emailTutor1 = "undefined";
+                                        emailTutor2 = "undefined";
+                                        phoneNumberTutor1 = "undefined";
+                                        phoneNumberTutor2 = "undefined";
+
+                                        const updateUser = await pool.query(
+                                            "UPDATE table_user SET firstname = $1, lastname = $2, address = $3, emailaddress = $4, password = $5, student = $6 WHERE user_id = $7",
+                                            [firstname,lastname,address,emailAddress,password,student,id]
+                                        );
+
+                                        //Allow us to see the response in postman
+                                        res.json("User Updated");
+                                    }
+                                }
+                                else console.log("Bad student boolean");
+                            }
+                            else console.log("Bad password");
+                        }
+                        else console.log("Bad email");
+                    }
+                    else console.log("Bad address");
+                }
+                else console.log("Bad lastname");
+            }
+            else console.log("Bad firstname");
+
+
+        }
+        catch (err)
+        {
+            console.error("Error while modifying an user : " + err.message)
+        }
+    }
+
+    async deleteUser(req,res)
+    {
+        try
+        {
+            const {id} = req.params;
+            const deleteUser = await pool.query("DELETE FROM table_user WHERE user_id = $1", [id]);
+
+            res.json("User deleted")
+        }
+        catch (err)
+        {
+            console.error("Error while deleting an user : " + err.message)
         }
     }
 }
