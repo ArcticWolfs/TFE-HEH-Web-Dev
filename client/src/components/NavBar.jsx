@@ -1,33 +1,21 @@
 import React, { Component } from "react";
+import "../css/style.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
  
 class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-dark bg-dark mb-3">
-
-            <h1 className="navbar-brand">Mise en page provisoire</h1>
-
-            <a className="navbar-brand" href="/addUser">
-                <div>Créer un utilisateur</div>
-            </a>
-
-            <a className="navbar-brand" href="/">
-                <div>/</div>
-            </a>
-
-            <a className="navbar-brand" href="/">
-                <div>/</div>
-            </a>
-
-            <a className="navbar-brand" href="/">
-                <div>/</div>
-            </a>
-
-            <a className="navbar-brand" href="/">
-                <div>/</div>
-            </a>
+        <nav id="navbar">
+          <ul>
+            <li id="titre"><a href="/">Ecole primaire libre Saint-Donat - Bienvenue</a></li>
+            <li><a href="/addUser">Mon compte</a></li>
+            <li><a href="/">Quizz</a></li>
+            <li><a href="/">Bulletin</a></li>
+            <li><a href="/">Vie de classe</a></li>
+            <li><a href="/">Administration</a></li>
+            <li><a href="/">Accueil</a></li>
+          </ul>
         </nav>
       </React.Fragment>
     );

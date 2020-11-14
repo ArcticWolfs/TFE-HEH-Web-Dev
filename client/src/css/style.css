@@ -1,0 +1,75 @@
+@media all and (max-width: 480px)
+{
+	
+}
+
+@media (min-width: 480px) and (max-width: 780px)
+{
+
+}
+
+@media (min-width: 781px) and (max-width: 979px)
+{
+
+}
+
+html
+{
+	background-image: url('../images/background.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	color:#FFF;
+}
+
+#bodyatme
+{
+	background: transparent;
+	color:#FFF;
+}
+
+nav
+{
+	height: 2.5em;
+	background-color: rgba(0, 111, 123, 0.558);
+	font-size: 1.2em;
+}
+
+nav ul
+{
+	line-height: 2.5em;
+	list-style: none;
+	margin:0;
+}
+
+nav li
+{
+	float: right;
+}
+
+nav li a
+{
+	display:block;
+	height:100%;
+	padding: 0 1em;
+	color:#FFF;
+}
+
+#titre
+{
+	float:left;
+	padding: 0;
+	margin-left:-2em;
+}
+
+#titre a:hover
+{
+	background-color: transparent;
+}
+
+nav li a:hover
+{
+	text-decoration: none;
+	color:#FFF;
+	background-color: rgba(230, 103, 213, 0.523);
+	
+}

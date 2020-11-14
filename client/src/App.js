@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './css/style.css';
 import WebRoute from './components/WebRoute';
 import NavBar from "./components/NavBar";
 

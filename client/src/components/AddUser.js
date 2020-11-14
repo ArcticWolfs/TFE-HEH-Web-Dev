@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import "../css/style.css";
 
 import Axios from 'axios'
 
