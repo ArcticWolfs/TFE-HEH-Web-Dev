@@ -54,7 +54,7 @@ class Security
     {
         if (surname.length > 1)
         {
-            let surnameCharactersSup = ["-"];
+            let surnameCharactersSup = ["-"," "];
             let goodSurnameCharacters = AllLetters.concat(surnameCharactersSup.concat(SpecialLetters));
 
             for (let c=0;c<surname.length;c++)
