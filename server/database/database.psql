@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS table_user(
     emailAddress VARCHAR(60) NOT NULL,
     password VARCHAR(50) NOT NULL,
     address VARCHAR(100),
-    inscriptionDate timestamp,
+    inscriptionDate TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     student boolean,
     phoneNumberTutor1 VARCHAR(20),
     phoneNumberTutor2 VARCHAR(20),
