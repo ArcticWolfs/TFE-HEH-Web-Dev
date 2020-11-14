@@ -66,7 +66,7 @@ export class AddUser extends Component {
             this.isStudent = 1;
         }
 
-        const Security = require("./Security");
+        const Security = require("../Security");
         const security = new Security();
 
         let v_lastname = this.state.lastname;
