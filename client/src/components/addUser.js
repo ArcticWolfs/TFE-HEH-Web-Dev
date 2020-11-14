@@ -29,20 +29,20 @@ export class AddUser extends Component {
 
                 <p><input placeholder="Prénom" name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} /></p>
                 <p><input placeholder="Nom" name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} /></p>
-                <p><input placeholder="Email" name="emailAddress" type="text" value={this.state.emailAddress} onChange={this.onChange} /></p>
-                <p><input placeholder="Mot de passe" name="password" type="text" value={this.state.password} onChange={this.onChange} /></p>
-                <p><input placeholder="Confirmation du mot de passe" name="confirmPassword" type="text" value={this.state.confirmPassword} onChange={this.onChange} /></p>
+                <p><input placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} /></p>
+                <p><input placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
+                <p><input placeholder="Confirmation du mot de passe" name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} /></p>
                 <p><input placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
                 <p><input id="isStudent" placeholder="Etudiant" name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
 
                 <div id="isShow" style={{display:"none"}}>
                     <p><input placeholder="Téléphone du tuteur 2" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
                     <p><input placeholder="Téléphone du tuteur 1" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
-                    <p><input placeholder="Mail du tuteur 1" name="emailTutor1" type="text" value={this.state.emailTutor1} onChange={this.onChange} /></p>
-                    <p><input placeholder="Mail du tuteur 2" name="emailTutor2" type="text" value={this.state.emailTutor2} onChange={this.onChange} /></p>
+                    <p><input placeholder="Mail du tuteur 1" name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} /></p>
+                    <p><input placeholder="Mail du tuteur 2" name="emailTutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
                 </div>
                
-                <button onClick={this.onClick} className="btn btn-success">S'inscrire</button>
+                <a id="inscription" href="addUser"><button onClick={this.onClick} className="btn btn-success">S'inscrire</button></a>
             </div>
         )
     }
@@ -170,6 +170,7 @@ export class AddUser extends Component {
                 .catch(function (err){
                     console.log(err)
                 }) 
+                document.getElementById('inscription').href = "/";
             }
             else
             {
