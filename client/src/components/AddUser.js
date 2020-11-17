@@ -150,7 +150,7 @@ export class AddUser extends Component {
             }
             if (testOk === true)
             {
-                Axios.post(`http://localhost:5000/users`, {   
+                Axios.post(`http://localhost:5000/createUser`, {
                     user_id: null,
                     class_id: null,
                     firstname: v_firstname,
