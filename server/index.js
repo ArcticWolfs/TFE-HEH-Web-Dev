@@ -1,14 +1,36 @@
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const cors = require("cors");
+const passport = require("passport");
+const passportLocal = require("passport-local").Strategy;
+const cookieParser = require("cookie-parser");
 const Function = require("./function/Functions");
+
 
     //////////////////
     //  MIDDLEWARE  //
     //////////////////
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: "http://localhost:3000",
+        credentials: true
+    }
+));
+
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+app.use(session(
+    {
+        secret: "159753",
+        resave: true,
+        saveUninitialized: true
+    }
+));
+
+app.use(cookieParser("159753"))
 
     //////////////
     //  Class  ///
@@ -38,6 +60,11 @@ app.post("/createUser",async(req, res) =>
 app.get("/getUser/:id", async(req, res) =>
 {
     await user.getUser(req,res);
+});
+
+app.get("/getUserByEmail/:email", async(req, res) =>
+{
+    await user.getUserByEmail(req,res);
 });
 
 app.get("/getAllUsers", async(req, res) =>

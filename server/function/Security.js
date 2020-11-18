@@ -1,10 +1,11 @@
-const index = require("../index");
-
+const bcrypt = require("bcrypt");
+const pool = require("../database/db");
 const LowerCase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 const UpperCase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 const AllLetters = LowerCase.concat(UpperCase);
 const SpecialLetters = ["â","ä","à","á","é","è","ë","ê","ç","û","ü","ù","ú","ï","î","ö","ô"];
 const Numbers = ["0","1","2","3","4","5","6","7","8","9"];
+const saltRounds = 10;
 
 class Security
 {
@@ -22,12 +23,17 @@ class Security
                 let testClass_id = Numbers.includes(class_id.charAt(c));
                 if (testClass_id === false)
                 {
+                    console.log("/!\\ Class id verification went wrong /!\\");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            console.log("/!\\ Class id verification went wrong /!\\");
+            return true;
+        }
     }
 
     firstNameVerification(name)
@@ -42,12 +48,17 @@ class Security
                 let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
+                    console.log("/!\\ Firstname verification went wrong because of invalid characters /!\\");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            console.log("/!\\ Firstname verification went wrong because it's empty or too small /!\\");
+            return true;
+        }
     }
 
     lastNameVerification(surname)
@@ -62,12 +73,17 @@ class Security
                 let testSurname = goodSurnameCharacters.includes(surname.charAt(c));
                 if (testSurname === false)
                 {
+                    console.log("/!\\ Lastname verification went wrong because of invalid characters /!\\");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            console.log("/!\\ Lastname verification went wrong because it's empty or too small /!\\");
+            return true;
+        }
     }
 
     addressVerification(address)
@@ -82,46 +98,75 @@ class Security
                 let testAddress = goodAddressCharacters.includes(address.charAt(c));
                 if (testAddress === false)
                 {
+                    console.log("/!\\ Address verification went wrong because of invalid characters /!\\");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            console.log("/!\\ Address verification went wrong because it's empty or too small /!\\");
+            return true;
+        }
     }
 
-    emailVerification(email)
+    async emailVerification(email)
     {
-        if (email.includes("@") && email.length > 5)
+        if (await this.emailAlreadyExist(email) === false)
         {
-            let part = email.split("@");
-            let emailCharactersSupPart1 = ["-","_","."];
-            let emailCharactersSupPart2 = [".","-"];
-            let goodEmailCharactersPart1 = AllLetters.concat(Numbers.concat(emailCharactersSupPart1));
-            let goodEmailCharactersPart2 = AllLetters.concat(Numbers.concat(emailCharactersSupPart2));
-
-            for (let c=0;c<part[0].length;c++)
+            if (email.includes("@") && email.length > 5)
             {
-                let testEmail = goodEmailCharactersPart1.includes(part[0].charAt(c));
-                if (testEmail === false)
-                {
-                    return true;
-                }
-            }
-            for (let c=0;c<part[1].length;c++)
-            {
-                let testEmail2 = goodEmailCharactersPart2.includes(part[1].charAt(c));
-                if (testEmail2 === false)
-                {
-                    return true
-                }
-                // Test to know if there is a point in the second part
-                if (!part[1].includes("."))
-                {
-                    return true
-                }
-            }
+                let part = email.split("@");
+                let emailCharactersSupPart1 = ["-","_","."];
+                let emailCharactersSupPart2 = [".","-"];
+                let goodEmailCharactersPart1 = AllLetters.concat(Numbers.concat(emailCharactersSupPart1));
+                let goodEmailCharactersPart2 = AllLetters.concat(Numbers.concat(emailCharactersSupPart2));
 
+                for (let c=0;c<part[0].length;c++)
+                {
+                    let testEmail = goodEmailCharactersPart1.includes(part[0].charAt(c));
+                    if (testEmail === false)
+                    {
+                        console.log("/!\\ Email verification went wrong because the first part of email contain invalid characters /!\\");
+                        return true;
+                    }
+                }
+                for (let c=0;c<part[1].length;c++)
+                {
+                    let testEmail2 = goodEmailCharactersPart2.includes(part[1].charAt(c));
+                    if (testEmail2 === false)
+                    {
+                        console.log("/!\\ Email verification went wrong because the second part of email contain invalid characters /!\\");
+                        return true
+                    }
+                    // Test to know if there is a point in the second part
+                    if (!part[1].includes("."))
+                    {
+                        console.log("/!\\ Email verification went wrong because the second part doesn't contain a '.' /!\\");
+                        return true
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                console.log("/!\\ Email verification went wrong because email is too short or empty /!\\");
+                return true;
+            }
+        }
+        else
+        {
+            console.log("/!\\ This email address already exist in the database /!\\");
+            return true;
+        }
+    }
+
+    async emailAlreadyExist(email)
+    {
+        const emailExist = await pool.query("SELECT all emailaddress FROM table_user WHERE emailAddress = $1", [email]);
+        if(emailExist.rowCount === 0)
+        {
             return false;
         }
         else return true;
@@ -138,15 +183,20 @@ class Security
         {
             return false;
         }
-        else return true;
+        else
+        {
+            console.log("/!\\ Student boolean verification went wrong because it's not a boolean /!\\");
+            return true;
+        }
     }
 
     phoneVerification(phone)
     {
-        // Allow to delete all the extra space
-        phone = phone.replace(/ /g,"");
         if (phone.length > 8)
         {
+            // Allow to delete all the extra space
+            phone = phone.replace(/ /g,"");
+
             for (let c=0;c<phone.length;c++)
             {
                 let phoneCharactersSup = ["+","#"," ",".","/"];
@@ -154,12 +204,30 @@ class Security
                 let testPhone = goodPhoneCharacters.includes(phone.charAt(c));
                 if (testPhone === false)
                 {
+                    console.log("/!\\ Phone verification went wrong because it contains invalid characters /!\\");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            console.log("/!\\ Phone verification went wrong because it's too short or empty /!\\");
+            return true;
+        }
+    }
+
+    async cryptingPassword(password)
+    {
+        let salt = bcrypt.genSaltSync(saltRounds);
+        let hash = bcrypt.hashSync(password,salt);
+
+        return hash;
+    }
+
+    decryptingPassword(password)
+    {
+
     }
 }
 

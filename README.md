@@ -17,3 +17,5 @@ Pg : C'est la base de donnée PostGresSql
 Cors : Permet de faire fonctionner les différents service sur différentes port
 
 Nodemon : Il permet de suivre les changement en directe sans devoir retaper à chaque fois la commande
+
+Installtion des sécurités : "npm i passport passport-local cookie-parser bcrypt express-session"

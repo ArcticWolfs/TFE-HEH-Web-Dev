@@ -39,7 +39,6 @@ class User
                     //////////////
                     //   TRIM   //
                     //////////////
-
                     phoneNumberTutor1 = phoneNumberTutor1.trim();
                     phoneNumberTutor2 = phoneNumberTutor2.trim();
                     emailTutor1 = emailTutor1.trim();
@@ -61,15 +60,13 @@ class User
             //   Security  //
             /////////////////
 
-            let testOk = false;
-
             if (security.firstNameVerification(firstname) === false)
             {
                 if (security.lastNameVerification(lastname) === false)
                 {
                     if (security.addressVerification(address) === false)
                     {
-                        if (security.emailVerification(emailAddress) === false)
+                        if (await security.emailVerification(emailAddress) === false)
                         {
                             if (security.passwordVerification(password) === false)
                             {
@@ -81,11 +78,22 @@ class User
                                         {
                                             if (security.phoneVerification(phoneNumberTutor2) === false)
                                             {
-                                                if (security.emailVerification(emailTutor1) === false)
+                                                if (await security.emailVerification(emailTutor1) === false)
                                                 {
-                                                    if (security.emailVerification(emailTutor2) === false)
+                                                    if (await security.emailVerification(emailTutor2) === false)
                                                     {
-                                                        testOk = true;
+                                                        ////////////////
+                                                        //   REQUEST  //
+                                                        ////////////////
+
+                                                        password = await security.cryptingPassword(password);
+
+                                                        const newUser = await pool.query(
+                                                            "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING * ",
+                                                            [firstname,lastname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
+                                                        );
+                                                        //Allow us to see the response in postman
+                                                        res.json(newUser.rows[0]);
                                                     }
                                                 }
                                             }
@@ -97,43 +105,24 @@ class User
                                         emailTutor2 = "undefined";
                                         phoneNumberTutor1 = "undefined";
                                         phoneNumberTutor2 = "undefined";
-                                        testOk = true;
+                                        password = await security.cryptingPassword(password);
+
+                                        ////////////////
+                                        //   REQUEST  //
+                                        ////////////////
+
+                                        const newUser = await pool.query(
+                                            "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student) VALUES($1,$2,$3,$4,$5,$6) RETURNING * ",
+                                            [firstname,lastname,address,emailAddress,password,student]
+                                        );
+                                        //Allow us to see the response in postman
+                                        res.json(newUser.rows[0]);
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-
-            ////////////////
-            //   REQUEST  //
-            ////////////////
-
-            if (testOk === true)
-            {
-                if (student === 1 || student === true || student === "1")
-                {
-                    const newUser = await pool.query(
-                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING * ",
-                        [firstname,lastname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2]
-                    );
-                    //Allow us to see the response in postman
-                    res.json(newUser.rows[0]);
-                }
-                else
-                {
-                    const newUser = await pool.query(
-                        "INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student) VALUES($1,$2,$3,$4,$5,$6) RETURNING * ",
-                        [firstname,lastname,address,emailAddress,password,student]
-                    );
-                    //Allow us to see the response in postman
-                    res.json(newUser.rows[0]);
-                }
-            }
-            else
-            {
-                console.log("Bad character detected aborting the query, please try again!");
             }
         }
         catch (err)
@@ -147,7 +136,6 @@ class User
         try
         {
             const {id} = req.params;
-            console.log("id");
             const getUser = await pool.query("SELECT * FROM table_user WHERE user_id = $1", [id]);
 
             res.json(getUser.rows);
@@ -155,6 +143,21 @@ class User
         catch (err)
         {
             console.error("Error while getting the user with a specific ID : " + err.message)
+        }
+    }
+
+    async getUserByEmail(req,res)
+    {
+        try
+        {
+            const {email} = req.params;
+            const getUser = await pool.query("SELECT * FROM table_user WHERE emailaddress = $1", [email]);
+
+            res.json(getUser.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting the user with a specific email : " + err.message)
         }
     }
 
@@ -196,7 +199,6 @@ class User
                     //////////////
                     //   TRIM   //
                     //////////////
-
                     phoneNumberTutor1 = phoneNumberTutor1.trim();
                     phoneNumberTutor2 = phoneNumberTutor2.trim();
                     emailTutor1 = emailTutor1.trim();
@@ -224,7 +226,7 @@ class User
                 {
                     if (security.addressVerification(address) === false)
                     {
-                        if (security.emailVerification(emailAddress) === false)
+                        if (await security.emailVerification(emailAddress) === false)
                         {
                             if (security.passwordVerification(password) === false)
                             {
@@ -236,10 +238,16 @@ class User
                                         {
                                             if (security.phoneVerification(phoneNumberTutor2) === false)
                                             {
-                                                if (security.emailVerification(emailTutor1) === false)
+                                                if (await security.emailVerification(emailTutor1) === false)
                                                 {
-                                                    if (security.emailVerification(emailTutor2) === false)
+                                                    if (await security.emailVerification(emailTutor2) === false)
                                                     {
+                                                        ////////////////
+                                                        //   REQUEST  //
+                                                        ////////////////
+
+                                                        password = await security.cryptingPassword(password);
+
                                                         const updateUser = await pool.query(
                                                             "UPDATE table_user SET firstname = $1, lastname = $2, address = $3, emailaddress = $4, password = $5, student = $6, phonenumbertutor1 = $7, phonenumbertutor2 = $8, emailtutor1 = $9, emailtutor2 = $10 WHERE user_id = $11",
                                                             [firstname,lastname,address,emailAddress,password,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2,id]
@@ -248,13 +256,9 @@ class User
                                                         //Allow us to see the response in postman
                                                         res.json("User Updated");
                                                     }
-                                                    else console.log("Bad email");
                                                 }
-                                                else console.log("Bad email");
                                             }
-                                            else console.log("Bad phone number");
                                         }
-                                        else console.log("Bad phone number");
                                     }
                                     else
                                     {
@@ -262,6 +266,11 @@ class User
                                         emailTutor2 = "undefined";
                                         phoneNumberTutor1 = "undefined";
                                         phoneNumberTutor2 = "undefined";
+                                        password = await security.cryptingPassword(password);
+
+                                        ////////////////
+                                        //   REQUEST  //
+                                        ////////////////
 
                                         const updateUser = await pool.query(
                                             "UPDATE table_user SET firstname = $1, lastname = $2, address = $3, emailaddress = $4, password = $5, student = $6 WHERE user_id = $7",
@@ -272,19 +281,11 @@ class User
                                         res.json("User Updated");
                                     }
                                 }
-                                else console.log("Bad student boolean");
                             }
-                            else console.log("Bad password");
                         }
-                        else console.log("Bad email");
                     }
-                    else console.log("Bad address");
                 }
-                else console.log("Bad lastname");
             }
-            else console.log("Bad firstname");
-
-
         }
         catch (err)
         {
@@ -307,5 +308,4 @@ class User
         }
     }
 }
-
 module.exports = User;
