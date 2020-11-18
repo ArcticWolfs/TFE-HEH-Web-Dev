@@ -73,3 +73,61 @@ nav li a:hover
 	background-color: rgba(230, 103, 213, 0.523);
 	
 }
+
+
+
+
+.mymodal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+  
+	border: 1px solid #ccc;
+	background-color: rgba(0, 111, 123, 0.653);
+	overflow: auto;
+	border-radius: 0.3em;
+	outline: none;
+	padding: 1.5em;
+	text-align: center;
+  }
+  
+  .myoverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  .ReactModal__Overlay {
+	opacity: 0;
+	transition: opacity 500ms ease-in-out;
+  }
+  
+  .ReactModal__Overlay--after-open {
+	opacity: 0.7;
+  }
+  
+  .ReactModal__Overlay--before-close {
+	opacity: 0;
+  }
+
+  .boutonModal {
+	  margin: 0.2em 0.3em 0 0.3em;
+  }
+
+  #connectezvous {
+	  margin-bottom: 0.5em;
+	  text-align: center;
+	  font-size: 1.5em;
+  }
+
+  .champConnect {
+	  border-radius: 1em;
+  }
+
+  .champConnect:focus {
+	  outline:none;
+  }

@@ -3,7 +3,7 @@ import "../css/style.css";
 
 import Axios from 'axios'
 
-export class AddUser extends Component {
+export class Inscription extends Component {
 
     constructor(props) {
         super(props)
@@ -43,7 +43,7 @@ export class AddUser extends Component {
                     <p><input placeholder="Mail du tuteur 2" name="emailTutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
                 </div>
                
-                <a id="inscription" href="addUser"><button onClick={this.onClick} className="btn btn-success">S'inscrire</button></a>
+                <a id="inscription" href="/inscription"><button onClick={this.onClick} className="btn btn-success">S'inscrire</button></a>
             </div>
         )
     }
@@ -185,4 +185,4 @@ export class AddUser extends Component {
     }
     
 }
-export default AddUser
+export default Inscription

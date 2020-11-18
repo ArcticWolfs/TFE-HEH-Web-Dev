@@ -9,7 +9,7 @@ class NavBar extends Component {
         <nav id="navbar">
           <ul>
             <li id="titre"><a href="/">Ecole primaire libre Saint-Donat - Bienvenue</a></li>
-            <li><a href="/addUser">Mon compte</a></li>
+            <li><a href="/">Mon compte</a></li>
             <li><a href="/">Quizz</a></li>
             <li><a href="/">Bulletin</a></li>
             <li><a href="/">Vie de classe</a></li>

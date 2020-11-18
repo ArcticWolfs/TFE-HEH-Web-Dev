@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import "../css/style.css";
+import Connexion from './Connexion';
 
 export class HomePage extends Component {
 
@@ -17,7 +18,7 @@ export class HomePage extends Component {
             phoneNumberTutor1: null,
             phoneNumberTutor2: null,
             emailTutor1: null,
-            emailTutor2: null
+            emailTutor2: null,
         }
     }
 
@@ -25,6 +26,7 @@ export class HomePage extends Component {
         return (
             <div>
                 <h1>Bienvenue</h1>
+                <Connexion />
             </div>
         )
     }
