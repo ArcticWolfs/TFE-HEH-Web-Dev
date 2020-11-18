@@ -111,9 +111,9 @@ class Security
         }
     }
 
-    async emailVerification(email)
+    async emailVerification(email,emailType)
     {
-        if (await this.emailAlreadyExist(email) === false)
+        if (await this.emailAlreadyExist(email) === false || emailType === "parent")
         {
             if (email.includes("@") && email.length > 5)
             {
@@ -225,9 +225,34 @@ class Security
         return hash;
     }
 
-    decryptingPassword(password)
+    async connectVerification(req,res)
     {
+       let { email } = req.body;
+       let { password } = req.body;
+       console.log(email,password);
 
+        if (await this.emailAlreadyExist(email))
+        {
+            try
+            {
+                let userData = await pool.query("SELECT * FROM table_user WHERE emailAddress = $1", [email]);
+                let passwordHash = userData.rows[0].password;
+
+                if (bcrypt.compareSync(password,passwordHash) === true)
+                {
+                    res.json(userData.rows[0]);
+                }
+                else
+                {
+                    res.send("Password doesn't match");
+                }
+            }
+            catch (error)
+            {
+                console.log("Error while verifying data for connection")
+            }
+        }
+        else res.send("Email address doesn't exist");
     }
 }
 

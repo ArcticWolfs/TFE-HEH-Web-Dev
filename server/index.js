@@ -7,7 +7,6 @@ const passportLocal = require("passport-local").Strategy;
 const cookieParser = require("cookie-parser");
 const Function = require("./function/Functions");
 
-
     //////////////////
     //  MIDDLEWARE  //
     //////////////////
@@ -81,6 +80,11 @@ app.delete("/deleteUser/:id", async(req,res) =>
 {
     await user.deleteUser(req,res);
 });
+
+app.post("/connect", async(req,res) =>
+{
+    await security.connectVerification(req,res);
+})
 
 app.listen(5000, () => 
 {

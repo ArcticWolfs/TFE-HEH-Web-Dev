@@ -78,9 +78,9 @@ class User
                                         {
                                             if (security.phoneVerification(phoneNumberTutor2) === false)
                                             {
-                                                if (await security.emailVerification(emailTutor1) === false)
+                                                if (await security.emailVerification(emailTutor1,"parent") === false)
                                                 {
-                                                    if (await security.emailVerification(emailTutor2) === false)
+                                                    if (await security.emailVerification(emailTutor2,"parent") === false)
                                                     {
                                                         ////////////////
                                                         //   REQUEST  //
@@ -137,8 +137,8 @@ class User
         {
             const {id} = req.params;
             const getUser = await pool.query("SELECT * FROM table_user WHERE user_id = $1", [id]);
-
-            res.json(getUser.rows);
+            //console.log(getUser.rows[0].emailaddress);
+            res.json(getUser.rows[0]);
         }
         catch (err)
         {
@@ -152,7 +152,6 @@ class User
         {
             const {email} = req.params;
             const getUser = await pool.query("SELECT * FROM table_user WHERE emailaddress = $1", [email]);
-
             res.json(getUser.rows);
         }
         catch (err)
@@ -238,9 +237,9 @@ class User
                                         {
                                             if (security.phoneVerification(phoneNumberTutor2) === false)
                                             {
-                                                if (await security.emailVerification(emailTutor1) === false)
+                                                if (await security.emailVerification(emailTutor1,"parent") === false)
                                                 {
-                                                    if (await security.emailVerification(emailTutor2) === false)
+                                                    if (await security.emailVerification(emailTutor2,"parent") === false)
                                                     {
                                                         ////////////////
                                                         //   REQUEST  //
