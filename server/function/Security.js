@@ -255,14 +255,14 @@ class Security
 
                 if (bcrypt.compareSync(password,passwordHash) === true)
                 {
-                    res.send(userId);
+                    res.json({id : userId});
                 }
                 else
                 {
                     error.errorMessage("400.4.4",res);
                 }
             }
-            catch (error)
+            catch (err)
             {
                 error.errorMessage("400",res);
             }
