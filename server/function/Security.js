@@ -25,7 +25,7 @@ class Security
                 let testClass_id = Numbers.includes(class_id.charAt(c));
                 if (testClass_id === false)
                 {
-                    error.errorMessage("400.0");
+                    error.errorMessage("400.0.0");
                     return true;
                 }
             }
@@ -33,7 +33,7 @@ class Security
         }
         else
         {
-            error.errorMessage("400.1");
+            error.errorMessage("400.0.1");
             return true;
         }
     }
@@ -49,7 +49,7 @@ class Security
                 let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
-                    error.errorMessage("401.0",res);
+                    error.errorMessage("400.1.0",res);
                     return true
                 }
             }
@@ -57,7 +57,7 @@ class Security
         }
         else
         {
-            error.errorMessage("401.1",res);
+            error.errorMessage("400.1.1",res);
             return true;
         }
     }
@@ -74,7 +74,7 @@ class Security
                 let testSurname = goodSurnameCharacters.includes(surname.charAt(c));
                 if (testSurname === false)
                 {
-                    error.errorMessage("402.0",res);
+                    error.errorMessage("400.2.0",res);
                     return true;
                 }
             }
@@ -82,7 +82,7 @@ class Security
         }
         else
         {
-            error.errorMessage("402.1",res);
+            error.errorMessage("400.2.1",res);
             return true;
         }
     }
@@ -99,7 +99,7 @@ class Security
                 let testAddress = goodAddressCharacters.includes(address.charAt(c));
                 if (testAddress === false)
                 {
-                    error.errorMessage("405.0",res);
+                    error.errorMessage("400.5.0",res);
                     return true;
                 }
             }
@@ -107,7 +107,7 @@ class Security
         }
         else
         {
-            error.errorMessage("405.1",res);
+            error.errorMessage("400.5.1",res);
             return true;
         }
     }
@@ -129,7 +129,7 @@ class Security
                     let testEmail = goodEmailCharactersPart1.includes(part[0].charAt(c));
                     if (testEmail === false)
                     {
-                        error.errorMessage("403.0.1",res);
+                        error.errorMessage("400.3.0.1",res);
                         return true;
                     }
                 }
@@ -138,13 +138,13 @@ class Security
                     let testEmail2 = goodEmailCharactersPart2.includes(part[1].charAt(c));
                     if (testEmail2 === false)
                     {
-                        error.errorMessage("403.0.2",res);
+                        error.errorMessage("400.3.0.2",res);
                         return true
                     }
                     // Test to know if there is a point in the second part
                     if (!part[1].includes("."))
                     {
-                        error.errorMessage("403.3",res);
+                        error.errorMessage("400.3.3",res);
                         return true
                     }
                 }
@@ -158,14 +158,14 @@ class Security
                 }
                 else
                 {
-                    error.errorMessage("403.1",res);
+                    error.errorMessage("400.3.1",res);
                     return true;
                 }
             }
         }
         else
         {
-            error.errorMessage("403.2",res);
+            error.errorMessage("400.3.2",res);
             return true;
         }
     }
@@ -193,7 +193,7 @@ class Security
         }
         else
         {
-            error.errorMessage("404.0",res);
+            error.errorMessage("400.4.0",res);
             return true;
         }
     }
@@ -212,7 +212,7 @@ class Security
                 let testPhone = goodPhoneCharacters.includes(phone.charAt(c));
                 if (testPhone === false)
                 {
-                    error.errorMessage("406.0",res);
+                    error.errorMessage("400.6.0",res);
                     return true;
                 }
             }
@@ -226,7 +226,7 @@ class Security
             }
             else
             {
-                error.errorMessage("406.1",res);
+                error.errorMessage("400.6.1",res);
                 return true;
             }
         }
@@ -250,23 +250,24 @@ class Security
             try
             {
                 let userData = await pool.query("SELECT * FROM table_user WHERE emailAddress = $1", [email]);
+                let userId = userData.rows[0].user_id;
                 let passwordHash = userData.rows[0].password;
 
                 if (bcrypt.compareSync(password,passwordHash) === true)
                 {
-                    res.json(userData.rows[0]);
+                    res.send(userId);
                 }
                 else
                 {
-                    error.errorMessage("404.4",res);
+                    error.errorMessage("400.4.4",res);
                 }
             }
             catch (error)
             {
-                error.errorMessage("500",res);
+                error.errorMessage("400",res);
             }
         }
-        else error.errorMessage("403.4",res);
+        else error.errorMessage("400.3.4",res);
     }
 }
 
