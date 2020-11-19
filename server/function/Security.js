@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const pool = require("../database/db");
+const ErrorAlert = require("./ErrorAlert");
+const error = new ErrorAlert();
 const LowerCase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 const UpperCase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 const AllLetters = LowerCase.concat(UpperCase);
@@ -23,7 +25,7 @@ class Security
                 let testClass_id = Numbers.includes(class_id.charAt(c));
                 if (testClass_id === false)
                 {
-                    console.log("/!\\ Class id verification went wrong /!\\");
+                    error.errorMessage("400.0");
                     return true;
                 }
             }
@@ -31,37 +33,36 @@ class Security
         }
         else
         {
-            console.log("/!\\ Class id verification went wrong /!\\");
+            error.errorMessage("400.1");
             return true;
         }
     }
 
-    firstNameVerification(name)
+    firstNameVerification(name,res)
     {
         if (name.length > 1)
         {
             let nameCharactersSup = ["-"," "];
             let goodNameCharacters = AllLetters.concat(nameCharactersSup.concat(SpecialLetters));
-
             for (let c=0;c<name.length;c++)
             {
                 let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
-                    console.log("/!\\ Firstname verification went wrong because of invalid characters /!\\");
-                    return true;
+                    error.errorMessage("401.0",res);
+                    return true
                 }
             }
             return false;
         }
         else
         {
-            console.log("/!\\ Firstname verification went wrong because it's empty or too small /!\\");
+            error.errorMessage("401.1",res);
             return true;
         }
     }
 
-    lastNameVerification(surname)
+    lastNameVerification(surname,res)
     {
         if (surname.length > 1)
         {
@@ -73,7 +74,7 @@ class Security
                 let testSurname = goodSurnameCharacters.includes(surname.charAt(c));
                 if (testSurname === false)
                 {
-                    console.log("/!\\ Lastname verification went wrong because of invalid characters /!\\");
+                    error.errorMessage("402.0",res);
                     return true;
                 }
             }
@@ -81,12 +82,12 @@ class Security
         }
         else
         {
-            console.log("/!\\ Lastname verification went wrong because it's empty or too small /!\\");
+            error.errorMessage("402.1",res);
             return true;
         }
     }
 
-    addressVerification(address)
+    addressVerification(address,res)
     {
         if (address.length > 5)
         {
@@ -98,7 +99,7 @@ class Security
                 let testAddress = goodAddressCharacters.includes(address.charAt(c));
                 if (testAddress === false)
                 {
-                    console.log("/!\\ Address verification went wrong because of invalid characters /!\\");
+                    error.errorMessage("405.0",res);
                     return true;
                 }
             }
@@ -106,14 +107,14 @@ class Security
         }
         else
         {
-            console.log("/!\\ Address verification went wrong because it's empty or too small /!\\");
+            error.errorMessage("405.1",res);
             return true;
         }
     }
 
-    async emailVerification(email,emailType)
+    async emailVerification(email,res,emailType)
     {
-        if (await this.emailAlreadyExist(email) === false || emailType === "parent")
+        if (await this.emailAlreadyExist(email,res) === false || emailType === "parent" || emailType === "parent2")
         {
             if (email.includes("@") && email.length > 5)
             {
@@ -128,7 +129,7 @@ class Security
                     let testEmail = goodEmailCharactersPart1.includes(part[0].charAt(c));
                     if (testEmail === false)
                     {
-                        console.log("/!\\ Email verification went wrong because the first part of email contain invalid characters /!\\");
+                        error.errorMessage("403.0.1",res);
                         return true;
                     }
                 }
@@ -137,13 +138,13 @@ class Security
                     let testEmail2 = goodEmailCharactersPart2.includes(part[1].charAt(c));
                     if (testEmail2 === false)
                     {
-                        console.log("/!\\ Email verification went wrong because the second part of email contain invalid characters /!\\");
+                        error.errorMessage("403.0.2",res);
                         return true
                     }
                     // Test to know if there is a point in the second part
                     if (!part[1].includes("."))
                     {
-                        console.log("/!\\ Email verification went wrong because the second part doesn't contain a '.' /!\\");
+                        error.errorMessage("403.3",res);
                         return true
                     }
                 }
@@ -151,18 +152,25 @@ class Security
             }
             else
             {
-                console.log("/!\\ Email verification went wrong because email is too short or empty /!\\");
-                return true;
+                if (emailType === "parent2")
+                {
+                    return false;
+                }
+                else
+                {
+                    error.errorMessage("403.1",res);
+                    return true;
+                }
             }
         }
         else
         {
-            console.log("/!\\ This email address already exist in the database /!\\");
+            error.errorMessage("403.2",res);
             return true;
         }
     }
 
-    async emailAlreadyExist(email)
+    async emailAlreadyExist(email,res)
     {
         const emailExist = await pool.query("SELECT all emailaddress FROM table_user WHERE emailAddress = $1", [email]);
         if(emailExist.rowCount === 0)
@@ -172,12 +180,12 @@ class Security
         else return true;
     }
 
-    passwordVerification(password)
+    passwordVerification(password,res)
     {
         return false;
     }
 
-    studentVerification(student)
+    studentVerification(student,res)
     {
         if (student === true || student === false || student === 1 || student === 0 || student === "1" || student === "0")
         {
@@ -185,12 +193,12 @@ class Security
         }
         else
         {
-            console.log("/!\\ Student boolean verification went wrong because it's not a boolean /!\\");
+            error.errorMessage("404.0",res);
             return true;
         }
     }
 
-    phoneVerification(phone)
+    phoneVerification(phone,res,phoneType)
     {
         if (phone.length > 8)
         {
@@ -204,7 +212,7 @@ class Security
                 let testPhone = goodPhoneCharacters.includes(phone.charAt(c));
                 if (testPhone === false)
                 {
-                    console.log("/!\\ Phone verification went wrong because it contains invalid characters /!\\");
+                    error.errorMessage("406.0",res);
                     return true;
                 }
             }
@@ -212,12 +220,19 @@ class Security
         }
         else
         {
-            console.log("/!\\ Phone verification went wrong because it's too short or empty /!\\");
-            return true;
+            if (phoneType === "parent2")
+            {
+                return false;
+            }
+            else
+            {
+                error.errorMessage("406.1",res);
+                return true;
+            }
         }
     }
 
-    async cryptingPassword(password)
+    async cryptingPassword(password,res)
     {
         let salt = bcrypt.genSaltSync(saltRounds);
         let hash = bcrypt.hashSync(password,salt);
@@ -229,9 +244,8 @@ class Security
     {
        let { email } = req.body;
        let { password } = req.body;
-       console.log(email,password);
 
-        if (await this.emailAlreadyExist(email))
+        if (await this.emailAlreadyExist(email,res))
         {
             try
             {
@@ -244,15 +258,15 @@ class Security
                 }
                 else
                 {
-                    res.send("Password doesn't match");
+                    error.errorMessage("404.4",res);
                 }
             }
             catch (error)
             {
-                console.log("Error while verifying data for connection")
+                error.errorMessage("500",res);
             }
         }
-        else res.send("Email address doesn't exist");
+        else error.errorMessage("403.4",res);
     }
 }
 

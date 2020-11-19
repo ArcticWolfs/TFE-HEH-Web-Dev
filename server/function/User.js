@@ -60,27 +60,27 @@ class User
             //   Security  //
             /////////////////
 
-            if (security.firstNameVerification(firstname) === false)
+            if (security.firstNameVerification(firstname,res) === false)
             {
-                if (security.lastNameVerification(lastname) === false)
+                if (security.lastNameVerification(lastname,res) === false)
                 {
-                    if (security.addressVerification(address) === false)
+                    if (security.addressVerification(address,res) === false)
                     {
-                        if (await security.emailVerification(emailAddress) === false)
+                        if (await security.emailVerification(emailAddress,res,"student") === false)
                         {
-                            if (security.passwordVerification(password) === false)
+                            if (security.passwordVerification(password,res) === false)
                             {
-                                if (security.studentVerification(student) === false)
+                                if (security.studentVerification(student,res) === false)
                                 {
                                     if (student === 1 || student === true || student === "1")
                                     {
-                                        if (security.phoneVerification(phoneNumberTutor1) === false)
+                                        if (security.phoneVerification(phoneNumberTutor1,res,"parent") === false)
                                         {
-                                            if (security.phoneVerification(phoneNumberTutor2) === false)
+                                            if (security.phoneVerification(phoneNumberTutor2,res,"parent2") === false)
                                             {
-                                                if (await security.emailVerification(emailTutor1,"parent") === false)
+                                                if (await security.emailVerification(emailTutor1,res,"parent") === false)
                                                 {
-                                                    if (await security.emailVerification(emailTutor2,"parent") === false)
+                                                    if (await security.emailVerification(emailTutor2,res,"parent2") === false)
                                                     {
                                                         ////////////////
                                                         //   REQUEST  //
@@ -219,33 +219,33 @@ class User
             //   Security  //
             /////////////////
 
-            if (security.firstNameVerification(firstname) === false)
+            if (security.firstNameVerification(firstname,res) === false)
             {
-                if (security.lastNameVerification(lastname) === false)
+                if (security.lastNameVerification(lastname,res) === false)
                 {
-                    if (security.addressVerification(address) === false)
+                    if (security.addressVerification(address,res) === false)
                     {
-                        if (await security.emailVerification(emailAddress) === false)
+                        if (await security.emailVerification(emailAddress,res,"student") === false)
                         {
-                            if (security.passwordVerification(password) === false)
+                            if (security.passwordVerification(password,res) === false)
                             {
-                                if (security.studentVerification(student) === false)
+                                if (security.studentVerification(student,res) === false)
                                 {
                                     if (student === 1 || student === true || student === "1")
                                     {
-                                        if (security.phoneVerification(phoneNumberTutor1) === false)
+                                        if (security.phoneVerification(phoneNumberTutor1,res,"parent") === false)
                                         {
-                                            if (security.phoneVerification(phoneNumberTutor2) === false)
+                                            if (security.phoneVerification(phoneNumberTutor2,res,"parent2") === false)
                                             {
-                                                if (await security.emailVerification(emailTutor1,"parent") === false)
+                                                if (await security.emailVerification(emailTutor1,res,"parent") === false)
                                                 {
-                                                    if (await security.emailVerification(emailTutor2,"parent") === false)
+                                                    if (await security.emailVerification(emailTutor2,res,"parent2") === false)
                                                     {
                                                         ////////////////
                                                         //   REQUEST  //
                                                         ////////////////
 
-                                                        password = await security.cryptingPassword(password);
+                                                        password = await security.cryptingPassword(password,res);
 
                                                         const updateUser = await pool.query(
                                                             "UPDATE table_user SET firstname = $1, lastname = $2, address = $3, emailaddress = $4, password = $5, student = $6, phonenumbertutor1 = $7, phonenumbertutor2 = $8, emailtutor1 = $9, emailtutor2 = $10 WHERE user_id = $11",
@@ -265,7 +265,7 @@ class User
                                         emailTutor2 = "undefined";
                                         phoneNumberTutor1 = "undefined";
                                         phoneNumberTutor2 = "undefined";
-                                        password = await security.cryptingPassword(password);
+                                        password = await security.cryptingPassword(password,res);
 
                                         ////////////////
                                         //   REQUEST  //
