@@ -14,7 +14,6 @@ export class Connexion extends Component {
         this.state = {
             emailAddress: "",
             password: "",
-            id:"",
             stayConnect:false,
             isOpen: true
         }
@@ -30,7 +29,7 @@ export class Connexion extends Component {
                     closeTimeoutMS={500}>
                     <div id="connectezvous">Connectez-vous</div>
                     <p className="champConnect"><input class="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange}/></p>
-                    <p className="champConnect"><input class="champConnect" placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange}/></p>
+                    <p className="champConnect"><input class="champConnect" onKeyDown={this.onKeyDown} placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange }/></p>
                     <p><input className="check" id="stayConnect" name="stayConnect" type="checkbox" value={this.state.stayConnect} />Rester connecter</p>
                     <button className="boutonModal btn btn-outline-light" onClick={this.toInscription}>S'inscrire</button>
                     <button className="boutonModal btn btn-outline-light" onClick={this.onClick}>Se connecter</button>
@@ -39,6 +38,15 @@ export class Connexion extends Component {
             </div>
         );
     }
+
+    onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+        // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          event.stopPropagation();
+          this.onClick();
+        }
+      }
 
     toInscription = () => {
         this.props.toInscript()
@@ -65,11 +73,8 @@ export class Connexion extends Component {
 
         }).then((res) => {
             if(res.data.id){
-                this.setState({
-                    id: res.data.id
-                })
                 this.toggleModal()
-                this.props.connect()
+                this.props.connect(res.data.id)
             }
             else {
                 console.log("Données incorrectes");

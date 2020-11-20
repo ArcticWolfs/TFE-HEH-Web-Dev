@@ -1,11 +1,6 @@
 
 class ErrorAlert
 {
-    constructor()
-    {
-
-    }
-
     errorMessage(idError,res)
     {
         let message;

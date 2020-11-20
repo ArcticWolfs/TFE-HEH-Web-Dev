@@ -42,16 +42,16 @@ export class Inscription extends Component {
                     <p><input className="champConnect" placeholder="Prénom" name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} /></p>
                     <p><input className="champConnect" placeholder="Nom" name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} /></p>
                     <p><input className="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Confirmez mot de passe" name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} /></p>
                     <p><input className="champConnect" placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Confirmez mot de passe" onKeyDown={this.onKeyDown} name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} /></p>
                     <p><input className="check" id="isStudent" placeholder="Etudiant" name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
 
                     <div id="isShow" style={{display:"none"}}>
                         <p><input className="champConnect" placeholder="Téléphone du tuteur 1" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
                         <p><input className="champConnect" placeholder="Téléphone du tuteur 2" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
-                        <p><input className="champConnect" placeholder="Mail du tuteur 1" name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} /></p>
-                        <p><input className="champConnect" placeholder="Mail du tuteur 2" name="emailTutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 1" onKeyDown={this.onKeyDown} name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 2" onKeyDown={this.onKeyDown} name="emailTutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
                     </div>
                     <button onClick={this.toConnexion} className="boutonModal btn btn-outline-light">Annuler</button>
                     <button onClick={this.onClick} className="boutonModal btn btn-outline-light">S'inscrire</button>
@@ -59,6 +59,15 @@ export class Inscription extends Component {
             </div> 
         )
     }
+
+    onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+        // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          event.stopPropagation();
+          this.onClick();
+        }
+      }
 
     toConnexion = () => {
         this.toggleModal()
