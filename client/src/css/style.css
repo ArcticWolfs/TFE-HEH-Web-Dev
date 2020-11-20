@@ -74,6 +74,19 @@ nav li a:hover
 	
 }
 
+.check {
+	margin: 0 0.2em;
+}
+
+#passwordForgot {
+	margin-top: 0.7em;
+	margin-bottom: -0.6em;
+}
+#passwordForgot a {
+	color:#FFF;
+	font-size: 0.9em;
+}
+
 
 
 
@@ -123,6 +136,12 @@ nav li a:hover
 	  text-align: center;
 	  font-size: 1.5em;
   }
+
+  #inscrivezvous {
+	margin-bottom: 0.5em;
+	text-align: center;
+	font-size: 1.5em;
+}
 
   .champConnect {
 	  border-radius: 1em;

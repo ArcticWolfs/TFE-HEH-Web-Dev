@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import "../css/style.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Axios from 'axios'
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 export class Inscription extends Component {
 
@@ -9,43 +13,62 @@ export class Inscription extends Component {
         super(props)
 
         this.state = {
-            firstname: null,
-            lastname: null,
-            emailAddress: null,
-            password: null,
-            confirmPassword: null,
-            address: null,
-            student: null,
-            phoneNumberTutor1: null,
-            phoneNumberTutor2: null,
-            emailTutor1: null,
-            emailTutor2: null
+            firstname: "",
+            lastname: "",
+            emailAddress: "",
+            password: "",
+            confirmPassword: "",
+            address: "",
+            student: "",
+            phoneNumberTutor1: "",
+            phoneNumberTutor2: "",
+            emailTutor1: "",
+            emailTutor2: "",
+            isOpen: true
         }
     }
 
     render() {
         return (
-            <div>
-                <h1>Inscription</h1>
+            <div className="App">
+                <Modal
+                    isOpen={this.state.isOpen}
+                    contentLabel="My dialog"
+                    className="mymodal"
+                    overlayClassName="myoverlay"
+                    closeTimeoutMS={500}>
+                    <div id="inscrivezvous">Inscription</div>
 
-                <p><input placeholder="Prénom" name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} /></p>
-                <p><input placeholder="Nom" name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} /></p>
-                <p><input placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} /></p>
-                <p><input placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
-                <p><input placeholder="Confirmation du mot de passe" name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} /></p>
-                <p><input placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
-                <p><input id="isStudent" placeholder="Etudiant" name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
+                    <p><input className="champConnect" placeholder="Prénom" name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Nom" name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Confirmez mot de passe" name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
+                    <p><input className="check" id="isStudent" placeholder="Etudiant" name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
 
-                <div id="isShow" style={{display:"none"}}>
-                    <p><input placeholder="Téléphone du tuteur 2" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
-                    <p><input placeholder="Téléphone du tuteur 1" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
-                    <p><input placeholder="Mail du tuteur 1" name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} /></p>
-                    <p><input placeholder="Mail du tuteur 2" name="emailTutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
-                </div>
-               
-                <a id="inscription" href="/inscription"><button onClick={this.onClick} className="btn btn-success">S'inscrire</button></a>
-            </div>
+                    <div id="isShow" style={{display:"none"}}>
+                        <p><input className="champConnect" placeholder="Téléphone du tuteur 1" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Téléphone du tuteur 2" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 1" name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 2" name="emailTutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
+                    </div>
+                    <button onClick={this.toConnexion} className="boutonModal btn btn-outline-light">Annuler</button>
+                    <button onClick={this.onClick} className="boutonModal btn btn-outline-light">S'inscrire</button>
+                </Modal>
+            </div> 
         )
+    }
+
+    toConnexion = () => {
+        this.toggleModal()
+        this.props.toConnect()
+    }
+
+    toggleModal = () => {
+        this.setState({
+            isOpen: false
+        })
     }
 
     toggleDisplay = () => {
@@ -112,7 +135,7 @@ export class Inscription extends Component {
                 {
                     if (security.addressVerification(v_address) === false)
                     {
-                        if (security.emailVerification(v_emailAddress) === false)
+                        if (security.emailVerification(v_emailAddress,"student") === false)
                         {
                             if (security.passwordVerification(v_password) === false)
                             {
@@ -120,13 +143,13 @@ export class Inscription extends Component {
                                 {
                                     if (v_student === 1 || v_student === true || v_student === "1")
                                     {
-                                        if (security.phoneVerification(v_phoneNumberTutor1) === false)
+                                        if (security.phoneVerification(v_phoneNumberTutor1,"parent") === false)
                                         {
-                                            if (security.phoneVerification(v_phoneNumberTutor2) === false)
+                                            if (security.phoneVerification(v_phoneNumberTutor2,"parent2") === false)
                                             {
-                                                if (security.emailVerification(v_emailTutor1) === false)
+                                                if (security.emailVerification(v_emailTutor1,"parent") === false)
                                                 {
-                                                    if (security.emailVerification(v_emailTutor2) === false)
+                                                    if (security.emailVerification(v_emailTutor2,"parent2") === false)
                                                     {
                                                         testOk = true;
                                                     }
@@ -151,27 +174,27 @@ export class Inscription extends Component {
             if (testOk === true)
             {
                 Axios.post(`http://localhost:5000/createUser`, {
-                    user_id: null,
-                    class_id: null,
                     firstname: v_firstname,
                     lastname: v_lastname,
                     emailAddress: v_emailAddress,
                     password: v_password,
                     address: v_address,
-                    inscriptiondate: null,
                     student: v_student,
                     phoneNumberTutor1: v_phoneNumberTutor1,
                     phoneNumberTutor2: v_phoneNumberTutor2,
                     emailTutor1: v_emailTutor1,
                     emailTutor2: v_emailTutor2
                 })
-                .then(function (res) {
+                .then((res) => {
                     console.log(res);
+                    if(res.data.user_id){
+                        this.toggleModal()
+                        this.props.toConnect()
+                    }  
                 })
                 .catch(function (err){
                     console.log(err)
                 }) 
-                document.getElementById('inscription').href = "/";
             }
             else
             {
