@@ -20,7 +20,7 @@ export class Connexion extends Component {
     }
     render() {
         return (
-            <div className="App">
+            <React.Fragment>
                 <Modal
                     isOpen={this.state.isOpen}
                     contentLabel="My dialog"
@@ -35,7 +35,7 @@ export class Connexion extends Component {
                     <button className="boutonModal btn btn-outline-light" onClick={this.onClick}>Se connecter</button>
                     <p id="passwordForgot"><a href="/#">Mot de passe oublié ?</a></p>
                 </Modal>
-            </div>
+            </React.Fragment>
         );
     }
 

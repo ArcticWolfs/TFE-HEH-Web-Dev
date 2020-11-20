@@ -30,7 +30,7 @@ export class Inscription extends Component {
 
     render() {
         return (
-            <div className="App">
+            <React.Fragment>
                 <Modal
                     isOpen={this.state.isOpen}
                     contentLabel="My dialog"
@@ -56,7 +56,7 @@ export class Inscription extends Component {
                     <button onClick={this.toConnexion} className="boutonModal btn btn-outline-light">Annuler</button>
                     <button onClick={this.onClick} className="boutonModal btn btn-outline-light">S'inscrire</button>
                 </Modal>
-            </div> 
+            </React.Fragment> 
         )
     }
 

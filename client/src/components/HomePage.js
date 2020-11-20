@@ -1,17 +1,13 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import "../css/style.css";
 
 export class HomePage extends Component {
 
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         return (
-            <Fragment>
+            <React.Fragment>
                 <h1>Bienvenue</h1>
-            </Fragment>
+            </React.Fragment>
         )
     }
 }

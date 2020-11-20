@@ -20,30 +20,28 @@ export class WebRoute extends Component {
     render() {
         if (this.state.connect===true && this.state.id<1){
             return (
-                <div>
+                <React.Fragment>
                     <Connexion connect={this.setConnectState} toInscript={this.setToInscriptState}/>
-                </div>
+                </React.Fragment>
             )
         }
         else if (this.state.inscript===true && this.state.id<1){
             return (
-                <div>
+                <React.Fragment>
                     <Inscription toConnect={this.setToConnectState}/>
-                </div>
+                </React.Fragment>
             )
         }
-        else {
-            return (
-                <div>
-                    <Router>
-                        <Switch>
-                            <Route path='/monCompte' render={() => (<AccountPage/>)}></Route>
-                            <Route path='/' render={() => (<HomePage/>)}></Route>
-                        </Switch>
-                    </Router>
-                </div>
-            )
-        }
+        return (
+            <React.Fragment>
+                <Router>
+                    <Switch>
+                        <Route path='/monCompte' render={() => (<AccountPage/>)}></Route>
+                        <Route path='/' render={() => (<HomePage/>)}></Route>
+                    </Switch>
+                </Router>
+            </React.Fragment>
+        )
     }
 
     setConnectState = (idUser) => {
