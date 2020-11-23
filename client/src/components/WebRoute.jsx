@@ -13,8 +13,9 @@ export class WebRoute extends Component {
         this.state = {
             connect: true,
             inscript: false,
-            id:0
+            id:sessionStorage.getItem('userID') || localStorage.getItem('userID') || 0
         }
+        console.log(this.state.id)
     }
 
     render() {
@@ -44,11 +45,10 @@ export class WebRoute extends Component {
         )
     }
 
-    setConnectState = (idUser) => {
+    setConnectState = () => {
         this.setState({
             connect:false,
-            inscript:false,
-            id:idUser
+            inscript:false
         })
     }
 

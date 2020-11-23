@@ -74,7 +74,9 @@ export class Connexion extends Component {
         }).then((res) => {
             if(res.data.id){
                 this.toggleModal()
-                this.props.connect(res.data.id)
+                if(document.getElementById('stayConnect').checked === true)localStorage.setItem('userID', res.data.id);
+                else sessionStorage.setItem('userID', res.data.id);
+                document.location.reload()
             }
             else {
                 console.log("Données incorrectes");

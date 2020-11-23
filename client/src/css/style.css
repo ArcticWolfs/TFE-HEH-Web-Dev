@@ -87,6 +87,47 @@ nav li a:hover
 	font-size: 0.9em;
 }
 
+nav li #dropdown-basic-button {
+	display:block;
+	padding: 0 1em;
+	color:#FFF;
+	background-color: transparent;
+	height: 2.5em;
+	font-size: 1em;
+	outline: none;
+	border: none;
+	margin: 0;
+	line-height: 2;
+	border-radius: 0;
+}
+
+nav li #dropdown-basic-button:hover {
+	text-decoration: none;
+	color:#FFF;
+	background-color: rgba(230, 103, 213, 0.523);
+}
+
+nav li #dropdown-basic-button:focus {
+	text-decoration: none;
+	color:#FFF;
+	border:none;
+	outline:none;
+	box-shadow: none;
+}
+
+nav li .dropdown-menu {
+	background-color: rgba(0, 111, 123, 0.558);
+	padding: 0;
+}
+
+nav li .dropdown-menu .dropdown-item {
+	color:#FFF;
+}
+
+nav li .dropdown-menu .dropdown-item:hover {
+	background-color: rgba(230, 103, 213, 0.523);
+}
+
 
 
 

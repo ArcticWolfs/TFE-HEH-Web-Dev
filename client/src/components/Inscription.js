@@ -198,7 +198,8 @@ export class Inscription extends Component {
                     console.log(res);
                     if(res.data.user_id){
                         this.toggleModal()
-                        this.props.toConnect()
+                        sessionStorage.setItem('userID', res.data.id);
+                        document.location.reload()
                     }  
                 })
                 .catch(function (err){
