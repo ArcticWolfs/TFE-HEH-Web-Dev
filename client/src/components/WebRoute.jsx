@@ -37,7 +37,7 @@ export class WebRoute extends Component {
             <React.Fragment>
                 <Router>
                     <Switch>
-                        <Route path='/monCompte' render={() => (<AccountPage/>)}></Route>
+                        <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id}/>)}></Route>
                         <Route path='/' render={() => (<HomePage/>)}></Route>
                     </Switch>
                 </Router>

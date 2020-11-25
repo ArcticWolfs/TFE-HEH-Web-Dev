@@ -195,10 +195,10 @@ export class Inscription extends Component {
                     emailTutor2: v_emailTutor2
                 })
                 .then((res) => {
-                    console.log(res);
+                    console.log(res.data.user_id);
                     if(res.data.user_id){
                         this.toggleModal()
-                        sessionStorage.setItem('userID', res.data.id);
+                        sessionStorage.setItem('userID', res.data.user_id);
                         document.location.reload()
                     }  
                 })

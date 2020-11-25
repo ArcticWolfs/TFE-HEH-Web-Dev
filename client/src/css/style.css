@@ -136,7 +136,7 @@ nav li .dropdown-menu .dropdown-item:hover {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-  
+
 	border: 1px solid #ccc;
 	background-color: rgba(0, 111, 123, 0.653);
 	overflow: auto;
@@ -144,50 +144,91 @@ nav li .dropdown-menu .dropdown-item:hover {
 	outline: none;
 	padding: 1.5em;
 	text-align: center;
-  }
-  
-  .myoverlay {
+}
+
+.myoverlay {
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.75);
-  }
+}
 
-  .ReactModal__Overlay {
+.ReactModal__Overlay {
 	opacity: 0;
 	transition: opacity 500ms ease-in-out;
-  }
-  
-  .ReactModal__Overlay--after-open {
+}
+
+.ReactModal__Overlay--after-open {
 	opacity: 0.7;
-  }
-  
-  .ReactModal__Overlay--before-close {
+}
+
+.ReactModal__Overlay--before-close {
 	opacity: 0;
-  }
+}
 
-  .boutonModal {
-	  margin: 0.2em 0.3em 0 0.3em;
-  }
+.boutonModal {
+	margin: 0.2em 0.3em 0 0.3em;
+}
 
-  #connectezvous {
-	  margin-bottom: 0.5em;
-	  text-align: center;
-	  font-size: 1.5em;
-  }
-
-  #inscrivezvous {
+#connectezvous {
 	margin-bottom: 0.5em;
 	text-align: center;
 	font-size: 1.5em;
 }
 
-  .champConnect {
-	  border-radius: 1em;
-  }
+#inscrivezvous {
+	margin-bottom: 0.5em;
+	text-align: center;
+	font-size: 1.5em;
+}
 
-  .champConnect:focus {
-	  outline:none;
-  }
+.champConnect {
+	border-radius: 1em;
+}
+
+.champConnect:focus {
+	outline:none;
+}
+
+
+#myAccount {
+	width:auto;
+	height:auto;
+	text-align: center;
+	margin-top: 30vh;
+ 	transform: translateY(-30%);
+}
+
+#borderStudent {
+	display: inline-block;
+	background-color: rgba(0, 111, 123, 0.354);
+	border:0.1em solid #FFF;
+	border-radius: 2em;
+	width: 30em;
+	height:40em;
+	text-align: center;
+}
+
+#borderParent {
+	display: inline-block;
+	background-color: rgba(0, 111, 123, 0.354);
+	border:0.1em solid #FFF;
+	border-radius: 2em;
+	width: 30em;
+	height:25em;
+	text-align: center;
+}
+
+h1 {
+	padding: 0.5em 0;
+}
+
+table {
+	margin:auto;
+}
+
+tr {
+	text-align: center;
+}
