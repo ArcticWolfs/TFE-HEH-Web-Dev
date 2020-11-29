@@ -2,17 +2,25 @@ import React, { Component } from 'react'
 import "../css/style.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 import Axios from 'axios'
 import Modal from "react-modal";
 
 Modal.setAppElement("#root");
 
-export class Inscription extends Component {
+export class Modification extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
+            id: this.props.userId,
             firstname: "",
             lastname: "",
             emailAddress: "",
@@ -24,11 +32,36 @@ export class Inscription extends Component {
             phoneNumberTutor2: "",
             emailTutor1: "",
             emailTutor2: "",
-            isOpen: true
+            isOpen: true,
+            open: false,
+            oldPassword: ""
         }
+
+        Axios.get(`http://localhost:5000/getUser/${this.state.id}`).then((res) => {
+            this.setState({
+                firstname: res.data.firstname,
+                lastname: res.data.lastname,
+                emailAddress: res.data.emailaddress,
+                oldEmailAddress: res.data.emailaddress,
+                address: res.data.address,
+                student: res.data.student,
+                phoneNumberTutor1: res.data.phonenumbertutor1,
+                phoneNumberTutor2: res.data.phonenumbertutor2,
+                emailTutor1: res.data.emailtutor1,
+                emailTutor2: res.data.emailtutor
+                
+            })
+        }).catch(err =>{
+            console.log(err)
+        })
+        
     }
 
     render() {
+        if (this.state.student===true) {
+            document.getElementById('isStudent').checked = true;
+            document.getElementById('isShow').style.display = "";
+        }
         return (
             <React.Fragment>
                 <Modal
@@ -37,27 +70,85 @@ export class Inscription extends Component {
                     className="mymodal"
                     overlayClassName="myoverlay"
                     closeTimeoutMS={500}>
-                    <div id="inscrivezvous">Inscription</div>
+                    <div id="inscrivezvous">Modification</div>
 
-                    <p><input className="champConnect" placeholder="Prénom" name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Nom" name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Prénom" onKeyDown={this.onKeyDown} name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Nom" onKeyDown={this.onKeyDown} name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Email" onKeyDown={this.onKeyDown} name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Addresse" onKeyDown={this.onKeyDown} name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Mot de passe" onKeyDown={this.onKeyDown} name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
                     <p><input className="champConnect" placeholder="Confirmez mot de passe" onKeyDown={this.onKeyDown} name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} /></p>
-                    <p><input className="check" id="isStudent" placeholder="Etudiant" name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
+                    <p><input className="check" id="isStudent" placeholder="Etudiant" onKeyDown={this.onKeyDown} name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
 
                     <div id="isShow" style={{display:"none"}}>
-                        <p><input className="champConnect" placeholder="Téléphone du tuteur 1" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
-                        <p><input className="champConnect" placeholder="Téléphone du tuteur 2" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Téléphone du tuteur 1" onKeyDown={this.onKeyDown} name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Téléphone du tuteur 2" onKeyDown={this.onKeyDown} name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
                         <p><input className="champConnect" placeholder="Mail du tuteur 1" onKeyDown={this.onKeyDown} name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} /></p>
                         <p><input className="champConnect" placeholder="Mail du tuteur 2" onKeyDown={this.onKeyDown} name="mail_Tutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
                     </div>
-                    <button onClick={this.toConnexion} className="boutonModal btn btn-outline-light">Annuler</button>
-                    <button onClick={this.onClick} className="boutonModal btn btn-outline-light">S'inscrire</button>
+                    <button onClick={this.cancel} className="boutonModal btn btn-outline-light">Annuler</button>
+                    <button onClick={this.handleClickOpen} className="boutonModal btn btn-outline-light">Modifier</button>
                 </Modal>
+
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Attention"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Veuillez confirmer votre mot de passe :
+                            <input style={{"margin-left":"0.3em"}} placeholder="Mot de passe" onKeyDown={this.accept} name="oldPassword" type="password" value={this.state.oldPassword} onChange={this.onChange} />
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.noVerif} color="primary">
+                        Annuler
+                        </Button>
+                        <Button onClick={this.verif} color="primary" autoFocus>
+                        Modifier
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </React.Fragment> 
         )
+    }
+
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
+    
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+    
+
+    noVerif = () => {
+        this.setState({
+            oldPassword:""
+        })
+        this.handleClose();
+    };
+
+    verif = () => {
+        Axios.post(`http://localhost:5000/connect`, {
+            email: this.state.oldEmailAddress,
+            password: this.state.oldPassword
+
+        }).then((res) => {
+            if(res.data.id){
+                this.onClick();
+            }
+            else {
+                console.log("Données incorrectes");
+            }
+        }).catch(err =>{
+            console.log(err)
+        })
     }
 
     onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
@@ -65,13 +156,22 @@ export class Inscription extends Component {
         if (event.key === 'Enter') {
           event.preventDefault();
           event.stopPropagation();
-          this.onClick();
+          this.handleClickOpen();
         }
-      }
+    }
 
-    toConnexion = () => {
+    accept = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+        // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          event.stopPropagation();
+          this.verif();
+        }
+    }
+    
+    cancel = () => {
         this.toggleModal()
-        this.props.toConnect()
+        this.props.toModify()
     }
 
     toggleModal = () => {
@@ -182,23 +282,23 @@ export class Inscription extends Component {
             }
             if (testOk === true)
             {
-                Axios.post(`http://localhost:5000/createUser`, {
+                Axios.put(`http://localhost:5000/modifyUser/${this.state.id}`, {
                     firstname: v_firstname,
                     lastname: v_lastname,
                     emailAddress: v_emailAddress,
                     password: v_password,
                     address: v_address,
                     student: v_student,
+                    oldEmail: this.state.oldEmailAddress,
                     phoneNumberTutor1: v_phoneNumberTutor1,
                     phoneNumberTutor2: v_phoneNumberTutor2,
                     emailTutor1: v_emailTutor1,
                     emailTutor2: v_emailTutor2
                 })
                 .then((res) => {
-                    console.log(res.data.user_id);
-                    if(res.data.user_id){
+                    if(res.data === "User Updated"){
+                        this.handleClose()
                         this.toggleModal()
-                        sessionStorage.setItem('userID', res.data.user_id);
                         document.location.reload()
                     }  
                 })
@@ -218,4 +318,4 @@ export class Inscription extends Component {
     }
     
 }
-export default Inscription
+export default Modification
