@@ -112,9 +112,11 @@ class Security
         }
     }
 
-    async emailVerification(email,res,emailType)
+    async emailVerification(email,oldEmail,res,emailType)
     {
-        if (await this.emailAlreadyExist(email,res) === false || emailType === "parent" || emailType === "parent2")
+        email = email.toLowerCase();
+
+        if (await this.emailAlreadyExist(email,res) === false || emailType === "parent" || emailType === "parent2" || oldEmail === email)
         {
             if (email.includes("@") && email.length > 5)
             {
@@ -173,6 +175,7 @@ class Security
     async emailAlreadyExist(email,res)
     {
         const emailExist = await pool.query("SELECT all emailaddress FROM table_user WHERE emailAddress = $1", [email]);
+
         if(emailExist.rowCount === 0)
         {
             return false;

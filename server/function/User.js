@@ -25,6 +25,7 @@ class User
             let { firstname } = req.body;
             let { address } = req.body;
             let { emailAddress } = req.body;
+            let oldEmail = null;
             let { password } = req.body;
             let { student } = req.body;
             let { phoneNumberTutor1 } = req.body;
@@ -43,6 +44,8 @@ class User
                     phoneNumberTutor2 = phoneNumberTutor2.trim();
                     emailTutor1 = emailTutor1.trim();
                     emailTutor2 = emailTutor2.trim();
+                    emailTutor1 = emailTutor1.toLowerCase();
+                    emailTutor2 = emailTutor2.toLowerCase();
                 }
                 catch (error)
                 {
@@ -54,6 +57,7 @@ class User
             lastname = lastname.trim();
             address = address.trim();
             emailAddress = emailAddress.trim();
+            emailAddress = emailAddress.toLowerCase();
             password = password.trim();
 
             /////////////////
@@ -66,7 +70,7 @@ class User
                 {
                     if (security.addressVerification(address,res) === false)
                     {
-                        if (await security.emailVerification(emailAddress,res,"student") === false)
+                        if (await security.emailVerification(emailAddress,oldEmail,res,"student") === false)
                         {
                             if (security.passwordVerification(password,res) === false)
                             {
@@ -78,9 +82,9 @@ class User
                                         {
                                             if (security.phoneVerification(phoneNumberTutor2,res,"parent2") === false)
                                             {
-                                                if (await security.emailVerification(emailTutor1,res,"parent") === false)
+                                                if (await security.emailVerification(emailTutor1,oldEmail,res,"parent") === false)
                                                 {
-                                                    if (await security.emailVerification(emailTutor2,res,"parent2") === false)
+                                                    if (await security.emailVerification(emailTutor2,oldEmail,res,"parent2") === false)
                                                     {
                                                         ////////////////
                                                         //   REQUEST  //
@@ -184,6 +188,7 @@ class User
             let { lastname } = req.body;
             let { address } = req.body;
             let { emailAddress } = req.body;
+            let { oldEmail} = req.body;
             let { password } = req.body;
             let { student } = req.body;
             let { phoneNumberTutor1 } = req.body;
@@ -202,6 +207,8 @@ class User
                     phoneNumberTutor2 = phoneNumberTutor2.trim();
                     emailTutor1 = emailTutor1.trim();
                     emailTutor2 = emailTutor2.trim();
+                    emailTutor1 = emailTutor1.toLowerCase();
+                    emailTutor2 = emailTutor2.toLowerCase();
                 }
                 catch (error)
                 {
@@ -213,6 +220,7 @@ class User
             lastname = lastname.trim();
             address = address.trim();
             emailAddress = emailAddress.trim();
+            emailAddress = emailAddress.toLowerCase();
             password = password.trim();
 
             /////////////////
@@ -225,7 +233,7 @@ class User
                 {
                     if (security.addressVerification(address,res) === false)
                     {
-                        if (await security.emailVerification(emailAddress,res,"student") === false)
+                        if (await security.emailVerification(emailAddress,oldEmail,res,"student") === false)
                         {
                             if (security.passwordVerification(password,res) === false)
                             {
@@ -237,9 +245,9 @@ class User
                                         {
                                             if (security.phoneVerification(phoneNumberTutor2,res,"parent2") === false)
                                             {
-                                                if (await security.emailVerification(emailTutor1,res,"parent") === false)
+                                                if (await security.emailVerification(emailTutor1,oldEmail,res,"parent") === false)
                                                 {
-                                                    if (await security.emailVerification(emailTutor2,res,"parent2") === false)
+                                                    if (await security.emailVerification(emailTutor2,oldEmail,res,"parent2") === false)
                                                     {
                                                         ////////////////
                                                         //   REQUEST  //
