@@ -30,7 +30,7 @@ html
 nav
 {
 	height: 2.5em;
-	background-color: rgba(0, 111, 123, 0.558);
+	background-color: rgba(1, 87, 96, 0.871);
 	font-size: 1.2em;
 }
 
@@ -127,7 +127,7 @@ nav li #dropdown-basic-button:focus {
 }
 
 nav li .dropdown-menu {
-	background-color: rgba(0, 111, 123, 0.558);
+	background-color: rgba(1, 87, 96, 0.871);
 	padding: 0;
 }
 
@@ -195,6 +195,17 @@ input:focus:invalid {
 
 .ReactModal__Overlay--before-close {
 	opacity: 0;
+}
+
+#changeRed {
+	color:#FFF;
+	border-color: #FFF;
+	box-shadow: 0 0 5px 1px #F00;
+}
+
+#changeRed:hover {
+	color:#FFF;
+	border-color: #F00;
 }
 
 .boutonModal {

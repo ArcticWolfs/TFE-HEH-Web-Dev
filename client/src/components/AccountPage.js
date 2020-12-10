@@ -102,7 +102,7 @@ export class AccountPage extends Component {
                             
                             <p>Inscription : {this.state.inscription}</p>
 
-                            <button onClick={this.handleClickOpen} className="boutonModal btn btn-outline-danger">Supprimer</button>
+                            <button onClick={this.handleClickOpen} id="changeRed" className="boutonModal btn btn-outline-danger">Supprimer</button>
                             <button onClick={this.toModify} className="boutonModal btn btn-outline-light">Modifier</button>
 
                             <Dialog

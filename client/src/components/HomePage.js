@@ -12,7 +12,7 @@ export class HomePage extends Component {
                         <div id="col1">
                             <p className="title">Adresse : </p>
                             <p>Ecole Saint-Donat <br/>Rue Cardinal Mercier 17<br/>7110 - Houdeng-Goegnies</p>
-                            <p className="title">Mail : </p>
+                            <p className="title">Email : </p>
                             <p>ec001394@adm.cfwb.be</p>
                             <p className="title">Téléphone : </p>
                             <p>064 21 42 42</p>
