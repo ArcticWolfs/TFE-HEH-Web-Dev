@@ -1,0 +1,326 @@
+@media all and (max-width: 480px)
+{
+	
+}
+
+@media (min-width: 480px) and (max-width: 780px)
+{
+
+}
+
+@media (min-width: 781px) and (max-width: 979px)
+{
+
+}
+
+html
+{
+	background-image: url('../images/background.jpg');
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+	color:#FFF;
+}
+
+#bodyatme
+{
+	background: transparent;
+	color:#FFF;
+}
+
+nav
+{
+	height: 2.5em;
+	background-color: rgba(1, 87, 96, 0.871);
+	font-size: 1.2em;
+}
+
+nav ul
+{
+	line-height: 2.5em;
+	list-style: none;
+	margin:0;
+}
+
+nav li
+{
+	float: right;
+}
+
+nav li a
+{
+	display:block;
+	height:100%;
+	padding: 0 1em;
+	color:#FFF;
+}
+
+#titre
+{
+	float:left;
+	padding: 0;
+	margin-left:-2em;
+}
+
+#titre a:hover
+{
+	background-color: transparent;
+}
+
+nav li a:hover
+{
+	text-decoration: none;
+	color:#FFF;
+	background-color: rgba(230, 103, 213, 0.523);
+	
+}
+
+.check {
+	margin: 0 0.2em;
+}
+
+#passwordForgot {
+	margin-top: 0.7em;
+	margin-bottom: -0.6em;
+}
+
+#passwordForgot a {
+	color:#FFF;
+	font-size: 0.9em;
+}
+
+#imEmployee {
+	margin-top: 0.7em;
+	margin-bottom: -0.6em;
+}
+
+#imEmployee a {
+	color:#FFF;
+	font-size: 0.9em;
+}
+
+nav li #dropdown-basic-button {
+	display:block;
+	padding: 0 1em;
+	color:#FFF;
+	background-color: transparent;
+	height: 2.5em;
+	font-size: 1em;
+	outline: none;
+	border: none;
+	margin: 0;
+	line-height: 2;
+	border-radius: 0;
+}
+
+nav li #dropdown-basic-button:hover {
+	text-decoration: none;
+	color:#FFF;
+	background-color: rgba(230, 103, 213, 0.523);
+}
+
+nav li #dropdown-basic-button:focus {
+	text-decoration: none;
+	color:#FFF;
+	border:none;
+	outline:none;
+	box-shadow: none;
+}
+
+nav li .dropdown-menu {
+	background-color: rgba(1, 87, 96, 0.871);
+	padding: 0;
+}
+
+nav li .dropdown-menu .dropdown-item {
+	color:#FFF;
+}
+
+nav li .dropdown-menu .dropdown-item:hover {
+	background-color: rgba(230, 103, 213, 0.523);
+}
+
+
+input:invalid {
+	box-shadow: 0 0 5px 1px red;
+}
+
+input:focus:invalid {
+	box-shadow: none;
+}
+
+
+
+
+.mymodal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	border: 1px solid #ccc;
+	background-color: rgba(0, 111, 123, 0.653);
+	overflow: auto;
+	border-radius: 0.3em;
+	outline: none;
+	padding: 1.5em;
+	text-align: center;
+}
+
+.myoverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.75);
+}
+
+.myoverlaymodif {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.455);
+}
+
+.ReactModal__Overlay {
+	opacity: 0;
+	transition: opacity 500ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+	opacity: 0.7;
+}
+
+.ReactModal__Overlay--before-close {
+	opacity: 0;
+}
+
+#changeRed {
+	color:#FFF;
+	border-color: #FFF;
+	box-shadow: 0 0 5px 1px #F00;
+}
+
+#changeRed:hover {
+	color:#FFF;
+	border-color: #F00;
+}
+
+.boutonModal {
+	margin: 0.2em 0.3em 0 0.3em;
+}
+
+#connectezvous {
+	margin-bottom: 0.5em;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+#inscrivezvous {
+	margin-bottom: 0.5em;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.champConnect {
+	border-radius: 1em;
+}
+
+.champConnect:focus {
+	outline:none;
+}
+
+
+#myAccount {
+	width:auto;
+	height:auto;
+	text-align: center;
+	margin-top: 30vh;
+ 	transform: translateY(-30%);
+}
+
+#borderStudent {
+	display: inline-block;
+	background-color: rgba(0, 111, 123, 0.354);
+	border:0.1em solid #FFF;
+	border-radius: 2em;
+	width: 30em;
+	height:36em;
+	text-align: center;
+}
+
+#borderParent {
+	display: inline-block;
+	background-color: rgba(0, 111, 123, 0.354);
+	border:0.1em solid #FFF;
+	border-radius: 2em;
+	width: 30em;
+	height:25em;
+	text-align: center;
+}
+
+h1 {
+	padding: 0.5em 0;
+}
+
+table {
+	margin:auto;
+}
+
+tr {
+	text-align: center;
+}
+
+
+
+.MuiDialogTitle-root {
+	background-color:  rgba(0, 111, 123, 0.768);
+	color: #fff;
+}
+
+.MuiDialogContent-root {
+	background-color:  rgba(0, 111, 123, 0.639);
+	
+}
+
+#alert-dialog-description {
+	color: #fff;
+}
+
+.MuiDialogActions-root {
+	background-color:  rgba(0, 111, 123, 0.639);
+	color: #fff;
+}
+
+#bodyHomePage {
+	width:auto;
+	height:auto;
+	text-align: center;
+	margin-top: 20vh;
+ 	transform: translateY(-20%);
+}
+
+.title {
+	font-size: 1.5em;
+}
+
+#col1 {
+	display : inline-block;
+	width: 30%;
+}
+
+#col2 {
+	display : inline-block;
+	width: 60%;
+}
+
+#borderHome {
+	display: inline-block;
+	background-color: rgba(0, 111, 123, 0.354);
+	border:0.1em solid #FFF;
+	border-radius: 2em;
+	width: 65em;
+	height:37em;
+}

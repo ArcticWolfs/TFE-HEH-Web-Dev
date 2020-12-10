@@ -1,3 +1,5 @@
+const ErrorAlert = require("./ErrorAlert");
+const error = new ErrorAlert();
 const LowerCase = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 const UpperCase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 const AllLetters = LowerCase.concat(UpperCase);
@@ -6,6 +8,7 @@ const Numbers = ["0","1","2","3","4","5","6","7","8","9"];
 
 class Security
 {
+
     classIdVerification(class_id)
     {
         if (class_id >= 1)
@@ -15,12 +18,17 @@ class Security
                 let testClass_id = Numbers.includes(class_id.charAt(c));
                 if (testClass_id === false)
                 {
+                    error.errorMessage("400.0.0");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            error.errorMessage("400.0.1");
+            return true;
+        }
     }
 
     firstNameVerification(name)
@@ -29,18 +37,22 @@ class Security
         {
             let nameCharactersSup = ["-"," "];
             let goodNameCharacters = AllLetters.concat(nameCharactersSup.concat(SpecialLetters));
-
             for (let c=0;c<name.length;c++)
             {
                 let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
+                    error.errorMessage("400.1.0");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            error.errorMessage("400.1.1");
+            return true;
+        }
     }
 
     lastNameVerification(surname)
@@ -55,12 +67,17 @@ class Security
                 let testSurname = goodSurnameCharacters.includes(surname.charAt(c));
                 if (testSurname === false)
                 {
+                    error.errorMessage("400.2.0");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            error.errorMessage("40.2.1");
+            return true;
+        }
     }
 
     addressVerification(address)
@@ -75,15 +92,20 @@ class Security
                 let testAddress = goodAddressCharacters.includes(address.charAt(c));
                 if (testAddress === false)
                 {
+                    error.errorMessage("400.5.0");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            error.errorMessage("400.5.1");
+            return true;
+        }
     }
 
-    emailVerification(email)
+    emailVerification(email,emailType)
     {
         if (email.includes("@") && email.length > 5)
         {
@@ -98,6 +120,7 @@ class Security
                 let testEmail = goodEmailCharactersPart1.includes(part[0].charAt(c));
                 if (testEmail === false)
                 {
+                    error.errorMessage("400.3.0.1");
                     return true;
                 }
             }
@@ -106,18 +129,30 @@ class Security
                 let testEmail2 = goodEmailCharactersPart2.includes(part[1].charAt(c));
                 if (testEmail2 === false)
                 {
+                    error.errorMessage("400.3.0.2");
                     return true
                 }
                 // Test to know if there is a point in the second part
                 if (!part[1].includes("."))
                 {
+                    error.errorMessage("400.3.3");
                     return true
                 }
             }
-
             return false;
         }
-        else return true;
+        else
+        {
+            if (emailType === "parent2")
+            {
+                return false;
+            }
+            else
+            {
+                error.errorMessage("400.3.1");
+                return true;
+            }
+        }
     }
 
     passwordVerification(password)
@@ -131,15 +166,20 @@ class Security
         {
             return false;
         }
-        else return true;
+        else
+        {
+            error.errorMessage("400.4.0");
+            return true;
+        }
     }
 
-    phoneVerification(phone)
+    phoneVerification(phone,phoneType)
     {
-        // Allow to delete all the extra space
-        phone = phone.replace(/ /g,"");
         if (phone.length > 8)
         {
+            // Allow to delete all the extra space
+            phone = phone.replace(/ /g,"");
+
             for (let c=0;c<phone.length;c++)
             {
                 let phoneCharactersSup = ["+","#"," ",".","/"];
@@ -147,12 +187,24 @@ class Security
                 let testPhone = goodPhoneCharacters.includes(phone.charAt(c));
                 if (testPhone === false)
                 {
+                    error.errorMessage("400.6.0");
                     return true;
                 }
             }
             return false;
         }
-        else return true;
+        else
+        {
+            if (phoneType === "parent2")
+            {
+                return false;
+            }
+            else
+            {
+                error.errorMessage("400.6.1");
+                return true;
+            }
+        }
     }
 }
 
