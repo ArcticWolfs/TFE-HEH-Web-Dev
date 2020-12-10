@@ -82,7 +82,18 @@ nav li a:hover
 	margin-top: 0.7em;
 	margin-bottom: -0.6em;
 }
+
 #passwordForgot a {
+	color:#FFF;
+	font-size: 0.9em;
+}
+
+#imEmployee {
+	margin-top: 0.7em;
+	margin-bottom: -0.6em;
+}
+
+#imEmployee a {
 	color:#FFF;
 	font-size: 0.9em;
 }
@@ -129,6 +140,15 @@ nav li .dropdown-menu .dropdown-item:hover {
 }
 
 
+input:invalid {
+	box-shadow: 0 0 5px 1px red;
+}
+
+input:focus:invalid {
+	box-shadow: none;
+}
+
+
 
 
 .mymodal {
@@ -153,6 +173,15 @@ nav li .dropdown-menu .dropdown-item:hover {
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.75);
+}
+
+.myoverlaymodif {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.455);
 }
 
 .ReactModal__Overlay {
@@ -231,4 +260,56 @@ table {
 
 tr {
 	text-align: center;
+}
+
+
+
+.MuiDialogTitle-root {
+	background-color:  rgba(0, 111, 123, 0.768);
+	color: #fff;
+}
+
+.MuiDialogContent-root {
+	background-color:  rgba(0, 111, 123, 0.639);
+	
+}
+
+#alert-dialog-description {
+	color: #fff;
+}
+
+.MuiDialogActions-root {
+	background-color:  rgba(0, 111, 123, 0.639);
+	color: #fff;
+}
+
+#bodyHomePage {
+	width:auto;
+	height:auto;
+	text-align: center;
+	margin-top: 20vh;
+ 	transform: translateY(-20%);
+}
+
+.title {
+	font-size: 1.5em;
+}
+
+#col1 {
+	display : inline-block;
+	width: 30%;
+}
+
+#col2 {
+	display : inline-block;
+	width: 60%;
+}
+
+#borderHome {
+	display: inline-block;
+	background-color: rgba(0, 111, 123, 0.354);
+	border:0.1em solid #FFF;
+	border-radius: 2em;
+	width: 65em;
+	height:37em;
 }

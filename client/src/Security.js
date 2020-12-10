@@ -18,7 +18,7 @@ class Security
                 let testClass_id = Numbers.includes(class_id.charAt(c));
                 if (testClass_id === false)
                 {
-                    error.errorMessage("400.0");
+                    error.errorMessage("400.0.0");
                     return true;
                 }
             }
@@ -26,7 +26,7 @@ class Security
         }
         else
         {
-            error.errorMessage("400.1");
+            error.errorMessage("400.0.1");
             return true;
         }
     }
@@ -42,15 +42,15 @@ class Security
                 let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
-                    error.errorMessage("401.0");
-                    return true
+                    error.errorMessage("400.1.0");
+                    return true;
                 }
             }
             return false;
         }
         else
         {
-            error.errorMessage("401.1");
+            error.errorMessage("400.1.1");
             return true;
         }
     }
@@ -67,7 +67,7 @@ class Security
                 let testSurname = goodSurnameCharacters.includes(surname.charAt(c));
                 if (testSurname === false)
                 {
-                    error.errorMessage("402.0");
+                    error.errorMessage("400.2.0");
                     return true;
                 }
             }
@@ -75,7 +75,7 @@ class Security
         }
         else
         {
-            error.errorMessage("402.1");
+            error.errorMessage("40.2.1");
             return true;
         }
     }
@@ -92,7 +92,7 @@ class Security
                 let testAddress = goodAddressCharacters.includes(address.charAt(c));
                 if (testAddress === false)
                 {
-                    error.errorMessage("405.0");
+                    error.errorMessage("400.5.0");
                     return true;
                 }
             }
@@ -100,7 +100,7 @@ class Security
         }
         else
         {
-            error.errorMessage("405.1");
+            error.errorMessage("400.5.1");
             return true;
         }
     }
@@ -120,7 +120,7 @@ class Security
                 let testEmail = goodEmailCharactersPart1.includes(part[0].charAt(c));
                 if (testEmail === false)
                 {
-                    error.errorMessage("403.0.1");
+                    error.errorMessage("400.3.0.1");
                     return true;
                 }
             }
@@ -129,13 +129,13 @@ class Security
                 let testEmail2 = goodEmailCharactersPart2.includes(part[1].charAt(c));
                 if (testEmail2 === false)
                 {
-                    error.errorMessage("403.0.2");
+                    error.errorMessage("400.3.0.2");
                     return true
                 }
                 // Test to know if there is a point in the second part
                 if (!part[1].includes("."))
                 {
-                    error.errorMessage("403.3");
+                    error.errorMessage("400.3.3");
                     return true
                 }
             }
@@ -149,7 +149,7 @@ class Security
             }
             else
             {
-                error.errorMessage("403.1");
+                error.errorMessage("400.3.1");
                 return true;
             }
         }
@@ -168,7 +168,7 @@ class Security
         }
         else
         {
-            error.errorMessage("404.0");
+            error.errorMessage("400.4.0");
             return true;
         }
     }
@@ -187,7 +187,7 @@ class Security
                 let testPhone = goodPhoneCharacters.includes(phone.charAt(c));
                 if (testPhone === false)
                 {
-                    error.errorMessage("406.0");
+                    error.errorMessage("400.6.0");
                     return true;
                 }
             }
@@ -201,7 +201,7 @@ class Security
             }
             else
             {
-                error.errorMessage("406.1");
+                error.errorMessage("400.6.1");
                 return true;
             }
         }

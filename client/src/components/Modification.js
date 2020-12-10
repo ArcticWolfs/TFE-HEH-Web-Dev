@@ -34,7 +34,9 @@ export class Modification extends Component {
             emailTutor2: "",
             isOpen: true,
             open: false,
-            oldPassword: ""
+            oldPassword: "",
+            isOpen2: false,
+            textError: ""
         }
 
         Axios.get(`http://localhost:5000/getUser/${this.state.id}`).then((res) => {
@@ -45,10 +47,10 @@ export class Modification extends Component {
                 oldEmailAddress: res.data.emailaddress,
                 address: res.data.address,
                 student: res.data.student,
-                phoneNumberTutor1: res.data.phonenumbertutor1,
-                phoneNumberTutor2: res.data.phonenumbertutor2,
-                emailTutor1: res.data.emailtutor1,
-                emailTutor2: res.data.emailtutor
+                phoneNumberTutor1: res.data.phonenumbertutor1 || "",
+                phoneNumberTutor2: res.data.phonenumbertutor2 || "",
+                emailTutor1: res.data.emailtutor1 || "",
+                emailTutor2: res.data.emailtutor || ""
                 
             })
         }).catch(err =>{
@@ -68,23 +70,23 @@ export class Modification extends Component {
                     isOpen={this.state.isOpen}
                     contentLabel="My dialog"
                     className="mymodal"
-                    overlayClassName="myoverlay"
+                    overlayClassName="myoverlaymodif"
                     closeTimeoutMS={500}>
                     <div id="inscrivezvous">Modification</div>
 
-                    <p><input className="champConnect" placeholder="Prénom" onKeyDown={this.onKeyDown} name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Nom" onKeyDown={this.onKeyDown} name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Email" onKeyDown={this.onKeyDown} name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Addresse" onKeyDown={this.onKeyDown} name="address" type="text" value={this.state.address} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Mot de passe" onKeyDown={this.onKeyDown} name="password" type="password" value={this.state.password} onChange={this.onChange} /></p>
-                    <p><input className="champConnect" placeholder="Confirmez mot de passe" onKeyDown={this.onKeyDown} name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} /></p>
+                    <p><input className="champConnect" placeholder="Prénom" onKeyDown={this.onKeyDown} name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} pattern="[A-Z][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ '-]+" onFocus={this.setRequired}/></p>
+                    <p><input className="champConnect" placeholder="Nom" onKeyDown={this.onKeyDown} name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} pattern="[A-Z][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ '-]+" onFocus={this.setRequired}/></p>
+                    <p><input className="champConnect" placeholder="Email" onKeyDown={this.onKeyDown} name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} pattern="[a-z.]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
+                    <p><input className="champConnect" placeholder="Addresse" onKeyDown={this.onKeyDown} name="address" type="text" value={this.state.address} onChange={this.onChange} pattern="[A-Za-z0-9 '-,àáâãäåçèéêëìíîïðòóôõöùúûüýÿ]+" onFocus={this.setRequired}/></p>
+                    <p><input className="champConnect" placeholder="Mot de passe" onKeyDown={this.onKeyDown} name="password" type="password" value={this.state.password} onChange={this.onChange}/></p>
+                    <p><input id="cpswd" className="champConnect" placeholder="Confirmez mot de passe" onKeyDown={this.onKeyDown} name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange}/></p>
                     <p><input className="check" id="isStudent" placeholder="Etudiant" onKeyDown={this.onKeyDown} name="student" type="checkbox" value={this.state.student} onClick={this.toggleDisplay} />Étudiant</p>
 
                     <div id="isShow" style={{display:"none"}}>
-                        <p><input className="champConnect" placeholder="Téléphone du tuteur 1" onKeyDown={this.onKeyDown} name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} /></p>
-                        <p><input className="champConnect" placeholder="Téléphone du tuteur 2" onKeyDown={this.onKeyDown} name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} /></p>
-                        <p><input className="champConnect" placeholder="Mail du tuteur 1" onKeyDown={this.onKeyDown} name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} /></p>
-                        <p><input className="champConnect" placeholder="Mail du tuteur 2" onKeyDown={this.onKeyDown} name="mail_Tutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} /></p>
+                        <p><input className="champConnect" placeholder="Téléphone du tuteur 1" onKeyDown={this.onKeyDown} name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} pattern="[0-9/. +]+" onFocus={this.setRequired}/></p>
+                        <p><input className="champConnect" placeholder="Téléphone du tuteur 2" onKeyDown={this.onKeyDown} name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} pattern="[0-9/. +]+"/></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 1" onKeyDown={this.onKeyDown} name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} pattern="[a-z.]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 2" onKeyDown={this.onKeyDown} name="mail_Tutor2" type="email" value={this.state.emailTutor2} onChange={this.onChange} pattern="[a-z.]+[@][a-z]+[.][a-z]+"/></p>
                     </div>
                     <button onClick={this.cancel} className="boutonModal btn btn-outline-light">Annuler</button>
                     <button onClick={this.handleClickOpen} className="boutonModal btn btn-outline-light">Modifier</button>
@@ -106,16 +108,36 @@ export class Modification extends Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.noVerif} color="primary">
+                        <Button onClick={this.noVerif} color="primary" class="boutonModal btn btn-outline-light">
                         Annuler
                         </Button>
-                        <Button onClick={this.verif} color="primary" autoFocus>
+                        <Button onClick={this.verif} color="primary" class="boutonModal btn btn-outline-light">
                         Modifier
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.isOpen2}
+                    onClose={this.handleIsClose2}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    >
+                    <DialogTitle id="alert-dialog-title">
+                        {this.state.textError}
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button onClick={this.handleIsClose2} color="primary" class="boutonModal btn btn-outline-light">
+                        Ok
                         </Button>
                     </DialogActions>
                 </Dialog>
             </React.Fragment> 
         )
+    }
+
+    setRequired = (event) => {
+        event.target.required = true;
     }
 
     handleClickOpen = () => {
@@ -124,6 +146,14 @@ export class Modification extends Component {
     
     handleClose = () => {
         this.setState({ open: false });
+    };
+
+    handleIsOpen2 = () => {
+        this.setState({ isOpen2: true });
+    };
+
+    handleIsClose2 = () => {
+        this.setState({ isOpen2: false });
     };
     
 
@@ -145,6 +175,8 @@ export class Modification extends Component {
             }
             else {
                 console.log("Données incorrectes");
+                this.handleIsOpen2()
+                this.setState({textError: "Mot de passe incorrect"})
             }
         }).catch(err =>{
             console.log(err)
@@ -186,10 +218,17 @@ export class Modification extends Component {
         else this.elmt.style.display = "none";
     }
 
+    verifPassword = () => {
+        if (this.state.password !== this.state.confirmPassword && this.state.confirmPassword !== ""){
+            document.getElementById("cpswd").style.boxShadow = "0 0 5px 1px red";
+        }
+        else if (this.state.password === this.state.confirmPassword && this.state.confirmPassword !== "") document.getElementById("cpswd").style.boxShadow = "none";
+    }
+
     onChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
-        })
+        }, () => this.verifPassword())
 
     }
 
@@ -206,7 +245,9 @@ export class Modification extends Component {
         let v_firstname = this.state.firstname;
         let v_address = this.state.address;
         let v_emailAddress = this.state.emailAddress;
-        let v_password = this.state.password;
+        let v_password;
+        if(this.state.password !== "") v_password = this.state.password;
+        else v_password = this.state.oldPassword;
         let v_student = this.isStudent;
         let v_phoneNumberTutor1 = this.state.phoneNumberTutor1;
         let v_phoneNumberTutor2 = this.state.phoneNumberTutor2;
@@ -280,6 +321,9 @@ export class Modification extends Component {
                     }
                 }
             }
+
+            if (this.state.password !== this.state.confirmPassword) testOk = false;
+
             if (testOk === true)
             {
                 Axios.put(`http://localhost:5000/modifyUser/${this.state.id}`, {
@@ -300,7 +344,11 @@ export class Modification extends Component {
                         this.handleClose()
                         this.toggleModal()
                         document.location.reload()
-                    }  
+                    }
+                    else {
+                        this.handleIsOpen2()
+                        this.setState({textError: "Email déjà utilisé"})
+                    }   
                 })
                 .catch(function (err){
                     console.log(err)
@@ -309,6 +357,12 @@ export class Modification extends Component {
             else
             {
                 console.log("Bad character detected aborting the query, please try again!");
+                this.handleIsOpen2()
+                if (this.state.password !== this.state.confirmPassword) this.setState({textError: "Mots de passe différents"})
+                else if (this.state.firstname === "" || this.state.lastname==="" || this.state.emailAddress==="" || this.state.password==="" || this.state.confirmPassword===""||this.state.address===""||this.state.phoneNumberTutor1===""||this.state.emailTutor1===""){
+                    this.setState({textError: "Un champ obligatoire n'a pas été complété"})
+                }
+                else this.setState({textError: "Caractère(s) invalide(s) utilisé(s)"})
             }
         }
         catch (err)

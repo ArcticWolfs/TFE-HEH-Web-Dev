@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import "../css/style.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 import Axios from 'axios'
 import Modal from "react-modal";
 
@@ -15,7 +20,8 @@ export class Connexion extends Component {
             emailAddress: "",
             password: "",
             stayConnect:false,
-            isOpen: true
+            isOpen: true,
+            open: false
         }
     }
     render() {
@@ -34,7 +40,24 @@ export class Connexion extends Component {
                     <button className="boutonModal btn btn-outline-light" onClick={this.toInscription}>S'inscrire</button>
                     <button className="boutonModal btn btn-outline-light" onClick={this.onClick}>Se connecter</button>
                     <p id="passwordForgot"><a href="/#">Mot de passe oublié ?</a></p>
+                    <p id="imEmployee"><a href="/#">Je suis un membre du personnel</a></p>
+                    
                 </Modal>
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    >
+                    <DialogTitle id="alert-dialog-title">
+                        Email ou mot de passe incorrect
+                    </DialogTitle>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary" class="boutonModal btn btn-outline-light">
+                        Ok
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </React.Fragment>
         );
     }
@@ -46,7 +69,15 @@ export class Connexion extends Component {
           event.stopPropagation();
           this.onClick();
         }
-      }
+    }
+
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     toInscription = () => {
         this.props.toInscript()
@@ -80,6 +111,7 @@ export class Connexion extends Component {
             }
             else {
                 console.log("Données incorrectes");
+                this.handleOpen()
             }
         }).catch(err =>{
             console.log(err)

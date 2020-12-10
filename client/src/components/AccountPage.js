@@ -120,10 +120,10 @@ export class AccountPage extends Component {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={this.noDeleteAccount} color="primary">
+                                    <Button onClick={this.noDeleteAccount} color="primary" class="boutonModal btn btn-outline-light">
                                     Annuler
                                     </Button>
-                                    <Button onClick={this.deleteAccount} color="primary" autoFocus>
+                                    <Button onClick={this.deleteAccount} color="primary" class="boutonModal btn btn-outline-light">
                                     Supprimer
                                     </Button>
                                 </DialogActions>

@@ -68,7 +68,6 @@ class ErrorAlert
 
         }
         console.log("ERROR " + idError + " : " + message);
-        res.send("ERROR " + idError + " : " + message);
     }
 }
 
