@@ -36,6 +36,7 @@ app.use(cookieParser("159753"))
     //////////////
 
 const user = new Function.User;
+const employee = new Function.Employee;
 
      //////////
      // Test //
@@ -89,4 +90,9 @@ app.post("/connect", async(req,res) =>
 app.listen(5000, () => 
 {
     console.log("Server has started on port 5000");
+});
+
+app.post("/createEmployee",async(req, res) =>
+{
+    await employee.addEmployee(req,res);
 });

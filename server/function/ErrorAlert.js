@@ -51,9 +51,6 @@ class ErrorAlert
             case "400.3.4":
                 message = ("/!\\ Email address doesn't exist /!\\");
                 break;
-            case "400.4.4":
-                message = ("/!\\ Password doesn't match /!\\");
-                break;
             case "400.4.0":
                 message = ("/!\\ Student boolean verification went wrong because it's not a boolean /!\\");
                 break;
@@ -68,6 +65,21 @@ class ErrorAlert
                 break;
             case "400.6.1":
                 message = ("/!\\ Phone verification went wrong because it's too short or empty /!\\");
+                break;
+            case "400.7.0":
+                message = ("/!\\ Admin boolean verification went wrong because it's not a boolean /!\\");
+                break;
+            case "400.8.0":
+                message = ("/!\\ Birthdate verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.8.1":
+                message = ("/!\\ Birthdate verification went wrong because it's empty or too small /!\\");
+                break;
+            case "400.9.0":
+                message = ("/!\\ FunctionEmployee verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.9.1":
+                message = ("/!\\ FunctionEmployee verification went wrong because it's empty or too small /!\\");
                 break;
             default: break;
 
