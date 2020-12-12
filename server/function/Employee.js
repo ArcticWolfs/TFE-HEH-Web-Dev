@@ -25,7 +25,7 @@ class Employee {
             address = address.trim();
             emailAddress = emailAddress.trim();
             emailAddress = emailAddress.toLowerCase();
-            phoneNumber = phoneNumber.toLowerCase();
+            phoneNumber = phoneNumber.trim();
             password = password.trim();
             functionEmployee = functionEmployee.trim();
 

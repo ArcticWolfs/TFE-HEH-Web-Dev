@@ -44,9 +44,6 @@ CREATE TABLE IF NOT EXISTS table_employee(
     isAdmin boolean
 );
 
-INSERT INTO table_employee (firstname,lastname,birthdate,address,emailAddress,phoneNumber,password,functionEmployee,isAdmin) 
-VALUES('François','Carnière','28/06/1997','Rue des Ecossais, 8','francoiscarniere@hotmail.com','0475961426','pomme','Admin',true);
-
 CREATE TABLE IF NOT EXISTS table_question(
     question_id SERIAL PRIMARY KEY,
     image VARCHAR(100),

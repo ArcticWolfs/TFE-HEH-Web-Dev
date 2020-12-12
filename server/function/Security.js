@@ -174,7 +174,7 @@ class Security
 
     async emailAlreadyExist(email,res, emailType)
     {
-        if(emailType === "parent" || emailType === "parent2") {
+        if(emailType === "parent" || emailType === "parent2" || emailType === "student") {
             const emailExist = await pool.query("SELECT all emailaddress FROM table_user WHERE emailAddress = $1", [email]);
 
             if(emailExist.rowCount === 0)

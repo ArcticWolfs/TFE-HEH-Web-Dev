@@ -206,6 +206,67 @@ class Security
             }
         }
     }
+
+    birthdateVerification(birthdate) 
+    {
+        if (birthdate.length > 9)
+        {
+            for (let c=0;c<birthdate.length;c++)
+            {
+                let birthdateCharactersSup = ["/"];
+                let goodBirthdateCharacters = Numbers.concat(birthdateCharactersSup);
+                let testBirthdate = goodBirthdateCharacters.includes(birthdate.charAt(c));
+                if (testBirthdate === false)
+                {
+                    error.errorMessage("400.8.0");
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.8.1");
+            return true;
+        }
+    }
+
+    adminVerification(isAdmin) 
+    {
+        if (isAdmin === true || isAdmin === false || isAdmin === 1 || isAdmin === 0 || isAdmin === "1" || isAdmin === "0")
+        {
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.7.0");
+            return true;
+        }
+    }
+
+    functionEmployeeVerification(functionEmployee) 
+    {
+        if (functionEmployee.length > 1)
+        {
+            let functionEmployeeCharactersSup = ["-"," "];
+            let goodFunctionEmployeeCharacters = AllLetters.concat(functionEmployeeCharactersSup.concat(SpecialLetters));
+            for (let c=0;c<functionEmployee.length;c++)
+            {
+                let testFunctionEmployee = goodFunctionEmployeeCharacters.includes(functionEmployee.charAt(c));
+                if (testFunctionEmployee === false)
+                {
+                    error.errorMessage("400.9.0");
+                    return true
+                }
+            }
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.9.1");
+            return true;
+        }
+    }
 }
 
 module.exports = Security;
