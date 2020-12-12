@@ -31,17 +31,21 @@ CREATE TABLE IF NOT EXISTS table_interTable(
 );
 
 CREATE TABLE IF NOT EXISTS table_employee(
-    employee_id SERIAL PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
-    surname VARCHAR(50) NOT NULL,
+    employee_id SERIAL PRIMARY KEY,  
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
     birthdate date,
     address VARCHAR(50),
-    phoneNumber VARCHAR(50),
-    inscriptionDate timestamp,
-    function VARCHAR(50) NOT NULL,
-    admin boolean,
-    emailAddress VARCHAR(60) NOT NULL
+    emailAddress VARCHAR(60) NOT NULL,
+    phoneNumber VARCHAR(20),
+    password VARCHAR(150) NOT NULL,
+    inscriptionDate TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    functionEmployee VARCHAR(50) NOT NULL,
+    isAdmin boolean
 );
+
+INSERT INTO table_employee (firstname,lastname,birthdate,address,emailAddress,phoneNumber,password,functionEmployee,isAdmin) 
+VALUES('François','Carnière','28/06/1997','Rue des Ecossais, 8','francoiscarniere@hotmail.com','0475961426','pomme','Admin',true);
 
 CREATE TABLE IF NOT EXISTS table_question(
     question_id SERIAL PRIMARY KEY,
