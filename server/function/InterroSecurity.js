@@ -24,7 +24,7 @@ class InterroSecurity
                 let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
-                    error.errorMessage("400.7.0",res);
+                    error.errorMessage("400.10.0",res);
                     return true
                 }
             }
@@ -32,7 +32,7 @@ class InterroSecurity
         }
         else
         {
-            error.errorMessage("400.7.1",res);
+            error.errorMessage("400.10.1",res);
             return true;
         }
     }
@@ -45,7 +45,7 @@ class InterroSecurity
         }
         else
         {
-            error.errorMessage("400.8.0",res);
+            error.errorMessage("400.11.0",res);
             return true;
         }
     }
