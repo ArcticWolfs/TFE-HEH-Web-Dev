@@ -26,7 +26,7 @@ class NavBar extends Component {
             </li>
             <li>
             <DropdownButton id="dropdown-basic-button" title="Evaluation">
-                <Dropdown.Item className="Dropdown-nav" href="/#">Cahier de notes</Dropdown.Item>
+                <Dropdown.Item className="Dropdown-nav" href="/interroList">Cahier de notes</Dropdown.Item>
                 <Dropdown.Item className="Dropdown-nav" href="/#">Bulletin</Dropdown.Item>
               </DropdownButton>
             </li>

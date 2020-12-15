@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { AccountPage } from './AccountPage'
+import {InterroList} from "./InterroList";
 import { Connexion } from './Connexion';
 import { Inscription } from './Inscription'
+
  
 export class WebRoute extends Component {
 
@@ -38,6 +40,7 @@ export class WebRoute extends Component {
                 <Router>
                     <Switch>
                         <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id}/>)}></Route>
+                        <Route path='/interroList' render={() => (<InterroList/>)}></Route>
                         <Route path='/' render={() => (<HomePage/>)}></Route>
                     </Switch>
                 </Router>
