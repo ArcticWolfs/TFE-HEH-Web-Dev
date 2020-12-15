@@ -4,6 +4,8 @@ const Interrogation = require("./Interrogation");
 const Subject = require("./Subject");
 const Sub_Subject = require("./Sub_Subject")
 const Class = require("./Class")
+const Employee = require("./Employee");
+
 
 module.exports =
     {
@@ -12,5 +14,6 @@ module.exports =
         Interrogation: Interrogation,
         Subject: Subject,
         Sub_Subject: Sub_Subject,
-        Class: Class
+        Class: Class,
+        Employee: Employee
     }

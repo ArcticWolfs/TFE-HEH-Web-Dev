@@ -116,7 +116,7 @@ class Security
     {
         email = email.toLowerCase();
 
-        if (await this.emailAlreadyExist(email,res) === false || emailType === "parent" || emailType === "parent2" || oldEmail === email)
+        if (await this.emailAlreadyExist(email,res, emailType) === false || emailType === "parent" || emailType === "parent2" || oldEmail === email)
         {
             if (email.includes("@") && email.length > 5)
             {
@@ -172,15 +172,27 @@ class Security
         }
     }
 
-    async emailAlreadyExist(email,res)
+    async emailAlreadyExist(email,res, emailType)
     {
-        const emailExist = await pool.query("SELECT all emailaddress FROM table_user WHERE emailAddress = $1", [email]);
+        if(emailType === "parent" || emailType === "parent2" || emailType === "student") {
+            const emailExist = await pool.query("SELECT all emailaddress FROM table_user WHERE emailAddress = $1", [email]);
 
-        if(emailExist.rowCount === 0)
-        {
-            return false;
+            if(emailExist.rowCount === 0)
+            {
+                return false;
+            }
+            else return true;
         }
-        else return true;
+
+        else if (emailType === "employee") {
+            const emailExist = await pool.query("SELECT all emailaddress FROM table_employee WHERE emailAddress = $1", [email]);
+            if(emailExist.rowCount === 0)
+            {
+                return false;
+            }
+            else return true;
+        }
+        
     }
 
     passwordVerification(password,res)
@@ -232,6 +244,67 @@ class Security
                 error.errorMessage("400.6.1",res);
                 return true;
             }
+        }
+    }
+
+    birthdateVerification(birthdate,res) 
+    {
+        if (birthdate.length > 9)
+        {
+            for (let c=0;c<birthdate.length;c++)
+            {
+                let birthdateCharactersSup = ["/"];
+                let goodBirthdateCharacters = Numbers.concat(birthdateCharactersSup);
+                let testBirthdate = goodBirthdateCharacters.includes(birthdate.charAt(c));
+                if (testBirthdate === false)
+                {
+                    error.errorMessage("400.8.0",res);
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.8.1",res);
+            return true;
+        }
+    }
+
+    adminVerification(isAdmin,res) 
+    {
+        if (isAdmin === true || isAdmin === false || isAdmin === 1 || isAdmin === 0 || isAdmin === "1" || isAdmin === "0")
+        {
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.7.0",res);
+            return true;
+        }
+    }
+
+    functionEmployeeVerification(functionEmployee,res) 
+    {
+        if (functionEmployee.length > 1)
+        {
+            let functionEmployeeCharactersSup = ["-"," "];
+            let goodFunctionEmployeeCharacters = AllLetters.concat(functionEmployeeCharactersSup.concat(SpecialLetters));
+            for (let c=0;c<functionEmployee.length;c++)
+            {
+                let testFunctionEmployee = goodFunctionEmployeeCharacters.includes(functionEmployee.charAt(c));
+                if (testFunctionEmployee === false)
+                {
+                    error.errorMessage("400.9.0",res);
+                    return true
+                }
+            }
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.9.1",res);
+            return true;
         }
     }
 

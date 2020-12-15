@@ -20,6 +20,7 @@ const interrogation = new Function.Interrogation();
 const Subject = new Function.Subject();
 const Sub_Subject = new Function.Sub_Subject();
 const Class = new Function.Class();
+const employee = new Function.Employee;
 
      //////////
      // Test //
@@ -124,4 +125,9 @@ app.get("/getClassByName/:name",async(req, res) =>
 app.listen(5000, () => 
 {
     console.log("Server has started on port 5000");
+});
+
+app.post("/createEmployee",async(req, res) =>
+{
+    await employee.addEmployee(req,res);
 });

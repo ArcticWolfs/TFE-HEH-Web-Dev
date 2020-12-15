@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { AccountPage } from './AccountPage'
-import Connexion from './Connexion';
-import Inscription from './Inscription'
 import {InterroList} from "./InterroList";
+import { Connexion } from './Connexion';
+import { Inscription } from './Inscription'
+
  
 export class WebRoute extends Component {
 
