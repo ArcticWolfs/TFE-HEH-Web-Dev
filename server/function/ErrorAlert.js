@@ -69,6 +69,15 @@ class ErrorAlert
             case "400.6.1":
                 message = ("/!\\ Phone verification went wrong because it's too short or empty /!\\");
                 break;
+            case "400.7.0":
+                message = ("/!\\ Name contains invalide characters  /!\\");
+                break;
+            case "400.7.1":
+                message = ("/!\\ Name is too short  /!\\");
+                break;
+            case "400.8.0":
+                message = ("/!\\ Value of total is invalid (not between 0 and 100)  /!\\");
+                break;
             default: break;
 
         }

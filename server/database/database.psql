@@ -1,6 +1,6 @@
 CREATE DATABASE school_website;
 
-DROP TABLE IF EXISTS table_user, table_class, table_interTable, table_employee, table_question, table_answer;
+DROP TABLE IF EXISTS table_user, table_class, table_interTable, table_employee, table_question, table_answer, table_test, table_grade, table_subject, table_subsubject;
 
 CREATE TABLE IF NOT EXISTS table_user(
     user_id SERIAL PRIMARY KEY,
@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS table_user(
 CREATE TABLE IF NOT EXISTS table_class(
     class_id SERIAL PRIMARY KEY,
     tutor_id int,
+    name VARCHAR(50),
     year VARCHAR(50)
 );
 
@@ -41,6 +42,38 @@ CREATE TABLE IF NOT EXISTS table_employee(
     function VARCHAR(50) NOT NULL,
     admin boolean,
     emailAddress VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS table_interro(
+    interro_id SERIAL PRIMARY KEY,
+    employee_id int NOT NULL,
+    class_id int NOT NULL,
+    subject_id int NOT NULL,
+    sub_subject_id int NOT NULL,
+    name VARCHAR(60) NOT NULL,
+    total double precision NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS table_grade(
+    grade_id SERIAL PRIMARY KEY,
+    interro_id int NOT NULL,
+    user_id int NOT NULL,
+    grade double precision NOT NULL,
+    total double precision NOT NULL,
+    absent boolean NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS table_subject(
+    subject_id SERIAL PRIMARY KEY,
+    employee_id int NOT NULL,
+    name VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS table_subsubject(
+    sub_subject_id SERIAL PRIMARY KEY,
+    subject_id int NOT NULL,
+    sub_subject_name VARCHAR(80) NOT NULL,
+    percentage double precision NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS table_question(

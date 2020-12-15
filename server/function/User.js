@@ -141,7 +141,6 @@ class User
         {
             const {id} = req.params;
             const getUser = await pool.query("SELECT * FROM table_user WHERE user_id = $1", [id]);
-            //console.log(getUser.rows[0].emailaddress);
             res.json(getUser.rows[0]);
         }
         catch (err)
