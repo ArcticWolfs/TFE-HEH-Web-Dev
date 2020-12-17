@@ -57,6 +57,60 @@ class Interrogation
         }
 
     }
+
+    async getAllInterroForAnEmployee(req,res)
+    {
+        try
+        {
+            let { employee_id } = req.params;
+
+                ////////////////
+                //   REQUEST  //
+                ////////////////
+                try
+                {
+                    const allInterro = await pool.query("SELECT * FROM table_interro WHERE employee_id = $1", [employee_id]);
+                    //Allow us to see the response in postman
+                    res.json(allInterro.rows);
+                }
+                catch (error)
+                {
+                    console.log("error while doing the querry" + error)
+                }
+        }
+        catch (error)
+        {
+            console.log("Error while creating an interro ! " + error);
+        }
+    }
+
+    async getInterroFiltered(req,res)
+    {
+        try
+        {
+            let { employee_id } = req.params;
+            let { subject_id } = req.body;
+            let { sub_subject_id } = req.body;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const interroFiltered = await pool.query("SELECT * FROM table_interro WHERE employee_id = $1 AND subject_id = $2 AND sub_subject_id = $3", [employee_id,subject_id,sub_subject_id]);
+                //Allow us to see the response in postman
+                res.json(interroFiltered.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while creating an interro ! " + error);
+        }
+    }
 }
 
 module.exports = Interrogation;

@@ -16,6 +16,8 @@
 html
 {
 	background-image: url('../images/background.jpg');
+	-webkit-background-size: cover; /* pour anciens Chrome et Safari /
+  	background-size: cover; / version standardisée */
 	background-attachment:fixed;
 	background-repeat:no-repeat;
 	color:#FFF;

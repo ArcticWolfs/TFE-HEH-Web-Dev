@@ -80,6 +80,16 @@ app.post("/createInterro",async(req, res) =>
     await interrogation.addInterro(req,res);
 });
 
+app.get("/getInterro/:employee_id",async(req, res) =>
+{
+    await interrogation.getAllInterroForAnEmployee(req,res);
+});
+
+app.get("/getInterroFiltered/:employee_id",async(req, res) =>
+{
+    await interrogation.getInterroFiltered(req,res);
+});
+
         //////////////////////
         // Create a subject //
         //////////////////////
@@ -87,6 +97,11 @@ app.post("/createInterro",async(req, res) =>
 app.get("/getSubject/:employee_id",async(req, res) =>
 {
     await Subject.getSubject(req,res);
+});
+
+app.get("/getSubjectById/:subject_id",async(req, res) =>
+{
+    await Subject.getSubjectById(req,res);
 });
 
 app.post("/getSubjectByName",async(req, res) =>
@@ -103,6 +118,16 @@ app.get("/getSubSubject/:subject_id",async(req, res) =>
     await Sub_Subject.getSubSubject(req,res);
 });
 
+app.get("/getSubSubjectByNameOnly",async(req, res) =>
+{
+    await Sub_Subject.getSubSubjectByNameOnly(req,res);
+});
+
+app.get("/getSubSubjectById/:sub_subject_id",async(req, res) =>
+{
+    await Sub_Subject.getSubSubjectById(req,res);
+});
+
 app.post("/getSubSubjectByName",async(req, res) =>
 {
     await Sub_Subject.getSubSubjectByName(req,res);
@@ -117,15 +142,19 @@ app.get("/getClass/:employee_id",async(req, res) =>
     await Class.getClassByEmployee(req,res);
 });
 
+app.get("/getClassById/:class_id",async(req, res) =>
+{
+    await Class.getClassById(req,res);
+});
+
 app.get("/getClassByName/:name",async(req, res) =>
 {
     await Class.getClassByName(req,res);
 });
 
-app.listen(5000, () => 
-{
-    console.log("Server has started on port 5000");
-});
+        //////////////////////////
+        // Create an employee ////
+        //////////////////////////
 
 app.post("/createEmployee",async(req, res) =>
 {
@@ -145,4 +174,9 @@ app.get("/getEmployeeByEmail/:email", async(req, res) =>
 app.get("/getAllEmployees", async(req, res) =>
 {
     await employee.getAllEmployees(req,res);
+});
+
+app.listen(5000, () => 
+{
+    console.log("Server has started on port 5000");
 });
