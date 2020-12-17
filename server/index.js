@@ -131,3 +131,18 @@ app.post("/createEmployee",async(req, res) =>
 {
     await employee.addEmployee(req,res);
 });
+
+app.get("/getEmployee/:id", async(req, res) =>
+{
+    await employee.getEmployee(req,res);
+});
+
+app.get("/getEmployeeByEmail/:email", async(req, res) =>
+{
+    await employee.getEmployeeByEmail(req,res);
+});
+
+app.get("/getAllEmployees", async(req, res) =>
+{
+    await employee.getAllEmployees(req,res);
+});

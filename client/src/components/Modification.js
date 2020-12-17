@@ -167,7 +167,8 @@ export class Modification extends Component {
     verif = () => {
         Axios.post(`http://localhost:5000/connect`, {
             email: this.state.oldEmailAddress,
-            password: this.state.oldPassword
+            password: this.state.oldPassword,
+            employee: false
 
         }).then((res) => {
             if(res.data.id){
