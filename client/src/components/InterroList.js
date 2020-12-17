@@ -19,6 +19,7 @@ export class InterroList extends Component {
             subject_name: "",
             subSubject_name: "",
             subjectFilter_name: "",
+            subSubjectFilter_name: "",
             selectSubjectID: "",
             selectSubSubjectID: "",
             selectSubjectIDFilter: "",
@@ -26,7 +27,8 @@ export class InterroList extends Component {
             isOpen: false,
             subject: "",
             employee_id: "1",
-            class_id: ""
+            class_id: "",
+            filtered: 0
         }
         this.onLoadPage();
     }
@@ -56,9 +58,9 @@ export class InterroList extends Component {
                             <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Matières</label>
                             <select className="custom-select my-1 mr-sm-2" id="subFilter" onChange={this.onSubjectFilterChange}></select>
                             <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Sous-Matière</label>
-                            <select className="custom-select my-1 mr-sm-2" id="subSubFilter"></select>
+                            <select className="custom-select my-1 mr-sm-2" id="subSubFilter" onChange={this.onSubSubjectFilterChange}></select>
                             <input type="text"/>
-                            <button type="submit" className="btn btn-primary mb-2" onClick={this.onFilter}>Filtrer
+                            <button type="button" className="btn btn-primary mb-2" onClick={this.onFilter}>Filtrer
                             </button>
                         </form>
                 </div>
@@ -72,14 +74,11 @@ export class InterroList extends Component {
                             <th scope="col">Matières</th>
                             <th scope="col">Sous-Matière</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Modify</th>
+                            <th scope="col">Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colSpan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <tbody id="table">
                         </tbody>
                     </table>
                 </div>
@@ -92,6 +91,20 @@ export class InterroList extends Component {
 
         }).then((res ) => {
             this.deleteChild("subFilter");
+            try
+            {
+                let tableRow = document.getElementById('table');
+                while (tableRow.hasChildNodes())
+                {
+                    tableRow.removeChild(tableRow.firstChild);
+                }
+            }
+            catch (e)
+            {
+                console.log("le tableau est vide");
+            }
+
+
             for (let c = 0; c < (res.data).length; c++)
             {
                 let option = document.createElement('option');
@@ -100,19 +113,96 @@ export class InterroList extends Component {
                 document.getElementById("subFilter").appendChild(option);
             }
             this.setState({subject_nameFilter: res.data[0].name})
-            this.setState({selectSubjectIDFilter: res.data[0].subject_id})
+            this.setState({selectSubjectIDFilter: res.data[0].subject_id},() => {
 
-            Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectIDFilter}`, {
+                Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectIDFilter}`, {
 
-            }).then((res) => {
-                this.createChildSubSub("subSubFilter",res)
+                }).then((res) => {
+                    this.createChildSubSub("subSubFilter",res)
+                })
             })
+
+
         })
 
-        Axios.get(`http://localhost:5000/getInterro/${this.state.employee_id}`)
-        {
+        Axios.get(`http://localhost:5000/getInterro/${this.state.employee_id}`,{
 
-        }
+        }).then((res) => {
+            let tableRow = document.getElementById("table");
+            for (let i = 0; i < (res.data).length; i++)
+            {
+                //Tableau ID
+                let trTable = document.createElement('tr');
+                tableRow.appendChild(trTable);
+
+                let tdTableID = document.createElement('td');
+                tdTableID.innerHTML = res.data[i].interro_id;
+                trTable.appendChild(tdTableID);
+
+                //Tableau Name
+                let tdTableName = document.createElement('td');
+                tdTableName.innerHTML = res.data[i].name;
+                trTable.appendChild(tdTableName);
+
+                //Tableau Classe
+                Axios.get(`http://localhost:5000/getClassById/${res.data[i].class_id}`,{
+
+                }).then((res2) => {
+                    let tdTableClass = document.createElement('td');
+                    tdTableClass.innerHTML = res2.data[0].name;
+                    trTable.appendChild(tdTableClass);
+
+                    //Tableau Matières
+                    Axios.get(`http://localhost:5000/getSubjectById/${res.data[i].subject_id}`,{
+
+                    }).then((res3) => {
+                        let tdTableSubject = document.createElement('td');
+                        tdTableSubject.innerHTML = res3.data[0].name;
+                        trTable.appendChild(tdTableSubject);
+
+                        //Tableau sous matière
+                        Axios.get(`http://localhost:5000/getSubSubjectById/${res.data[i].sub_subject_id}`,{
+
+                        }).then((res4) => {
+                            let tdTableSubSubject = document.createElement('td');
+                            tdTableSubSubject.innerHTML = res4.data[0].sub_subject_name;tdTableID.className = "tableData";
+                            trTable.appendChild(tdTableSubSubject);
+
+                            //Tableau total
+                            let tdTableTotal = document.createElement('td');
+                            tdTableTotal.innerHTML = res.data[i].total;
+                            trTable.appendChild(tdTableTotal);
+
+                            //Tableau Note
+                            let tdTableNote = document.createElement('td');
+                            trTable.appendChild(tdTableNote);
+                            let buttonNote = document.createElement('button');
+                            buttonNote.textContent = "Points" ;
+                            buttonNote.className = "btn btn-primary"
+                            tdTableNote.appendChild(buttonNote);
+
+                            //Tableau modify
+                            let tdTableModify = document.createElement('td');
+                            trTable.appendChild(tdTableModify);
+                            let buttonModify = document.createElement('button');
+                            buttonModify.textContent = "Modify" ;
+                            buttonModify.className = "btn btn-warning"
+                            tdTableModify.appendChild(buttonModify);
+
+                            //Tableau delete
+                            let tdTableDelete = document.createElement('td');
+                            trTable.appendChild(tdTableDelete);
+                            let buttonDelete = document.createElement('button');
+                            buttonDelete.textContent = "Delete" ;
+                            buttonDelete.className = "btn btn-danger"
+                            tdTableDelete.appendChild(buttonDelete);
+                        })
+                    })
+                })
+            }
+        })
+
+
     }
 
     onCreateInterro = (e) => {
@@ -156,7 +246,7 @@ export class InterroList extends Component {
             }).then((res) => {
                 this.createChildSubSub("modalSubSub",res)
                 this.setState({subSubject_name: res.data[0].name})
-                this.setState({selectSubSubjectID: res.data[0].subject_id})
+                this.setState({selectSubSubjectID: res.data[0].sub_subject_id})
 
                 Axios.get(`http://localhost:5000/getClass/${this.state.employee_id}`, {
 
@@ -178,6 +268,7 @@ export class InterroList extends Component {
 
     handleClose = () => {
         this.setState({ isOpen: false });
+        this.onLoadPage();
     };
 
     onSubjectChange = (e) => {
@@ -213,8 +304,6 @@ export class InterroList extends Component {
 
         this.setState({subSubject_name: modalSubSubjectName}, () =>
         {
-            console.log(this.state.selectSubSubjectID)
-            console.log(this.state.subSubject_name)
             Axios.post(`http://localhost:5000/getSubSubjectByName`,
                 {
 
@@ -226,8 +315,7 @@ export class InterroList extends Component {
                 this.setState({selectSubSubjectID: res.data[0].sub_subject_id}, () => {
                     this.setState({subSubject_name: res.data[0].sub_subject_name},() =>
                     {
-                        console.log(this.state.selectSubSubjectID)
-                        console.log(this.state.subSubject_name)
+
                     })
                 })
 
@@ -268,18 +356,39 @@ export class InterroList extends Component {
 
                 }).then((res) =>
             {
-                this.setState({selectSubjectFilterID: res.data[0].subject_id}, () =>
+                this.setState({selectSubjectIDFilter: res.data[0].subject_id}, () =>
                 {
-                    Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectFilterID}`, {}).then((res) =>
+                    Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectIDFilter}`, {}).then((res) =>
                     {
+                        this.setState({selectSubSubjectIDFilter : res.data[0].sub_subject_id})
                         this.deleteChild("subSubFilter");
                         this.createChildSubSub("subSubFilter",res);
-
                     })
                 })
             })
         })
     }
+
+    /*onSubSubjectFilterChange = (e) => {
+        let subSubjectFilterName = document.getElementById("subSubFilter").value;
+
+        this.setState({subSubjectFilter_name: subSubjectFilterName}, () =>
+        {
+            console.log(this.state.selectSubjectIDFilter)
+            console.log(this.state.subSubjectFilter_name)
+            Axios.get(`http://localhost:5000/getSubSubjectByNameOnly`,
+                {
+
+                    subject_id: this.state.selectSubjectIDFilter,
+                    sub_subject_name: this.state.subSubjectFilter_name
+
+                }).then((res) =>
+            {
+                console.log(res.data.sub_subject_id)
+                this.setState({selectSubSubjectIDFilter: res.data.sub_subject_id})
+            })
+        })
+    }*/
 
     deleteChild = (select) => {
         let selectList = document.getElementById(select);
@@ -301,6 +410,90 @@ export class InterroList extends Component {
             subSubjectSelect.appendChild(optionSubSub);
         }
     }
+
+    /*onFilter = () => {
+        console.log(this.state.selectSubjectIDFilter)
+        console.log(this.state.selectSubSubjectIDFilter)
+        Axios.get(`http://localhost:5000/getInterroFiltered/${this.state.employee_id}`,{
+            subject_id: this.state.selectSubjectIDFilter,
+            sub_subject_id : this.state.selectSubSubjectIDFilter
+
+        }).then((res) => {
+            let tableRow = document.getElementById("table");
+
+            for (let i = 0; i < (res.data).length; i++)
+            {
+                //Tableau ID
+                let trTable = document.createElement('tr');
+                tableRow.appendChild(trTable);
+
+                let tdTableID = document.createElement('td');
+                tdTableID.innerHTML = res.data[i].interro_id;
+                trTable.appendChild(tdTableID);
+
+                //Tableau Name
+                let tdTableName = document.createElement('td');
+                tdTableName.innerHTML = res.data[i].name;
+                trTable.appendChild(tdTableName);
+
+                //Tableau Classe
+                Axios.get(`http://localhost:5000/getClassById/${res.data[i].class_id}`,{
+
+                }).then((res2) => {
+                    let tdTableClass = document.createElement('td');
+                    tdTableClass.innerHTML = res2.data[0].name;
+                    trTable.appendChild(tdTableClass);
+
+                    //Tableau Matières
+                    Axios.get(`http://localhost:5000/getSubjectById/${res.data[i].subject_id}`,{
+
+                    }).then((res3) => {
+                        let tdTableSubject = document.createElement('td');
+                        tdTableSubject.innerHTML = res3.data[0].name;
+                        trTable.appendChild(tdTableSubject);
+
+                        //Tableau sous matière
+                        Axios.get(`http://localhost:5000/getSubSubjectById/${res.data[i].sub_subject_id}`,{
+
+                        }).then((res4) => {
+                            let tdTableSubSubject = document.createElement('td');
+                            tdTableSubSubject.innerHTML = res4.data[0].sub_subject_name;tdTableID.className = "tableData";
+                            trTable.appendChild(tdTableSubSubject);
+
+                            //Tableau total
+                            let tdTableTotal = document.createElement('td');
+                            tdTableTotal.innerHTML = res.data[i].total;
+                            trTable.appendChild(tdTableTotal);
+
+                            //Tableau Note
+                            let tdTableNote = document.createElement('td');
+                            trTable.appendChild(tdTableNote);
+                            let buttonNote = document.createElement('button');
+                            buttonNote.textContent = "Points" ;
+                            buttonNote.className = "btn btn-primary"
+                            tdTableNote.appendChild(buttonNote);
+
+                            //Tableau modify
+                            let tdTableModify = document.createElement('td');
+                            trTable.appendChild(tdTableModify);
+                            let buttonModify = document.createElement('button');
+                            buttonModify.textContent = "Modify" ;
+                            buttonModify.className = "btn btn-warning"
+                            tdTableModify.appendChild(buttonModify);
+
+                            //Tableau delete
+                            let tdTableDelete = document.createElement('td');
+                            trTable.appendChild(tdTableDelete);
+                            let buttonDelete = document.createElement('button');
+                            buttonDelete.textContent = "Delete" ;
+                            buttonDelete.className = "btn btn-danger"
+                            tdTableDelete.appendChild(buttonDelete);
+                        })
+                    })
+                })
+            }
+        })
+    }*/
 
     onClick = () => {
         Axios.get(`http://localhost:5000/createInterro/${this.state.id}`, {

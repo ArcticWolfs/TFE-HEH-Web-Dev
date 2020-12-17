@@ -35,6 +35,33 @@ class Subject
         }
     }
 
+    async getSubjectById(req, res)
+    {
+        try
+        {
+            const {subject_id} = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const subject = await pool.query(
+                    "SELECT * FROM table_subject WHERE subject_id = $1", [subject_id]);
+                //Allow us to see the response in postman
+                res.json(subject.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting a subject " + error);
+        }
+    }
+
     async getSubjectByName(req, res)
     {
         try
