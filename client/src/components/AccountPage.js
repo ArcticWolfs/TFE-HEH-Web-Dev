@@ -18,6 +18,7 @@ export class AccountPage extends Component {
 
         this.state = {
             id: this.props.userId,
+            employee: sessionStorage.getItem('employee') || localStorage.getItem('employee'),
             class: null,
             firstname: null,
             lastname: null,
@@ -32,6 +33,7 @@ export class AccountPage extends Component {
             modifyIsOpen: false,
             open: false
         }
+        console.log(this.props.employee)
         
         Axios.get(`http://localhost:5000/getUser/${this.state.id}`).then((res) => {
             this.setState({
@@ -54,7 +56,7 @@ export class AccountPage extends Component {
     }
 
     render() {
-        if (this.state.modifyIsOpen === false)
+        if (this.state.modifyIsOpen === false && this.state.employee === "false")
         {
             return (
                 <React.Fragment>

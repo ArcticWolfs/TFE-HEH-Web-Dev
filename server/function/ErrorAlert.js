@@ -54,6 +54,8 @@ class ErrorAlert
             case "400.4.0":
                 message = ("/!\\ Student boolean verification went wrong because it's not a boolean /!\\");
                 break;
+            case "400.4.4":
+                message = ("/!\\ Password incorrect /!\\");
             case "400.5.0":
                 message = ("/!\\ Address verification went wrong because of invalid characters /!\\");
                 break;
