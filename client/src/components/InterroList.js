@@ -2,10 +2,6 @@ import React, {Component} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
 import Modal from "react-modal";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
 
 
 export class InterroList extends Component {

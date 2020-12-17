@@ -174,7 +174,7 @@ class Security
 
     async emailAlreadyExist(email,res, emailType)
     {
-        if(emailType === "parent" || emailType === "parent2" || emailType === "student") {
+        if(emailType === "parent" || emailType === "parent2" || emailType === "student" || emailType === "user") {
             const emailExist = await pool.query("SELECT all emailaddress FROM table_user WHERE emailAddress = $1", [email]);
 
             if(emailExist.rowCount === 0)
@@ -320,30 +320,57 @@ class Security
     {
        let { email } = req.body;
        let { password } = req.body;
-
-        if (await this.emailAlreadyExist(email,res))
-        {
-            try
+       let { employee } = req.body;
+       if (employee === false) {
+            if (await this.emailAlreadyExist(email,res,"user"))
             {
-                let userData = await pool.query("SELECT * FROM table_user WHERE emailAddress = $1", [email]);
-                let userId = userData.rows[0].user_id;
-                let passwordHash = userData.rows[0].password;
+                try
+                {
+                    let userData = await pool.query("SELECT * FROM table_user WHERE emailAddress = $1", [email]);
+                    let userId = userData.rows[0].user_id;
+                    let passwordHash = userData.rows[0].password;
 
-                if (bcrypt.compareSync(password,passwordHash) === true)
-                {
-                    res.json({id : userId});
+                    if (bcrypt.compareSync(password,passwordHash) === true)
+                    {
+                        res.json({id : userId});
+                    }
+                    else
+                    {
+                        error.errorMessage("400.4.4",res);
+                    }
                 }
-                else
+                catch (err)
                 {
-                    error.errorMessage("400.4.4",res);
+                    error.errorMessage("400",res);
                 }
             }
-            catch (err)
-            {
-                error.errorMessage("400",res);
-            }
+            else error.errorMessage("400.3.4",res);
         }
-        else error.errorMessage("400.3.4",res);
+        else {
+            if (await this.emailAlreadyExist(email,res,"employee"))
+            {
+                try
+                {
+                    let employeeData = await pool.query("SELECT * FROM table_employee WHERE emailAddress = $1", [email]);
+                    let employeeId = employeeData.rows[0].employee_id;
+                    let passwordHash = employeeData.rows[0].password;
+
+                    if (bcrypt.compareSync(password,passwordHash) === true)
+                    {
+                        res.json({id : employeeId});
+                    }
+                    else
+                    {
+                        error.errorMessage("400.4.4",res);
+                    }
+                }
+                catch (err)
+                {
+                    error.errorMessage("400",res);
+                }
+            }
+            else error.errorMessage("400.3.4",res);
+        }
     }
 }
 

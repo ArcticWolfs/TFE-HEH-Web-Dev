@@ -21,6 +21,7 @@ export class Connexion extends Component {
             password: "",
             stayConnect:false,
             isOpen: true,
+            isOpen2: false,
             open: false
         }
     }
@@ -40,7 +41,23 @@ export class Connexion extends Component {
                     <button className="boutonModal btn btn-outline-light" onClick={this.toInscription}>S'inscrire</button>
                     <button className="boutonModal btn btn-outline-light" onClick={this.onClick}>Se connecter</button>
                     <p id="passwordForgot"><a href="/#">Mot de passe oublié ?</a></p>
-                    <p id="imEmployee"><a href="/#">Je suis un membre du personnel</a></p>
+                    <p id="imEmployee"><a href="/#" onClick={this.changeModal}>Je suis un membre du personnel</a></p>
+                    
+                </Modal>
+                <Modal
+                    isOpen={this.state.isOpen2}
+                    contentLabel="My dialog"
+                    className="mymodal"
+                    overlayClassName="myoverlay"
+                    closeTimeoutMS={500}>
+                    <div id="connectezvous">Connectez-vous</div>
+                    <p className="champConnect"><input class="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange}/></p>
+                    <p className="champConnect"><input class="champConnect" onKeyDown={this.onKeyDown} placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange }/></p>
+                    <p><input className="check" id="stayConnect" name="stayConnect" type="checkbox" value={this.state.stayConnect} />Rester connecter</p>
+                    <button className="boutonModal btn btn-outline-light" onClick={this.toInscription}>S'inscrire</button>
+                    <button className="boutonModal btn btn-outline-light" onClick={this.onClick}>Se connecter</button>
+                    <p id="passwordForgot"><a href="/#">Mot de passe oublié ?</a></p>
+                    <p id="imEmployee"><a href="/#" onClick={this.changeModal}>Je ne suis pas un membre du personnel</a></p>
                     
                 </Modal>
                 <Dialog
@@ -54,7 +71,7 @@ export class Connexion extends Component {
                     </DialogTitle>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary" class="boutonModal btn btn-outline-light">
-                        Ok
+                            Ok
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -97,16 +114,38 @@ export class Connexion extends Component {
 
     }
 
+    changeModal = () => {
+        if (this.state.isOpen===true && this.state.isOpen2===false) {
+            this.setState({
+                isOpen: false,
+                isOpen2:true
+            })
+        }
+        else if (this.state.isOpen===false && this.state.isOpen2===true) {
+            this.setState({
+                isOpen: true,
+                isOpen2:false
+            })
+        }
+    }
+
     onClick = () => {
         Axios.post(`http://localhost:5000/connect`, {
             email: this.state.emailAddress,
-            password: this.state.password
+            password: this.state.password,
+            employee: this.state.isOpen2
 
         }).then((res) => {
             if(res.data.id){
                 this.toggleModal()
-                if(document.getElementById('stayConnect').checked === true)localStorage.setItem('userID', res.data.id);
-                else sessionStorage.setItem('userID', res.data.id);
+                if(document.getElementById('stayConnect').checked === true){
+                    localStorage.setItem('userID', res.data.id);
+                    localStorage.setItem('employee', this.state.isOpen2);
+                }
+                else {
+                    sessionStorage.setItem('userID', res.data.id);
+                    sessionStorage.setItem('employee', this.state.isOpen2);
+                }
                 document.location.reload()
             }
             else {

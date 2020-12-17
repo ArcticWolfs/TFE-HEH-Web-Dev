@@ -56,7 +56,50 @@ class Employee {
             }
         }
         catch (err) {
-            console.error("Error while creating an user : " + err.message);
+            console.error("Error while creating an employee : " + err.message);
+        }
+    }
+
+    async getEmployee(req,res)
+    {
+        try
+        {
+            const {id} = req.params;
+            const getEmployee = await pool.query("SELECT * FROM table_employee WHERE employee_id = $1", [id]);
+            res.json(getEmployee.rows[0]);
+        }
+        catch (err)
+        {
+            console.error("Error while getting the employee with a specific ID : " + err.message)
+        }
+    }
+
+    async getEmployeeByEmail(req,res)
+    {
+        try
+        {
+            const {email} = req.params;
+            const getEmployee = await pool.query("SELECT * FROM table_employee WHERE emailaddress = $1", [email]);
+            res.json(getEmployee.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting the employee with a specific email : " + err.message)
+        }
+    }
+
+    async getAllEmployees(req, res)
+    {
+        try
+        {
+            const getAllEmployees = await pool.query("SELECT * FROM table_employee");
+
+            //Allow us to see the response in postman
+            res.json(getAllEmployees.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting all the employees : " + err.message)
         }
     }
 }
