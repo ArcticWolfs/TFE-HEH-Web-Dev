@@ -102,5 +102,65 @@ class Employee {
             console.error("Error while getting all the employees : " + err.message)
         }
     }
+
+    async modifyEmployee(req,res)
+    {
+        try
+        {
+            let { id } = req.params;
+            let { firstname } = req.body;
+            let { lastname } = req.body;
+            let { birthdate } = req.body;
+            let { address } = req.body;
+            let { emailAddress } = req.body;
+            let { oldEmail} = req.body;
+            let { phoneNumber } = req.body;
+            let { password } = req.body;       
+            let { functionEmployee } = req.body;
+            let { isAdmin } = req.body;
+
+            firstname = firstname.trim();
+            lastname = lastname.trim();
+            birthdate = birthdate.trim();
+            address = address.trim();
+            emailAddress = emailAddress.trim();
+            emailAddress = emailAddress.toLowerCase();
+            oldEmail = oldEmail.trim();
+            oldEmail = oldEmail.toLowerCase();
+            phoneNumber = phoneNumber.trim();
+            password = password.trim();
+            functionEmployee = functionEmployee.trim();
+
+            if (security.firstNameVerification(firstname,res) === false) {
+                if (security.lastNameVerification(lastname,res) === false) {
+                    if (security.birthdateVerification(birthdate,res) === false) {
+                        if (security.addressVerification(address,res) === false) {
+                            if (await security.emailVerification(emailAddress,oldEmail,res,"employee") === false) {
+                                if (security.phoneVerification(phoneNumber,res,"Employee") === false) {
+                                    if (security.passwordVerification(password,res) === false) {
+                                        if (security.adminVerification(isAdmin,res) === false) {
+                                            if (security.functionEmployeeVerification(functionEmployee,res) === false) {
+                                                password = await security.cryptingPassword(password);
+
+                                                const newEmployee = await pool.query(
+                                                    "UPDATE table_employee SET firstname=$1, lastname=$2, birthdate=$3, address=$4, emailAddress=$5, phoneNumber=$6, password=$7, functionEmployee=$8, isAdmin=$9 WHERE employee_id=$10",
+                                                    [firstname,lastname,birthdate,address,emailAddress,phoneNumber,password,functionEmployee,isAdmin,id]
+                                                );
+                                                res.json("Employee Updated");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (err)
+        {
+            console.error("Error while modifying an Employee : " + err.message)
+        }
+    }
 }
 module.exports = Employee;
