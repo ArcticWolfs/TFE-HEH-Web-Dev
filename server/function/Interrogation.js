@@ -111,6 +111,66 @@ class Interrogation
             console.log("Error while creating an interro ! " + error);
         }
     }
+
+    async getInterroByID(req,res)
+    {
+        try
+        {
+            let { interro_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const interro = await pool.query("SELECT * FROM table_interro WHERE interro_id = $1", [interro_id]);
+                //Allow us to see the response in postman
+                res.json(interro.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while modifying an interro ! " + error);
+        }
+    }
+
+    async modifyInterro(req,res)
+    {
+        try
+        {
+            let { interro_id } = req.body;
+            let { employee_id } = req.body;
+            let { name } = req.body;
+            let { total } = req.body;
+            let { subject_id } = req.body;
+            let { sub_subject_id } = req.body;
+            let { class_id } = req.body;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const interro = await pool.query("UPDATE table_interro SET name = $1, total = $2, subject_id = $3, sub_subject_id = $4, class_id = $5 WHERE interro_id = $6 AND employee_id = $7", [name,total,subject_id,sub_subject_id,class_id,interro_id,employee_id]);
+                //Allow us to see the response in postman
+                res.json(interro.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while modifying an interro ! " + error);
+        }
+    }
+
+
 }
 
 module.exports = Interrogation;

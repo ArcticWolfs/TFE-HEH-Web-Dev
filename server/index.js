@@ -90,6 +90,16 @@ app.get("/getInterroFiltered/:employee_id",async(req, res) =>
     await interrogation.getInterroFiltered(req,res);
 });
 
+app.get("/getInterroByID/:interro_id",async(req, res) =>
+{
+    await interrogation.getInterroByID(req,res);
+});
+
+app.put("/modifyInterro",async(req, res) =>
+{
+    await interrogation.modifyInterro(req,res);
+});
+
         //////////////////////
         // Create a subject //
         //////////////////////
