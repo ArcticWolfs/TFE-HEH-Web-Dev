@@ -48,7 +48,7 @@ export class Inscription extends Component {
 
                     <p><input className="champConnect" placeholder="Prénom" name="firstname" type="text" value={this.state.firstname} onChange={this.onChange} pattern="[A-Z][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ '-]+" onFocus={this.setRequired}/></p>
                     <p><input className="champConnect" placeholder="Nom" name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} pattern="[A-Z][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ '-]+" onFocus={this.setRequired}/></p>
-                    <p><input id="mail" className="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} pattern="[a-z.]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
+                    <p><input id="mail" className="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange} pattern="[a-z0-9.]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
                     <p><input className="champConnect" placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} pattern="[A-Za-z0-9 ',àáâãäåçèéêëìíîïðòóôõöùúûüýÿ-]+" onFocus={this.setRequired}/></p>
                     <p><input id="pswd" className="champConnect" placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange} onFocus={this.setRequired}/></p>
                     <p><input id="cpswd" className="champConnect" placeholder="Confirmez mot de passe" onKeyDown={this.onKeyDown} name="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.onChange} onFocus={this.setRequired}/></p>
@@ -57,8 +57,8 @@ export class Inscription extends Component {
                     <div id="isShow" style={{display:"none"}}>
                         <p><input className="champConnect" placeholder="Téléphone du tuteur 1" name="phoneNumberTutor1" type="text" value={this.state.phoneNumberTutor1} onChange={this.onChange} pattern="[0-9/. +]+" onFocus={this.setRequired}/></p>
                         <p><input className="champConnect" placeholder="Téléphone du tuteur 2" name="phoneNumberTutor2" type="text" value={this.state.phoneNumberTutor2} onChange={this.onChange} pattern="[0-9/. +]+"/></p>
-                        <p><input className="champConnect" placeholder="Mail du tuteur 1" onKeyDown={this.onKeyDown} name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} pattern="[a-z.]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
-                        <p><input className="champConnect" placeholder="Mail du tuteur 2" onKeyDown={this.onKeyDown} name="mail_Tutor2" type="email" value={this.state.mail_Tutor2} onChange={this.onChange} pattern="[a-z.]+[@][a-z]+[.][a-z]+"/></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 1" onKeyDown={this.onKeyDown} name="emailTutor1" type="email" value={this.state.emailTutor1} onChange={this.onChange} pattern="[a-z.0-9]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
+                        <p><input className="champConnect" placeholder="Mail du tuteur 2" onKeyDown={this.onKeyDown} name="mail_Tutor2" type="email" value={this.state.mail_Tutor2} onChange={this.onChange} pattern="[a-z.0-9]+[@][a-z]+[.][a-z]+"/></p>
                     </div>
                     <button onClick={this.toConnexion} className="boutonModal btn btn-outline-light">Annuler</button>
                     <button onClick={this.onClick} className="boutonModal btn btn-outline-light">S'inscrire</button>
@@ -243,6 +243,7 @@ export class Inscription extends Component {
                     if(res.data.user_id){
                         this.toggleModal()
                         sessionStorage.setItem('userID', res.data.user_id);
+                        sessionStorage.setItem('employee', false);
                         document.location.reload()
                     }
                     else {
