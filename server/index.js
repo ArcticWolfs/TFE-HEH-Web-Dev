@@ -181,6 +181,11 @@ app.put("/modifyEmployee/:id", async(req, res) =>
     await employee.modifyEmployee(req,res);
 });
 
+app.delete("/deleteEmployee/:id", async(req,res) =>
+{
+    await employee.deleteEmployee(req,res);
+});
+
 app.listen(5000, () => 
 {
     console.log("Server has started on port 5000");

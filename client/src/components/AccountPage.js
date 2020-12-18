@@ -270,6 +270,20 @@ export class AccountPage extends Component {
                 console.log(err)
             })
         }
+        else {
+            Axios.delete(`http://localhost:5000/deleteEmployee/${this.state.id}`, {
+
+            })
+            .then(function (res) {
+                localStorage.clear()
+                sessionStorage.clear()
+                document.location.reload()
+                console.log(res);
+            })
+            .catch(function (err){
+                console.log(err)
+            })
+        }
         
     }
 
