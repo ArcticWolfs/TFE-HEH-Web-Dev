@@ -162,5 +162,20 @@ class Employee {
             console.error("Error while modifying an Employee : " + err.message)
         }
     }
+
+    async deleteEmployee(req,res)
+    {
+        try
+        {
+            const {id} = req.params;
+            const deleteEmployee = await pool.query("DELETE FROM table_employee WHERE employee_id = $1", [id]);
+
+            res.json("Employee deleted")
+        }
+        catch (err)
+        {
+            console.error("Error while deleting an employee : " + err.message)
+        }
+    }
 }
 module.exports = Employee;
