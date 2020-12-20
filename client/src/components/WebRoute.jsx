@@ -5,6 +5,7 @@ import { AccountPage } from './AccountPage'
 import {InterroList} from "./InterroList";
 import { Connexion } from './Connexion';
 import { Inscription } from './Inscription'
+import {GradeList} from "./GradeList";
 
  
 export class WebRoute extends Component {
@@ -17,7 +18,6 @@ export class WebRoute extends Component {
             inscript: false,
             id:sessionStorage.getItem('userID') || localStorage.getItem('userID') || 0
         }
-        console.log(this.state.id)
     }
 
     render() {
@@ -41,6 +41,7 @@ export class WebRoute extends Component {
                     <Switch>
                         <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id}/>)}></Route>
                         <Route path='/interroList' render={() => (<InterroList/>)}></Route>
+                        <Route path='/gradeList' render={() => (<GradeList/>)}></Route>
                         <Route path='/' render={() => (<HomePage/>)}></Route>
                     </Switch>
                 </Router>

@@ -21,6 +21,7 @@ const Subject = new Function.Subject();
 const Sub_Subject = new Function.Sub_Subject();
 const Class = new Function.Class();
 const employee = new Function.Employee;
+const Grade = new Function.Grade();
 
      //////////
      // Test //
@@ -100,6 +101,21 @@ app.put("/modifyInterro",async(req, res) =>
     await interrogation.modifyInterro(req,res);
 });
 
+app.get("/getInterroId",async(req, res) =>
+{
+    await interrogation.getInterroID(req,res);
+});
+
+        ///////////////////
+        // Create a Grade //
+        ///////////////////
+
+app.post("/addGrade",async(req, res) =>
+{
+    await Grade.addGrade(req,res);
+});
+
+
         //////////////////////
         // Create a subject //
         //////////////////////
@@ -160,6 +176,11 @@ app.get("/getClassById/:class_id",async(req, res) =>
 app.get("/getClassByName/:name",async(req, res) =>
 {
     await Class.getClassByName(req,res);
+});
+
+app.get("/getWholeClass/:class_id",async(req, res) =>
+{
+    await Class.getWholeClass(req,res);
 });
 
         //////////////////////////

@@ -41,8 +41,7 @@ class Interrogation
                             "INSERT INTO table_interro (employee_id,class_id,subject_id,sub_subject_id,name,total) VALUES($1,$2,$3,$4,$5,$6) RETURNING * ",
                             [employee_id,class_id,subject_id,sub_subject_id,name,total]
                         );
-                        //Allow us to see the response in postman
-                        res.json(newInterro.rows[0]);
+                        res.json(newInterro.rows);
                     }
                     catch (error)
                     {
@@ -81,6 +80,36 @@ class Interrogation
         catch (error)
         {
             console.log("Error while creating an interro ! " + error);
+        }
+    }
+
+    async getInterroID(req,res)
+    {
+        try
+        {
+            let { employee_id } = req.body;
+            let {class_id} = req.body;
+            let {name} = req.body;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const interroID = await pool.query(
+                    "SELECT interro_id FROM table_interro WHERE class_id = $1 AND name = $2 AND employee_id = $3",
+                    [class_id,name,employee_id]
+                )
+                res.json(interroID.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting the id of an interro ! " + error);
         }
     }
 
