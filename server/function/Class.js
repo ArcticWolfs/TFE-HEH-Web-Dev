@@ -35,6 +35,33 @@ class Class
         }
     }
 
+    async getWholeClass(req, res)
+    {
+        try
+        {
+            const {class_id} = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const wholeClass = await pool.query("SELECT * FROM table_user WHERE class_id = $1", [class_id]
+                )
+                //Allow us to see the response in postman
+                res.json(wholeClass.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting a whole class " + error);
+        }
+    }
+
     async getClassById(req, res)
     {
         try

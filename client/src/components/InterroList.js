@@ -88,12 +88,12 @@ export class InterroList extends Component {
                     <table className="table table-sm table-dark">
                         <thead>
                         <tr>
-                            <th scope="col">ID</th>
                             <th scope="col">Nom de l'interro</th>
                             <th scope="col">Classe</th>
-                            <th scope="col">Matières</th>
+                            <th scope="col">Matière</th>
                             <th scope="col">Sous-Matière</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Points</th>
                             <th scope="col">Modify</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -151,13 +151,9 @@ export class InterroList extends Component {
             let tableRow = document.getElementById("table");
             for (let i = 0; i < (res.data).length; i++)
             {
-                //Tableau ID
+                //Tableau
                 let trTable = document.createElement('tr');
                 tableRow.appendChild(trTable);
-
-                let tdTableID = document.createElement('td');
-                tdTableID.innerHTML = res.data[i].interro_id;
-                trTable.appendChild(tdTableID);
 
                 //Tableau Name
                 let tdTableName = document.createElement('td');
@@ -185,7 +181,7 @@ export class InterroList extends Component {
 
                         }).then((res4) => {
                             let tdTableSubSubject = document.createElement('td');
-                            tdTableSubSubject.innerHTML = res4.data[0].sub_subject_name;tdTableID.className = "tableData";
+                            tdTableSubSubject.innerHTML = res4.data[0].sub_subject_name;
                             trTable.appendChild(tdTableSubSubject);
 
                             //Tableau total
@@ -225,35 +221,67 @@ export class InterroList extends Component {
                 })
             }
         })
-
-
     }
 
     onCreateInterro = (e) => {
+        try{
+            Axios.post(`http://localhost:5000/createInterro`, {
+                employee_id: this.state.employee_id,
+                class_id: this.state.class_id,
+                subject_id: this.state.selectSubjectID,
+                sub_subject_id: this.state.selectSubSubjectID,
+                name : this.state.name,
+                total : this.state.total
+            }).then((res) => {
+                try
+                {
+                    Axios.get(`http://localhost:5000/getWholeClass/${this.state.class_id}`,{
 
-        Axios.post(`http://localhost:5000/createInterro`, {
-            employee_id: this.state.employee_id,
-            class_id: this.state.class_id,
-            subject_id: this.state.selectSubjectID,
-            sub_subject_id: this.state.selectSubSubjectID,
-            name : this.state.name,
-            total : this.state.total
-        }).then(() =>
+                    }).then((res2) => {
+                        for (let c = 0; c < (res2.data).length; c++)
+                        {
+                            try
+                            {
+                                Axios.post(`http://localhost:5000/addGrade`,{
+                                    interro_id: res.data[0].interro_id,
+                                    user_id: res2.data[c].user_id,
+                                    grade: 0,
+                                    total: res.data[0].total,
+                                    absent: false
+                                }).then((res3) =>{
+
+                                })
+                            }
+                            catch (e)
+                            {
+                                this.handleClose();
+                                this.onLoadPage();
+                                console.log("Error while adding the grade");
+                            }
+
+                        }
+                    })
+                }
+                catch (e)
+                {
+                    this.handleClose();
+                    this.onLoadPage();
+                    console.log("error while getting the user of a certain class ! Maybe the class is empty ?");
+                }
+                this.handleClose();
+                this.onLoadPage();
+            })
+        }
+        catch (e)
         {
             this.handleClose();
             this.onLoadPage();
-        })
+            console.log("Error while creating an interro !")
+        }
+
     }
 
     onModifyInterro= () => {
-        console.log(this.state.interroIDModify)
-        console.log(this.state.employee_id)
-        console.log(this.state.selectClassIDModify)
-        console.log(this.state.selectSubjectIDModify)
-        console.log(this.state.selectSubSubjectIDModify)
-        console.log(this.state.nameModify)
-        console.log(this.state.totalModify)
-
         Axios.put(`http://localhost:5000/modifyInterro`, {
             interro_id: this.state.interroIDModify,
             employee_id:this.state.employee_id,
@@ -263,9 +291,9 @@ export class InterroList extends Component {
             name : this.state.nameModify,
             total : this.state.totalModify
         }).then(() => {
-            this.handleCloseModify();
             this.onLoadPage();
         })
+        this.handleCloseModify();
     }
 
     onChange = (event) => {
