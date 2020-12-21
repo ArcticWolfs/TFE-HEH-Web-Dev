@@ -1,6 +1,6 @@
-CREATE DATABASE school_website;
+--CREATE DATABASE school_website;
 
-DROP TABLE IF EXISTS table_user, table_class, table_interTable, table_employee, table_question, table_answer, table_test, table_grade, table_subject, table_subsubject;
+DROP TABLE IF EXISTS table_user, table_class, table_employee, table_interTable, table_subject, table_subsubject, table_interro, table_grade, table_question, table_answer;
 
 CREATE TABLE IF NOT EXISTS table_user(
     user_id SERIAL PRIMARY KEY,
@@ -18,6 +18,27 @@ CREATE TABLE IF NOT EXISTS table_user(
     emailTutor2 VARCHAR(60)
 );
 
+INSERT INTO table_user (class_id,firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2)
+VALUES(1,'Student','Un','Rue des écoles','student1@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',true,'012345678',null,'parent1@hotmail.com','parent4@hotmail.com');
+INSERT INTO table_user (class_id,firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2)
+VALUES(1,'Student','Deux','Rue des écoles','student2@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',true,'012345678',null,'parent1@hotmail.com',null);
+INSERT INTO table_user (class_id,firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2)
+VALUES(1,'Student','Trois','Rue des écoles','student3@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',true,'012345678',null,'parent2@hotmail.com',null);
+
+INSERT INTO table_user (class_id,firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2)
+VALUES(2,'Student','Quatre','Rue des écoles','student4@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',true,'012345678',null,'parent2@hotmail.com',null);
+INSERT INTO table_user (class_id,firstname,lastname,address,emailaddress,password,student,phonenumbertutor1,phonenumbertutor2,emailtutor1,emailtutor2)
+VALUES(2,'Student','Cinq','Rue des écoles','student5@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',true,'012345678',null,'parent3@hotmail.com','parent4@hotmail.com');
+
+INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student)
+VALUES('Parent','Un','Rue des écoles','parent1@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',false);
+INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student)
+VALUES('Parent','Deux','Rue des écoles','parent2@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',false);
+INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student)
+VALUES('Parent','Trois','Rue des écoles','parent3@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',false);
+INSERT INTO table_user (firstname,lastname,address,emailaddress,password,student)
+VALUES('Parent','Quatre','Rue des écoles','parent4@hotmail.com','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq',false);
+
 CREATE TABLE IF NOT EXISTS table_class(
     class_id SERIAL PRIMARY KEY,
     tutor_id int,
@@ -25,11 +46,10 @@ CREATE TABLE IF NOT EXISTS table_class(
     year VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS table_interTable(
-    inter_id SERIAL PRIMARY KEY,
-    class_id int,
-    employee_id int
-);
+INSERT INTO table_class (tutor_id,name,year)
+VALUES(1,'6A','2020-2021');
+INSERT INTO table_class (tutor_id,name,year)
+VALUES(2,'6B','2020-2021');
 
 CREATE TABLE IF NOT EXISTS table_employee(
     employee_id SERIAL PRIMARY KEY,  
@@ -44,6 +64,121 @@ CREATE TABLE IF NOT EXISTS table_employee(
     functionEmployee VARCHAR(50) NOT NULL,
     isAdmin boolean
 );
+
+INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
+VALUES ('Admin','Admin','04/04/1994','Rue du collège, 7','admin@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Admin',true);
+INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
+VALUES ('Instituteur','Un','04/04/1994','Rue du collège, 7','insituteur1@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',true);
+INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
+VALUES ('Instituteur','Deux','04/04/1994','Rue du collège, 7','insituteur2@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',false);
+INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
+VALUES ('Instituteur','Trois','04/04/1994','Rue du collège, 7','insituteur3@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',false);
+
+CREATE TABLE IF NOT EXISTS table_interTable(
+    inter_id SERIAL PRIMARY KEY,
+    class_id int,
+    employee_id int
+);
+
+INSERT INTO table_interTable (class_id,employee_id)
+VALUES (1,2);
+INSERT INTO table_interTable (class_id,employee_id)
+VALUES (2,3);
+INSERT INTO table_interTable (class_id,employee_id)
+VALUES (1,4);
+INSERT INTO table_interTable (class_id,employee_id)
+VALUES (2,4);
+
+CREATE TABLE IF NOT EXISTS table_subject(
+    subject_id SERIAL PRIMARY KEY,
+    employee_id int NOT NULL,
+    name VARCHAR(80) NOT NULL
+);
+
+INSERT INTO table_subject (employee_id, name)
+VALUES (2,'Français');
+INSERT INTO table_subject (employee_id, name)
+VALUES (2,'Mathématiques');
+INSERT INTO table_subject (employee_id, name)
+VALUES (2,'Eveil');
+INSERT INTO table_subject (employee_id, name)
+VALUES (3,'Français');
+INSERT INTO table_subject (employee_id, name)
+VALUES (3,'Mathématiques');
+INSERT INTO table_subject (employee_id, name)
+VALUES (3,'Eveil');
+INSERT INTO table_subject (employee_id, name)
+VALUES (4,'Neerlandais');
+
+
+CREATE TABLE IF NOT EXISTS table_subsubject(
+    sub_subject_id SERIAL PRIMARY KEY,
+    subject_id int NOT NULL,
+    sub_subject_name VARCHAR(80) NOT NULL,
+    percentage double precision NOT NULL
+);
+
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(1,'Grammaire',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(1,'Conjugaison',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(1,'Lecture',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(1,'Orthographe',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(1,'Vocabulaire',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(4,'Grammaire',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(4,'Conjugaison',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(4,'Lecture',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(4,'Orthographe',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(4,'Vocabulaire',20);
+
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(2,'Calculs',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(2,'Problèmes',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(2,'Géométrie',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(2,'Grandeurs',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(2,'Numération',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(5,'Calculs',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(5,'Problèmes',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(5,'Géométrie',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(5,'Grandeurs',20);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(5,'Numération',20);
+
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(3,'Histoire',33.33);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(3,'Sciences',33.33);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(3,'Géographie',33.33);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(6,'Histoire',33.33);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(6,'Sciences',33.33);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(6,'Géographie',33.33);
+
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(7,'Ecriture',33.33);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(7,'Lecture',33.33);
+INSERT INTO table_subsubject (subject_id,sub_subject_name,percentage)
+VALUES(7,'Audition',33.33);
 
 CREATE TABLE IF NOT EXISTS table_interro(
     interro_id SERIAL PRIMARY KEY,
@@ -62,19 +197,6 @@ CREATE TABLE IF NOT EXISTS table_grade(
     grade double precision NOT NULL,
     total double precision NOT NULL,
     absent boolean NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS table_subject(
-    subject_id SERIAL PRIMARY KEY,
-    employee_id int NOT NULL,
-    name VARCHAR(80) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS table_subsubject(
-    sub_subject_id SERIAL PRIMARY KEY,
-    subject_id int NOT NULL,
-    sub_subject_name VARCHAR(80) NOT NULL,
-    percentage double precision NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS table_question(

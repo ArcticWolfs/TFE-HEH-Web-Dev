@@ -16,7 +16,8 @@ export class WebRoute extends Component {
         this.state = {
             connect: true,
             inscript: false,
-            id:sessionStorage.getItem('userID') || localStorage.getItem('userID') || 0
+            id:sessionStorage.getItem('userID') || localStorage.getItem('userID') || 0,
+            employee: sessionStorage.getItem('employee') || localStorage.getItem('employee') || 0
         }
     }
 
@@ -35,18 +36,31 @@ export class WebRoute extends Component {
                 </React.Fragment>
             )
         }
-        return (
-            <React.Fragment>
-                <Router>
-                    <Switch>
-                        <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id}/>)}></Route>
-                        <Route path='/interroList' render={() => (<InterroList/>)}></Route>
-                        <Route path='/gradeList' render={() => (<GradeList/>)}></Route>
-                        <Route path='/' render={() => (<HomePage/>)}></Route>
-                    </Switch>
-                </Router>
-            </React.Fragment>
-        )
+        if (this.state.employee==="true"){
+            return (
+                <React.Fragment>
+                    <Router>
+                        <Switch>
+                            <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id} employee={this.state.employee}/>)}></Route>
+                            <Route path='/interroList' render={() => (<InterroList/>)}></Route>
+                            <Route path='/gradeList' render={() => (<GradeList/>)}></Route>
+                            <Route path='/' render={() => (<HomePage/>)}></Route>
+                        </Switch>
+                    </Router>
+                </React.Fragment>
+            )
+        } else {
+            return (
+                <React.Fragment>
+                    <Router>
+                        <Switch>
+                            <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id} employee={this.state.employee}/>)}></Route>
+                            <Route path='/' render={() => (<HomePage/>)}></Route>
+                        </Switch>
+                    </Router>
+                </React.Fragment>
+            )
+        }
     }
 
     setConnectState = () => {

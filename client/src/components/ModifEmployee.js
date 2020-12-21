@@ -25,7 +25,7 @@ export class ModifEmployee extends Component {
             lastname: "",
             birthdate: "",
             address: "",
-            emailAddress: "",
+            email: "",
             phoneNumber: "",
             password: "",
             confirmPassword: "",
@@ -72,7 +72,7 @@ export class ModifEmployee extends Component {
                     <p><input className="champConnect" placeholder="Nom" name="lastname" type="text" value={this.state.lastname} onChange={this.onChange} pattern="[A-Z][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ '-]+" onFocus={this.setRequired}/></p>
                     <p><input className="champConnect" placeholder="Naissance (xx/xx/xxxx)" name="birthdate" type="text" value={this.state.birthdate} onChange={this.onChange} pattern="[0-9]{2}[/][0-9]{2}[/][0-9]{4}||[0-9]{4}[-][0-9]{2}[-][0-9]{2}" onFocus={this.setRequired}/></p>
                     <p><input className="champConnect" placeholder="Addresse" name="address" type="text" value={this.state.address} onChange={this.onChange} pattern="[A-Za-z0-9 ',àáâãäåçèéêëìíîïðòóôõöùúûüýÿ-]+" onFocus={this.setRequired}/></p>
-                    <p><input id="mail" className="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.email} onChange={this.onChange} pattern="[a-z.0-9]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
+                    <p><input id="mail" className="champConnect" placeholder="Email" name="email" type="email" value={this.state.email} onChange={this.onChange} pattern="[a-z.0-9]+[@][a-z]+[.][a-z]+" onFocus={this.setRequired}/></p>
                     <p><input className="champConnect" placeholder="Téléphone" name="phoneNumber" type="text" value={this.state.phoneNumber} onChange={this.onChange} pattern="[0-9/. +]+" onFocus={this.setRequired}/></p>
                     <p><input className="champConnect" placeholder="Fonction" name="functionEmployee" type="text" value={this.state.functionEmployee} onChange={this.onChange} pattern="[A-Z][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ '-]+" onFocus={this.setRequired}/></p>
                     <p><input id="pswd" className="champConnect" placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange}/></p>
