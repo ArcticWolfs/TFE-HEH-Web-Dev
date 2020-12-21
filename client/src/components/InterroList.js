@@ -132,17 +132,17 @@ export class InterroList extends Component {
                 option.innerHTML = res.data[c].name;
                 document.getElementById("subFilter").appendChild(option);
             }
-            this.setState({subject_nameFilter: res.data[0].name})
-            this.setState({selectSubjectIDFilter: res.data[0].subject_id},() => {
+            if ((res.data).length!==0){
+                this.setState({subject_nameFilter: res.data[0].name})
+                this.setState({selectSubjectIDFilter: res.data[0].subject_id},() => {
 
-                Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectIDFilter}`, {
+                    Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectIDFilter}`, {
 
-                }).then((res) => {
-                    this.createChildSubSub("subSubFilter",res)
+                    }).then((res) => {
+                        this.createChildSubSub("subSubFilter",res)
+                    })
                 })
-            })
-
-
+            }
         })
 
         Axios.get(`http://localhost:5000/getInterro/${this.state.employee_id}`,{

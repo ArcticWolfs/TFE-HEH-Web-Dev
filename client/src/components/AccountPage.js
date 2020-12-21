@@ -19,7 +19,7 @@ export class AccountPage extends Component {
 
         this.state = {
             id: this.props.userId,
-            employee: sessionStorage.getItem('employee') || localStorage.getItem('employee'),
+            employee: this.props.employee,
             class: null,
             firstname: null,
             lastname: null,
