@@ -68,11 +68,11 @@ CREATE TABLE IF NOT EXISTS table_employee(
 INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
 VALUES ('Admin','Admin','04/04/1994','Rue du collège, 7','admin@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Admin',true);
 INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
-VALUES ('Instituteur','Un','04/04/1994','Rue du collège, 7','insituteur1@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',true);
+VALUES ('Instituteur','Un','04/04/1994','Rue du collège, 7','instituteur1@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',true);
 INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
-VALUES ('Instituteur','Deux','04/04/1994','Rue du collège, 7','insituteur2@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',false);
+VALUES ('Instituteur','Deux','04/04/1994','Rue du collège, 7','instituteur2@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',false);
 INSERT INTO table_employee (firstname,lastname,birthdate,address,emailaddress,phoneNumber,password,functionEmployee,isAdmin)
-VALUES ('Instituteur','Trois','04/04/1994','Rue du collège, 7','insituteur3@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',false);
+VALUES ('Instituteur','Trois','04/04/1994','Rue du collège, 7','instituteur3@hotmail.com','012345678','$2b$10$AolwCSeKwa8pvZIZMoIuN.Wgo81/GCPs0uy8Wyx5GwB.BD1j29xBq','Instituteur',false);
 
 CREATE TABLE IF NOT EXISTS table_interTable(
     inter_id SERIAL PRIMARY KEY,
