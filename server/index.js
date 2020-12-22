@@ -115,6 +115,11 @@ app.post("/addGrade",async(req, res) =>
     await Grade.addGrade(req,res);
 });
 
+app.get("/getGradeByInterroID/:interro_id",async(req, res) =>
+{
+    await Grade.getGradeByInterroID(req,res);
+});
+
 
         //////////////////////
         // Create a subject //

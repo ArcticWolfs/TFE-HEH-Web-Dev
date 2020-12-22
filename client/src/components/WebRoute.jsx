@@ -42,8 +42,8 @@ export class WebRoute extends Component {
                     <Router>
                         <Switch>
                             <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id} employee={this.state.employee}/>)}></Route>
-                            <Route path='/interroList' render={() => (<InterroList/>)}></Route>
-                            <Route path='/gradeList' render={() => (<GradeList/>)}></Route>
+                            <Route path='/interroList' render={() => (<InterroList userId={this.state.id}/>)}></Route>
+                            <Route path='/gradeList' render={() => (<GradeList userId={this.state.id}/>)}></Route>
                             <Route path='/' render={() => (<HomePage/>)}></Route>
                         </Switch>
                     </Router>
