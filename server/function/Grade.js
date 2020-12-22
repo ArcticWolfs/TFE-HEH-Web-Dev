@@ -38,6 +38,33 @@ class Grade
             console.log("Can't create a grade")
         }
     }
+
+    async getGradeByInterroID(req,res)
+    {
+        try
+        {
+            let { interro_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const allGrade = await pool.query("SELECT * FROM table_grade WHERE interro_id = $1", [interro_id]);
+                //Allow us to see the response in postman
+                res.json(allGrade.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting the grade ! " + error);
+        }
+    }
+
 }
 
 module.exports = Grade;
