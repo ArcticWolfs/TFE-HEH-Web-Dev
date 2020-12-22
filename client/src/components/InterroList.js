@@ -196,7 +196,7 @@ export class InterroList extends Component {
                             let buttonNote = document.createElement('a');
                             buttonNote.textContent = "Points" ;
                             buttonNote.className = "btn btn-primary"
-                            buttonNote.href = `/gradeList/${res.data[i].interro_id}/${res.data[i].class_id}`;
+                            buttonNote.href = `/gradeList/${res.data[i].interro_id}`;
                             tdTableNote.appendChild(buttonNote);
 
                             //Tableau modify

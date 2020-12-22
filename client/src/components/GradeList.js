@@ -11,7 +11,7 @@ export class GradeList extends Component {
             interro_name : "sqd",
             interro_class : "qsd"
         }
-        this.onLoadPage();
+        this.onLoadPage2();
     }
 
     render() {
@@ -29,10 +29,9 @@ export class GradeList extends Component {
                             <th scope="col">Point</th>
                             <th scope="col">Total</th>
                             <th scope="col">absent</th>
-                            <th scope="col">Sauvegarder</th>
                         </tr>
                         </thead>
-                        <tbody id="table">
+                        <tbody id="table2">
                         </tbody>
                     </table>
                 </div>
@@ -40,13 +39,13 @@ export class GradeList extends Component {
         )
     }
 
-    onLoadPage = () => {
+    onLoadPage2 = () => {
         try
         {
-            let tableRow = document.getElementById('table');
-            while (tableRow.hasChildNodes())
+            let tableRow2 = document.getElementById('table2');
+            while (tableRow2.hasChildNodes())
             {
-                tableRow.removeChild(tableRow.firstChild);
+                tableRow2.removeChild(tableRow2.firstChild);
             }
         }
         catch (e)
@@ -58,10 +57,12 @@ export class GradeList extends Component {
         let url_info = url.split("/");
         let interro_id = url_info[2];
 
+        console.log(interro_id)
+
         Axios.get(`http://localhost:5000/getGradeByInterroID/${interro_id}`,{
 
         }).then((res) => {
-
+            console.log((res.data).length)
             Axios.get(`http://localhost:5000/getInterroByID/${interro_id}`,{
 
             }).then((res3 ) => {
@@ -72,8 +73,8 @@ export class GradeList extends Component {
                 }).then((res4 ) => {
                     this.setState({interro_class: res4.data[0].name})
                 })
-                
-                let tableRow = document.getElementById("table");
+
+                let tableRow = document.getElementById("table2");
                 for (let i = 0; i < (res.data).length; i++)
                 {
                     //Table
@@ -94,13 +95,21 @@ export class GradeList extends Component {
 
                         //Tableau Grade
                         let tdTableGrade = document.createElement('td');
-                        tdTableGrade.innerHTML = res.data[i].grade;
                         trTable.appendChild(tdTableGrade);
+                        let inputGrade = document.createElement('input');
+                        inputGrade.value = res.data[i].grade;
+                        inputGrade.className = "text-center"
+                        inputGrade.addEventListener("input",this.saveModification)
+                        tdTableGrade.appendChild(inputGrade);
 
-                        //Tableau Total
+                        //Tableau Grade
                         let tdTableTotal = document.createElement('td');
-                        tdTableTotal.innerHTML = res.data[i].total;
                         trTable.appendChild(tdTableTotal);
+                        let inputTotal = document.createElement('input');
+                        inputTotal.value = res.data[i].total;
+                        inputTotal.className = "text-center"
+                        inputTotal.addEventListener("input",this.saveModification)
+                        tdTableTotal.appendChild(inputTotal);
 
                         //Tableau Absent
                         let tdTableAbsent = document.createElement('td');
@@ -111,12 +120,17 @@ export class GradeList extends Component {
                         {
                             checkbox.checked = true;
                         }
+                        checkbox.addEventListener("click",this.saveModification)
                         tdTableAbsent.appendChild(checkbox);
                     })
                 }
             })
-            console.log((res.data).length)
         })
     }
+
+    saveModification = () => {
+        console.log("modif")
+    }
+
 }
 export default GradeList
