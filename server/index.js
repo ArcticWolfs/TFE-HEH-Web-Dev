@@ -106,6 +106,11 @@ app.get("/getInterroId",async(req, res) =>
     await interrogation.getInterroID(req,res);
 });
 
+app.delete("/deleteInterroByID/:interro_id",async(req, res) =>
+{
+    await interrogation.deleteInterroByID(req,res);
+});
+
         ///////////////////
         // Create a Grade //
         ///////////////////

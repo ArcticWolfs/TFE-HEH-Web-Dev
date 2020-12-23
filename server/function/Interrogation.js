@@ -167,6 +167,33 @@ class Interrogation
         }
     }
 
+    async deleteInterroByID(req,res)
+    {
+        try
+        {
+            let { interro_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const deleteInterro = await pool.query("DELETE FROM table_interro WHERE interro_id = $1", [interro_id]);
+                const deleteGrade = await pool.query("DELETE FROM table_grade WHERE interro_id = $1", [interro_id]);
+                //Allow us to see the response in postman
+                res.json("Deleted");
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while modifying an interro ! " + error);
+        }
+    }
+
     async modifyInterro(req,res)
     {
         try

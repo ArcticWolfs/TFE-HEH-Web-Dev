@@ -216,6 +216,7 @@ export class InterroList extends Component {
                             buttonDelete.textContent = "Delete" ;
                             buttonDelete.className = "btn btn-danger"
                             buttonDelete.value = res.data[i].interro_id;
+                            buttonDelete.addEventListener("click",this.onDeleteInterro)
                             tdTableDelete.appendChild(buttonDelete);
                         })
                     })
@@ -295,6 +296,15 @@ export class InterroList extends Component {
             this.onLoadPage();
         })
         this.handleCloseModify();
+    }
+
+    onDeleteInterro = (e) => {
+        console.log(e.path[0].value)
+        Axios.delete(`http://localhost:5000/deleteInterroByID/${e.path[0].value}`,{
+
+        }).then((res) => {
+            this.onLoadPage();
+        })
     }
 
     onChange = (event) => {
