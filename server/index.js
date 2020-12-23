@@ -120,6 +120,15 @@ app.get("/getGradeByInterroID/:interro_id",async(req, res) =>
     await Grade.getGradeByInterroID(req,res);
 });
 
+app.get("/getGradeByID/:grade_id",async(req, res) =>
+{
+    await Grade.getGradeByID(req,res);
+});
+
+app.put("/modifyGradeByID",async(req, res) =>
+{
+    await Grade.modifyGradeByID(req,res);
+});
 
         //////////////////////
         // Create a subject //

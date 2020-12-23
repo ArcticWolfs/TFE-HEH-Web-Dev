@@ -65,6 +65,58 @@ class Grade
         }
     }
 
+    async getGradeByID(req,res)
+    {
+        try
+        {
+            let { grade_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const Grade = await pool.query("SELECT * FROM table_grade WHERE grade_id = $1", [grade_id]);
+                //Allow us to see the response in postman
+                res.json(Grade.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting the grade ! " + error);
+        }
+    }
+
+    async modifyGradeByID(req, res)
+    {
+        try {
+            let {grade_id} = req.body;
+            let {grade} = req.body;
+            let {total} = req.body;
+            let {absent} = req.body;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try {
+                const modifyGrade = await pool.query(
+                    "UPDATE table_grade SET grade = $2, total = $3, absent = $4 WHERE grade_id = $1",
+                    [grade_id, grade,total,absent]
+                );
+                //Allow us to see the response in postman
+                res.json(modifyGrade.rows[0]);
+            } catch (error) {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error){
+            console.log("Can't modify a grade")
+        }
+    }
 }
 
 module.exports = Grade;
