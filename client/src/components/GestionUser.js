@@ -9,39 +9,41 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import Axios from 'axios'
-import CreateEmployee from './CreateEmployee';
 import ModifByAdmin from './ModifByAdmin';
 
 var LIST_ROW = []
 
-export class GestionEmployee extends Component {
+export class GestionUser extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            isOpen: false,
             open: false,
             open2: false,
             actualID: null,
             id: null,
             lastname: null,
             firstname: null,
-            birthdate: null,
+            class_id: null,
             address: null,
-            phoneNumber: null,
-            functionEmployee: null,
-            isAdmin: null
+            email: null,
+            student: null,
+            phoneNumberTutor1: null,
+            emailTutor1: null,
+            phoneNumberTutor2: null,
+            emailTutor2: null
         }
 
-        Axios.get(`http://localhost:5000/getAllEmployees`).then((res) => {
+        Axios.get(`http://localhost:5000/getAllUsers`).then((res) => {
             LIST_ROW=[];
-            let nbEmployees=res.data.length;
-            for (let i = 0; i < nbEmployees; i++) {
-                LIST_ROW.push({id: res.data[i]["employee_id"],lastname: res.data[i]["lastname"],firstname: res.data[i]["firstname"],birthdate: res.data[i]["birthdate"],address: res.data[i]["address"],email: res.data[i]["emailaddress"],phoneNumber: res.data[i]["phonenumber"],functionEmployee: res.data[i]["functionemployee"],isAdmin: res.data[i]["isadmin"].toString()})
+            let nbUsers=res.data.length;
+            for (let i = 0; i < nbUsers; i++) {
+                LIST_ROW.push({id: res.data[i]["user_id"],lastname: res.data[i]["lastname"],firstname: res.data[i]["firstname"],class_id: res.data[i]["class_id"],address: res.data[i]["address"],email: res.data[i]["emailaddress"],student: res.data[i]["student"].toString(),phoneNumberTutor1: res.data[i]["phoneNumberTutor1"],emailTutor1: res.data[i]["emailTutor1"],phoneNumberTutor2: res.data[i]["phoneNumberTutor2"],emailTutor2: res.data[i]["emailTutor2"]})
                 this.setState({ entries: true }, () => {
-                    document.getElementById("modify"+res.data[i]["employee_id"]).onclick = this.toModify;
-                    document.getElementById("delete"+res.data[i]["employee_id"]).onclick = this.handleClickOpen;
+                    document.getElementById("modify"+res.data[i]["user_id"]).onclick = this.toModify;
+                    document.getElementById("delete"+res.data[i]["user_id"]).onclick = this.handleClickOpen;
+                    console.log("modify"+res.data[i]["user_id"])
                 });
                 
             }
@@ -49,28 +51,29 @@ export class GestionEmployee extends Component {
     }
 
     render() {
-        if (this.state.isOpen === false && this.state.open===false) {
+        if (this.state.open===false) {
             return (
                 <React.Fragment>
                     <div className="centerGestion">
-                        <h1>Gestion du personnel</h1>
-                        <button id="buttonCreateEmployee" className="boutonModal btn btn-outline-light" onClick={this.toCreate}>Ajouter un employé</button>
+                        <h1>Gestion des utilisateurs</h1>
                     </div>
                     <div>
                         <table className="table table-sm table-dark EmployeeList">
                             <tr>
                                 <th scope="col" className="lastname">Nom</th>
                                 <th scope="col" className="firstname">Prénom</th>
-                                <th scope="col" className="birthdate">Date de naissance</th>
+                                <th scope="col" className="class_id">Classe</th>
                                 <th scope="col" className="address">Adresse</th>
                                 <th scope="col" className="email">Email</th>
-                                <th scope="col" className="phoneNumber">Téléphone</th>
-                                <th scope="col" className="functionEmployee">Fonction</th>
-                                <th scope="col" className="isAdmin">Admin</th>
+                                <th scope="col" className="student">Étudiant</th>
+                                <th scope="col" className="phoneNumberTutor1">Téléphone tuteur 1</th>
+                                <th scope="col" className="emailTutor1">Email tuteur 1</th>
+                                <th scope="col" className="phoneNumberTutor2">Téléphone tuteur 2</th>
+                                <th scope="col" className="emailTutor2">Email tuteur 2</th>
                                 <th scope="col" className="modify">Modifier</th>
                                 <th scope="col" className="delete">Supprimer</th>
                             </tr>
-                            <EmployeeList entries={LIST_ROW}/>
+                            <UserList entries={LIST_ROW}/>
                         </table>
                     </div>
                     <Dialog
@@ -99,28 +102,14 @@ export class GestionEmployee extends Component {
                 </React.Fragment>
             )
         }
-        else if (this.state.isOpen===true && this.state.open===false){
+        else if (this.state.open===true){
             return (
                 <React.Fragment>
-                    <CreateEmployee toCreate={this.setToCreate}></CreateEmployee>
-                </React.Fragment>
-            )
-        }
-        else if (this.state.isOpen===false && this.state.open===true){
-            return (
-                <React.Fragment>
-                    <ModifByAdmin userId={this.state.actualID} toModify={this.setToModify} employee={true}></ModifByAdmin>
+                    <ModifByAdmin userId={this.state.actualID} toModify={this.setToModify} employee={false}></ModifByAdmin>
                 </React.Fragment>
             )
         }
     }
-    toCreate = () => {
-        this.setState({ isOpen: true });
-    };
-
-    setToCreate = () => {
-        this.setState({ isOpen: false });
-    };
     
     toModify = (event) => {
         this.setState({ 
@@ -132,8 +121,8 @@ export class GestionEmployee extends Component {
     setToModify = () => {
         this.setState({open: false }, () => {
             for (let i = 1; i <= LIST_ROW.length; i++) {
-                document.getElementById("modify"+i).onclick = this.toModify;
-                document.getElementById("delete"+i).onclick = this.handleClickOpen;
+                /*document.getElementById("modify"+i).onclick = this.toModify;
+                document.getElementById("delete"+i).onclick = this.handleClickOpen;*/
             }
         });   
     };
@@ -152,7 +141,7 @@ export class GestionEmployee extends Component {
         this.handleClose();
     };
     deleteAccount = () =>{
-        Axios.delete(`http://localhost:5000/deleteEmployee/${this.state.actualID}`, {
+        Axios.delete(`http://localhost:5000/deleteUser/${this.state.actualID}`, {
 
         })
         .then(function (res) {
@@ -167,20 +156,22 @@ export class GestionEmployee extends Component {
 
 }
 
-const EmployeeList = ({ entries }) => (
+const UserList = ({ entries }) => (
     
     <tbody>
     {
-        entries.map(({id, lastname, firstname, birthdate, address, email, phoneNumber, functionEmployee, isAdmin }) => (
+        entries.map(({id, lastname, firstname, class_id, address, email, student, phoneNumberTutor1, emailTutor1, phoneNumberTutor2, emailTutor2 }) => (
             <tr key={id}>
                 <td className="lastname">{lastname}</td>
                 <td className="firstname">{firstname}</td>
-                <td className="birthdate">{birthdate}</td>
+                <td className="class_id">{class_id}</td>
                 <td className="address">{address}</td>
                 <td className="email">{email}</td>
-                <td className="phoneNumber">{phoneNumber}</td>
-                <td className="functionEmployee">{functionEmployee}</td>
-                <td className="isAdmin">{isAdmin}</td>
+                <td className="student">{student}</td>
+                <td className="phoneNumberTutor1">{phoneNumberTutor1}</td>
+                <td className="emailTutor1">{emailTutor1}</td>
+                <td className="phoneNumberTutor2">{phoneNumberTutor2}</td>
+                <td className="emailTutor2">{emailTutor2}</td>
                 <td className="modify"><button id={"modify"+id} value={id}>Modifier</button></td>
                 <td className="delete"><button id={"delete"+id} value={id}>Supprimer</button></td>
             </tr>
@@ -190,4 +181,4 @@ const EmployeeList = ({ entries }) => (
     
 )
 
-export default GestionEmployee
+export default GestionUser
