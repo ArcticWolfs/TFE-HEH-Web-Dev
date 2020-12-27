@@ -336,3 +336,73 @@ tr {
 	width: 65em;
 	height:37em;
 }
+
+.ulAdministration
+{
+	line-height: 2.5em;
+	list-style: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.liAdministration
+{
+	text-align: center;
+}
+
+.aAdministration
+{
+	display:block;
+	height:100%;
+	color:#FFF;
+	font-size: 2em;
+	margin: 0.5em 0;
+	padding : 0.8em 1em;
+	border : solid rgba(0, 111, 123, 0.653) 0.1em;
+	background-color: rgba(0, 111, 123, 0.394);
+	border-radius : 1em;
+}
+
+.aAdministration:hover
+{
+	text-decoration: none;
+	color: #FFF;
+	background-color: rgba(0, 111, 123, 0.755);
+	cursor: pointer;
+}
+
+.aAdministrationDisabled
+{
+	display:block;
+	height:100%;
+	color:#FFF;
+	font-size: 2em;
+	margin: 0.5em 0;
+	padding : 0.8em 1em;
+	border : solid rgba(127, 145, 147, 0.714) 0.1em;
+	background-color: rgba(127, 145, 147, 0.714);
+	border-radius : 1em;
+}
+
+.aAdministrationDisabled:hover
+{
+	text-decoration: none;
+	color: #FFF;
+	cursor: not-allowed;
+}
+
+.centerGestion {
+	text-align: center;
+}
+
+#buttonCreateEmployee {
+	background-color: rgba(0, 111, 123, 0.394);
+	margin-bottom: 1em;
+	margin-top: -0.5em;
+}
+#buttonCreateEmployee:hover {
+	color: #FFF;
+	background-color: rgba(0, 111, 123, 0.755);
+}

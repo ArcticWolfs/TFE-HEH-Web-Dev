@@ -212,6 +212,11 @@ app.put("/modifyEmployee/:id", async(req, res) =>
     await employee.modifyEmployee(req,res);
 });
 
+app.put("/modifyEmployee_admin/:id", async(req, res) =>
+{
+    await employee.modifyEmployee_admin(req,res);
+});
+
 app.delete("/deleteEmployee/:id", async(req,res) =>
 {
     await employee.deleteEmployee(req,res);
