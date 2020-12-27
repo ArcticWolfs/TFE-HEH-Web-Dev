@@ -421,5 +421,38 @@ class User
             console.error("Error while deleting an user : " + err.message)
         }
     }
+
+    async getAllStudents(req, res)
+    {
+        try
+        {
+            const getAllStudents = await pool.query("SELECT * FROM table_user WHERE student = true");
+
+            //Allow us to see the response in postman
+            res.json(getAllStudents.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting all the user : " + err.message)
+        }
+    }
+
+    async changeClass(req,res)
+    {
+        try
+        {
+            let { id } = req.params;
+            let { class_id } = req.body;
+
+
+            const ChangeClass = await pool.query(
+                "UPDATE table_user SET class_id = $1 WHERE user_id = $2",
+                [class_id,id]
+            );
+            res.json("Class is change")
+        }
+        catch (err)
+        {}
+    }
 }
 module.exports = User;

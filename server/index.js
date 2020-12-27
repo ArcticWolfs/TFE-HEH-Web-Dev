@@ -250,3 +250,18 @@ app.listen(5000, () =>
 {
     console.log("Server has started on port 5000");
 });
+
+app.get("/getAllStudents", async(req, res) =>
+{
+    await user.getAllStudents(req,res);
+});
+
+app.get("/getAllClass", async(req,res)=>
+{
+    await Class.getAllClass(req,res);
+});
+
+app.put("/changeClass/:id", async(req,res) =>
+{
+    await user.changeClass(req,res);
+})

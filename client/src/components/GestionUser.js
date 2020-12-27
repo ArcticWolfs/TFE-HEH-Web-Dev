@@ -43,7 +43,6 @@ export class GestionUser extends Component {
                 this.setState({ entries: true }, () => {
                     document.getElementById("modify"+res.data[i]["user_id"]).onclick = this.toModify;
                     document.getElementById("delete"+res.data[i]["user_id"]).onclick = this.handleClickOpen;
-                    console.log("modify"+res.data[i]["user_id"])
                 });
                 
             }
@@ -120,9 +119,9 @@ export class GestionUser extends Component {
 
     setToModify = () => {
         this.setState({open: false }, () => {
-            for (let i = 1; i <= LIST_ROW.length; i++) {
-                /*document.getElementById("modify"+i).onclick = this.toModify;
-                document.getElementById("delete"+i).onclick = this.handleClickOpen;*/
+            for (let i = 0; i < LIST_ROW.length; i++) {
+                document.getElementById("modify"+LIST_ROW[i].id).onclick = this.toModify;
+                document.getElementById("delete"+LIST_ROW[i].id).onclick = this.handleClickOpen;
             }
         });   
     };

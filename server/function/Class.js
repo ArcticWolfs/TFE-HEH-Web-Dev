@@ -115,6 +115,21 @@ class Class
             console.log("Error while getting a subject " + error);
         }
     }
+
+    async getAllClass(req,res)
+    {
+        try
+        {
+            const getAllClass = await pool.query("SELECT * FROM table_class");
+
+            //Allow us to see the response in postman
+            res.json(getAllClass.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting all the class : " + err.message)
+        }
+    }
 }
 
 module.exports = Class;

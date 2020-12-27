@@ -30,7 +30,7 @@ export class Administration extends Component {
                     <ul className="ulAdministration">
                         <li className="liAdministration"><a href="/gestionEmployee" className="aAdministration">Gestion du personnel</a></li>
                         <li className="liAdministration"><a href="/gestionUser" className="aAdministration">Gestion des utilisateurs</a></li>
-                        <li className="liAdministration"><a href="/#" className="aAdministration">Gestion des classes</a></li>
+                        <li className="liAdministration"><a href="/gestionClass" className="aAdministration">Gestion des classes</a></li>
                     </ul>
                 </React.Fragment>
             )
@@ -41,7 +41,7 @@ export class Administration extends Component {
                     <ul className="ulAdministration">
                         <li className="liAdministration"><a href="/administration#" className="aAdministrationDisabled">Gestion du personnel</a></li>
                         <li className="liAdministration"><a href="/administration#" className="aAdministrationDisabled">Gestion des utilisateurs</a></li>
-                        <li className="liAdministration"><a href="/#" className="aAdministration">Gestion des classes</a></li>
+                        <li className="liAdministration"><a href="/gestionClass" className="aAdministration">Gestion des classes</a></li>
                     </ul>
                 </React.Fragment>
             )
