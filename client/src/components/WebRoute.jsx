@@ -6,6 +6,8 @@ import {InterroList} from "./InterroList";
 import { Connexion } from './Connexion';
 import { Inscription } from './Inscription'
 import {GradeList} from "./GradeList";
+import {Administration} from "./Administration";
+import {GestionEmployee} from "./GestionEmployee";
 
  
 export class WebRoute extends Component {
@@ -41,6 +43,8 @@ export class WebRoute extends Component {
                 <React.Fragment>
                     <Router>
                         <Switch>
+                            <Route path='/gestionEmployee' render={() => (<GestionEmployee/>)}></Route>
+                            <Route path='/administration' render={() => (<Administration userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/interroList' render={() => (<InterroList userId={this.state.id}/>)}></Route>
                             <Route path='/gradeList' render={() => (<GradeList userId={this.state.id}/>)}></Route>
