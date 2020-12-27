@@ -62,6 +62,11 @@ app.put("/modifyUser/:id", async(req, res) =>
     await user.modifyUser(req,res);
 });
 
+app.put("/modifyUser_admin/:id", async(req, res) =>
+{
+    await user.modifyUser_admin(req,res);
+});
+
 app.delete("/deleteUser/:id", async(req,res) =>
 {
     await user.deleteUser(req,res);

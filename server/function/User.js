@@ -299,6 +299,114 @@ class User
         }
     }
 
+    async modifyUser_admin(req,res)
+    {
+        try
+        {
+            let { id } = req.params;
+            let { firstname } = req.body;
+            let { lastname } = req.body;
+            let { address } = req.body;
+            let { student } = req.body;
+            let { phoneNumberTutor1 } = req.body;
+            let { phoneNumberTutor2 } = req.body;
+            let { emailTutor1 } = req.body;
+            let { emailTutor2 } = req.body;
+            
+            if (student === 1 || student === true || student === "1")
+            {
+                try
+                {
+                    //////////////
+                    //   TRIM   //
+                    //////////////
+                    phoneNumberTutor1 = phoneNumberTutor1.trim();
+                    phoneNumberTutor2 = phoneNumberTutor2.trim();
+                    emailTutor1 = emailTutor1.trim();
+                    emailTutor2 = emailTutor2.trim();
+                    emailTutor1 = emailTutor1.toLowerCase();
+                    emailTutor2 = emailTutor2.toLowerCase();
+                }
+                catch (error)
+                {
+                    console.log("trying to trim nonexistent data");
+                }
+            }
+
+            firstname = firstname.trim();
+            lastname = lastname.trim();
+            address = address.trim();
+
+            /////////////////
+            //   Security  //
+            /////////////////
+
+            if (security.firstNameVerification(firstname,res) === false)
+            {
+                if (security.lastNameVerification(lastname,res) === false)
+                {
+                    if (security.addressVerification(address,res) === false)
+                    {
+                        if (security.studentVerification(student,res) === false)
+                        {
+                            if (student === 1 || student === true || student === "1")
+                            {
+                                if (security.phoneVerification(phoneNumberTutor1,res,"parent") === false)
+                                {
+                                    if (security.phoneVerification(phoneNumberTutor2,res,"parent2") === false)
+                                    {
+                                        let oldEmail="noemail";
+                                        if (await security.emailVerification(emailTutor1,oldEmail,res,"parent") === false)
+                                        {
+                                            if (await security.emailVerification(emailTutor2,oldEmail,res,"parent2") === false)
+                                            {
+                                                ////////////////
+                                                //   REQUEST  //
+                                                ////////////////
+
+                                                const updateUser = await pool.query(
+                                                    "UPDATE table_user SET firstname = $1, lastname = $2, address = $3, student = $4, phonenumbertutor1 = $5, phonenumbertutor2 = $6, emailtutor1 = $7, emailtutor2 = $8 WHERE user_id = $9",
+                                                    [firstname,lastname,address,student,phoneNumberTutor1,phoneNumberTutor2,emailTutor1,emailTutor2,id]
+                                                );
+
+                                                //Allow us to see the response in postman
+                                                res.json("User Updated");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                emailTutor1 = "undefined";
+                                emailTutor2 = "undefined";
+                                phoneNumberTutor1 = "undefined";
+                                phoneNumberTutor2 = "undefined";
+
+                                ////////////////
+                                //   REQUEST  //
+                                ////////////////
+
+                                const updateUser = await pool.query(
+                                    "UPDATE table_user SET firstname = $1, lastname = $2, address = $3, student = $4 WHERE user_id = $5",
+                                    [firstname,lastname,address,student,id]
+                                );
+
+                                //Allow us to see the response in postman
+                                res.json("User Updated");
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        catch (err)
+        {
+            console.error("Error while modifying an user : " + err.message)
+        }
+    }
+
     async deleteUser(req,res)
     {
         try
