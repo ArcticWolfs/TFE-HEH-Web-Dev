@@ -104,6 +104,7 @@ export class CreateEmployee extends Component {
         this.setState({
             isOpen: false
         })
+        this.props.toCreate();
     }
 
     verifPassword = () => {
@@ -120,9 +121,9 @@ export class CreateEmployee extends Component {
     }
 
     onClick = () =>{
-        this.isAdmin = 0;
+        this.state.isAdmin = 0;
         if(document.getElementById('isAdmin').checked === true){
-            this.isAdmin = 1;
+            this.state.isAdmin = 1;
         }
 
         const Security = require("../Security");

@@ -62,6 +62,11 @@ app.put("/modifyUser/:id", async(req, res) =>
     await user.modifyUser(req,res);
 });
 
+app.put("/modifyUser_admin/:id", async(req, res) =>
+{
+    await user.modifyUser_admin(req,res);
+});
+
 app.delete("/deleteUser/:id", async(req,res) =>
 {
     await user.deleteUser(req,res);
@@ -240,6 +245,11 @@ app.get("/getAllEmployees", async(req, res) =>
 app.put("/modifyEmployee/:id", async(req, res) =>
 {
     await employee.modifyEmployee(req,res);
+});
+
+app.put("/modifyEmployee_admin/:id", async(req, res) =>
+{
+    await employee.modifyEmployee_admin(req,res);
 });
 
 app.delete("/deleteEmployee/:id", async(req,res) =>
