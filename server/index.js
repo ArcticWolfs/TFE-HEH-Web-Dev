@@ -96,6 +96,11 @@ app.get("/getInterroByID/:interro_id",async(req, res) =>
     await interrogation.getInterroByID(req,res);
 });
 
+app.get("/getInterroByIDAndTrimester/:interro_id",async(req, res) =>
+{
+    await interrogation.getInterroByIDAndTrimester(req,res);
+});
+
 app.put("/modifyInterro",async(req, res) =>
 {
     await interrogation.modifyInterro(req,res);
@@ -124,6 +129,12 @@ app.get("/getGradeByInterroID/:interro_id",async(req, res) =>
 {
     await Grade.getGradeByInterroID(req,res);
 });
+
+app.get("/getGradeByUserID/:user_id",async(req, res) =>
+{
+    await Grade.getGradeByUserID(req,res);
+});
+
 
 app.get("/getGradeByID/:grade_id",async(req, res) =>
 {

@@ -65,6 +65,32 @@ class Grade
         }
     }
 
+    async getGradeByUserID(req,res)
+    {
+        try
+        {
+            let { user_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const allGrade = await pool.query("SELECT * FROM table_grade WHERE user_id = $1", [user_id]);
+                //Allow us to see the response in postman
+                res.json(allGrade.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting the grade ! " + error);
+        }
+    }
+
     async getGradeByID(req,res)
     {
         try

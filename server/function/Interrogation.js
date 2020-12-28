@@ -20,6 +20,7 @@ class Interrogation
             let { class_id } = req.body;
             let { name } = req.body;
             let { total } = req.body;
+            let { trimester } = req.body;
 
 
                 //////////////
@@ -38,8 +39,8 @@ class Interrogation
                     try
                     {
                         const newInterro = await pool.query(
-                            "INSERT INTO table_interro (employee_id,class_id,subject_id,sub_subject_id,name,total) VALUES($1,$2,$3,$4,$5,$6) RETURNING * ",
-                            [employee_id,class_id,subject_id,sub_subject_id,name,total]
+                            "INSERT INTO table_interro (employee_id,class_id,subject_id,sub_subject_id,name,total,trimester) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING * ",
+                            [employee_id,class_id,subject_id,sub_subject_id,name,total,trimester]
                         );
                         res.json(newInterro.rows);
                     }
@@ -153,6 +154,33 @@ class Interrogation
             try
             {
                 const interro = await pool.query("SELECT * FROM table_interro WHERE interro_id = $1", [interro_id]);
+                //Allow us to see the response in postman
+                res.json(interro.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while modifying an interro ! " + error);
+        }
+    }
+
+    async getInterroByIDAndTrimester(req,res)
+    {
+        try
+        {
+            let { interro_id } = req.params;
+            let { trimester } = req.body;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const interro = await pool.query("SELECT * FROM table_interro WHERE interro_id = $1 AND trimester = $2", [interro_id,trimester]);
                 //Allow us to see the response in postman
                 res.json(interro.rows);
             }

@@ -6,6 +6,8 @@ import {InterroList} from "./InterroList";
 import { Connexion } from './Connexion';
 import { Inscription } from './Inscription'
 import {GradeList} from "./GradeList";
+import {BulletinList} from "./BulletinList";
+import {Bulletin} from "./Bulletin";
 
  
 export class WebRoute extends Component {
@@ -44,6 +46,8 @@ export class WebRoute extends Component {
                             <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/interroList' render={() => (<InterroList userId={this.state.id}/>)}></Route>
                             <Route path='/gradeList' render={() => (<GradeList userId={this.state.id}/>)}></Route>
+                            <Route path='/bulletinList' render={() => (<BulletinList userId={this.state.id} employee={this.state.employee}/>)}></Route>
+                            <Route path='/bulletin' render={() => (<Bulletin userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/' render={() => (<HomePage/>)}></Route>
                         </Switch>
                     </Router>
@@ -55,6 +59,8 @@ export class WebRoute extends Component {
                     <Router>
                         <Switch>
                             <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id} employee={this.state.employee}/>)}></Route>
+                            <Route path='/bulletinList' render={() => (<BulletinList userId={this.state.id} employee={this.state.employee}/>)}></Route>
+                            <Route path='/bulletin' render={() => (<Bulletin userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/' render={() => (<HomePage/>)}></Route>
                         </Switch>
                     </Router>

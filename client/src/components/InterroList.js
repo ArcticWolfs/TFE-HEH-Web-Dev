@@ -14,6 +14,7 @@ export class InterroList extends Component {
             nameModify: "",
             totalModify: "",
             class: "",
+            trimester: "1",
             subject_name: "",
             subSubject_name: "",
             subjectFilter_name: "",
@@ -54,6 +55,11 @@ export class InterroList extends Component {
                     <select className="custom-select my-1 mr-sm-2" id="modalSub" onChange={this.onSubjectChange}></select>
                     <select className="custom-select my-1 mr-sm-2" id="modalSubSub" onChange={this.onSubSubjectChange}></select>
                     <select className="custom-select my-1 mr-sm-2" id="modalClass" onChange={this.onClassChange}></select>
+                    <select className="custom-select my-1 mr-sm-2" id="modalTrimester" onChange={this.onTrimesterChange}>
+                        <option value="1">Premier trimestre</option>
+                        <option value="2">Deuxième trimestre</option>
+                        <option value="3">Troisième trimestre</option>
+                    </select>
                     <button className="boutonModal btn btn-outline-light"  onClick={this.handleClose}>Annuler</button>
                     <button className="boutonModal btn btn-outline-light" onClick={this.onCreateInterro}>Créer l'interro</button>
                 </Modal>
@@ -93,6 +99,7 @@ export class InterroList extends Component {
                             <th scope="col">Classe</th>
                             <th scope="col">Matière</th>
                             <th scope="col">Sous-Matière</th>
+                            <th scope="col">Trimestre</th>
                             <th scope="col">Total</th>
                             <th scope="col">Points</th>
                             <th scope="col">Modify</th>
@@ -185,6 +192,11 @@ export class InterroList extends Component {
                             tdTableSubSubject.innerHTML = res4.data[0].sub_subject_name;
                             trTable.appendChild(tdTableSubSubject);
 
+                            //Tableau Trimester
+                            let tdTableTrimester = document.createElement('td');
+                            tdTableTrimester.innerHTML = res.data[i].trimester;
+                            trTable.appendChild(tdTableTrimester);
+
                             //Tableau total
                             let tdTableTotal = document.createElement('td');
                             tdTableTotal.innerHTML = res.data[i].total;
@@ -226,6 +238,7 @@ export class InterroList extends Component {
     }
 
     onCreateInterro = (e) => {
+        console.log(this.state.trimester)
         try{
             Axios.post(`http://localhost:5000/createInterro`, {
                 employee_id: this.state.employee_id,
@@ -233,7 +246,8 @@ export class InterroList extends Component {
                 subject_id: this.state.selectSubjectID,
                 sub_subject_id: this.state.selectSubSubjectID,
                 name : this.state.name,
-                total : this.state.total
+                total : this.state.total,
+                trimester : this.state.trimester
             }).then((res) => {
                 try
                 {
@@ -584,6 +598,13 @@ export class InterroList extends Component {
 
             })
         })
+    }
+
+    onTrimesterChange = () =>
+    {
+        let modalTrimester = document.getElementById("modalTrimester").value;
+
+        this.setState({trimester : modalTrimester})
     }
 
     onSubjectFilterChange = (e) => {
