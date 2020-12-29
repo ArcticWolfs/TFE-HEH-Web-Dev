@@ -187,7 +187,8 @@ CREATE TABLE IF NOT EXISTS table_interro(
     subject_id int NOT NULL,
     sub_subject_id int NOT NULL,
     name VARCHAR(60) NOT NULL,
-    total double precision NOT NULL
+    total double precision NOT NULL,
+    trimester int NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS table_grade(
