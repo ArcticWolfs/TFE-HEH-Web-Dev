@@ -22,6 +22,7 @@ const Sub_Subject = new Function.Sub_Subject();
 const Class = new Function.Class();
 const employee = new Function.Employee;
 const Grade = new Function.Grade();
+const Question = new Function.Question();
 
      //////////
      // Test //
@@ -255,6 +256,20 @@ app.put("/modifyEmployee_admin/:id", async(req, res) =>
 app.delete("/deleteEmployee/:id", async(req,res) =>
 {
     await employee.deleteEmployee(req,res);
+});
+
+        //////////////////////
+        //     Question     //
+        //////////////////////
+
+app.get("/getQuestion/:question_id", async(req,res) =>
+{
+    await Question.getQuestionByID(req,res);
+});
+
+app.post("/createQuestion", async(req,res) =>
+{
+    await Question.createQuestion(req,res);
 });
 
 app.listen(5000, () => 
