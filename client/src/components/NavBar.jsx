@@ -30,7 +30,7 @@ class NavBar extends Component {
               </li>
               <li>
                 <DropdownButton id="dropdown-basic-button" title="Quizz">
-                  <Dropdown.Item className="Dropdown-nav" href="/#">Gestion des questionnaires</Dropdown.Item>
+                  <Dropdown.Item className="Dropdown-nav" href="/quizzList">Gestion des questionnaires</Dropdown.Item>
                   <Dropdown.Item className="Dropdown-nav" href="/#">Testez vos quizz</Dropdown.Item>
                 </DropdownButton>
               </li>
