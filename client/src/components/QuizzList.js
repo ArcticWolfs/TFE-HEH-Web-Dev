@@ -13,8 +13,9 @@ export class QuizzList extends Component {
             isModifyOpen: false,
             questions: "",
             image: "",
-            subject : "",
+            select_subject : "français",
             time : "",
+            type : "TrueOrFalse",
             good_answer : "",
             bad_answer:"",
             bad_answer_2 :"",
@@ -36,8 +37,14 @@ export class QuizzList extends Component {
                     <div id="créer une question"><h1>Créer une Question</h1></div>
                     <p className="champConnect"><input class="champConnect" placeholder="Question" name="questions" type="text" value={this.state.questions} onChange={this.onChange}/></p>
                     <p className="champConnect"><input class="champConnect" placeholder="Lien vers l'image" name="image" type="text" value={this.state.image} onChange={this.onChange}/></p>
-                    <p className="champConnect"><input className="champConnect" placeholder="Matière" name="subject" type="text" value={this.state.subject} onChange={this.onChange}/></p>
-                    <p className="champConnect"><input className="champConnect" placeholder="Temps" name="time" type="text" value={this.state.time} onChange={this.onChange}/></p>
+                    <select id="subject" onChange={this.onSubjectChange}>
+                        <option value="français">Français</option>
+                        <option value="mathématiques">Mathématiques</option>
+                        <option value="histoire">Histoire</option>
+                        <option value="géographie">Géographie</option>
+                        <option value="sciences">Sciences</option>
+                    </select>
+                    <p className="champConnect"><input className="champConnect" placeholder="Temps" name="time" type="number" value={this.state.time} onChange={this.onChange}/></p>
                     <div>
                         <h2>Type de question</h2>
                         <input type="radio" id="trueOrFalseType" name="typeQuestion" value="trueOrFalse" defaultChecked onClick={this.onQuestionTypeChangeForTrueOrFalse}/>
@@ -74,7 +81,7 @@ export class QuizzList extends Component {
                     <select className="custom-select my-1 mr-sm-2" id="modalSubSubModify" onChange={this.onSubSubjectChangeModify}/>
                     <select className="custom-select my-1 mr-sm-2" id="modalClassModify" onChange={this.onClassChangeModify}/>
                     <button className="boutonModal btn btn-outline-light"  onClick={this.handleCloseModify}>Annuler</button>
-                    <button className="boutonModal btn btn-outline-light" onClick={this.onModifyInterro}>Modifier l'interro</button>
+                    <button className="boutonModal btn btn-outline-light" onClick={this.onModifyQuestion}>Modifier l'interro</button>
                 </Modal>
                 <div>
                     <h1>Question du Quizz</h1>
@@ -230,15 +237,91 @@ export class QuizzList extends Component {
     }*/
 
     onCreateQuestion = (e) => {
+        console.log(this.state.questions)
+        console.log(this.state.select_subject)
+        console.log(this.state.time)
+        console.log(this.state.image)
         try{
             Axios.post(`http://localhost:5000/createQuestion`, {
                 question: this.state.questions,
                 image : this.state.image,
-                subject : this.state.subject,
+                subject : this.state.select_subject,
                 time : this.state.time
             }).then((res) => {
-                this.handleClose();
-                //this.onLoadPage();
+                console.log(res.data.question_id)
+                if (this.state.type === "TrueOrFalse")
+                {
+                    if (this.state.trueOrFalse_answer === 1)
+                    {
+                        Axios.post(`http://localhost:5000/createAnswer`, {
+                            question_id : res.data.question_id,
+                            answer : "Vrai",
+                            trueanswerornot: true
+                        }).then((res9) => {
+                            Axios.post(`http://localhost:5000/createAnswer`, {
+                                answer : "Faux",
+                                trueanswerornot : false,
+                                question_id : res.data.question_id
+                            }).then((res8) => {
+                                this.handleClose();
+                                //this.onLoadPage();
+                            })
+                        })
+                    }
+                    else
+                    {
+                        Axios.post(`http://localhost:5000/createAnswer`, {
+                            answer : "Vrai",
+                            trueanswerornot: false,
+                            question_id : res.data.question_id
+                        }).then((res6) => {
+                            Axios.post(`http://localhost:5000/createAnswer`, {
+                                answer : "Faux",
+                                trueanswerornot : true,
+                                question_id : res.data.question_id
+                            }).then((res7) => {
+                                this.handleClose();
+                                //this.onLoadPage();
+                            })
+                        })
+                    }
+                }
+                else
+                {
+                    console.log(this.state.good_answer)
+                    console.log(this.state.bad_answer)
+                    console.log(this.state.bad_answer_2)
+                    console.log(this.state.bad_answer_3)
+                    console.log(res.data.question_id)
+                    Axios.post(`http://localhost:5000/createAnswer`, {
+                        answer : this.state.good_answer,
+                        trueanswerornot : true,
+                        question_id : res.data.question_id
+                    }).then((res2) => {
+                        Axios.post(`http://localhost:5000/createAnswer`, {
+                            answer : this.state.bad_answer,
+                            trueanswerornot : false,
+                            question_id : res.data.question_id
+                        }).then((res3) => {
+                            Axios.post(`http://localhost:5000/createAnswer`, {
+                                answer : this.state.bad_answer_2,
+                                trueanswerornot : false,
+                                question_id : res.data.question_id
+
+                            }).then((res4) => {
+                                Axios.post(`http://localhost:5000/createAnswer`, {
+                                    answer : this.state.bad_answer_3,
+                                    trueanswerornot : false,
+                                    question_id : res.data.question_id
+                                }).then((res5) => {
+                                    this.handleClose();
+                                    //this.onLoadPage();
+                                })
+                            })
+                        })
+                    })
+                }
+
             })
         }
         catch (e)
@@ -251,10 +334,12 @@ export class QuizzList extends Component {
     }
 
     onQuestionTypeChangeForMultipleAnswer = () => {
+        this.setState({type : "MultipleAnswer"});
         document.getElementById("multipleAnswer").hidden = false;
         document.getElementById("trueOrFalse").hidden = true;
     }
     onQuestionTypeChangeForTrueOrFalse = () => {
+        this.setState({type : "TrueOrFalse"});
         document.getElementById("multipleAnswer").hidden = true;
         document.getElementById("trueOrFalse").hidden = false;
     }
@@ -302,46 +387,11 @@ export class QuizzList extends Component {
 
     handleOpen = () => {
         this.setState({ isOpen: true });
-        Axios.get(`http://localhost:5000/getSubject/${this.state.employee_id}`, {
-
-        }).then((res ) => {
-            for (let c = 0; c < (res.data).length; c++)
-            {
-                let option = document.createElement('option');
-                option.value = res.data[c].name;
-                option.innerHTML = res.data[c].name;
-                document.getElementById("modalSub").appendChild(option);
-            }
-            this.setState({subject_name: res.data[0].name})
-            this.setState({selectSubjectID: res.data[0].subject_id})
-
-            Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectID}`, {
-
-            }).then((res) => {
-                this.createChildSubSub("modalSubSub",res)
-                this.setState({subSubject_name: res.data[0].name})
-                this.setState({selectSubSubjectID: res.data[0].sub_subject_id})
-
-                Axios.get(`http://localhost:5000/getClass/${this.state.employee_id}`, {
-
-                }).then((res) => {
-                    for (let c = 0; c < (res.data).length; c++)
-                    {
-                        let option = document.createElement('option');
-                        option.value = res.data[c].name;
-                        option.innerHTML = res.data[c].name;
-                        document.getElementById("modalClass").appendChild(option);
-                    }
-                    this.setState({class: res.data[0].name})
-                    this.setState({class_id: res.data[0].class_id})
-
-                })
-            })
-        })
     };
 
     handleClose = () => {
         this.setState({ isOpen: false });
+        this.setState({select_subject : "français"});
     };
 
     handleOpenModify = (e) => {
@@ -418,6 +468,13 @@ export class QuizzList extends Component {
         });
     };
 
+    onSubjectChange = () => {
+        this.setState({select_subject : document.getElementById("subject").value})
+    }
+
+    onSubjectChangeModify = () => {
+        this.setState({select_subject_modify : document.getElementById("subject_modify").value})
+    }
 
     deleteChild = (select) => {
         let selectList = document.getElementById(select);
