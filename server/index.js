@@ -23,6 +23,7 @@ const Class = new Function.Class();
 const employee = new Function.Employee;
 const Grade = new Function.Grade();
 const Question = new Function.Question();
+const Answer = new Function.Answer();
 
      //////////
      // Test //
@@ -270,6 +271,15 @@ app.get("/getQuestion/:question_id", async(req,res) =>
 app.post("/createQuestion", async(req,res) =>
 {
     await Question.createQuestion(req,res);
+});
+
+        //////////////////////
+        //     Anwer     //
+        //////////////////////
+
+app.post("/createAnswer", async(req,res) =>
+{
+    await Answer.createAnswer(req,res);
 });
 
 app.listen(5000, () => 

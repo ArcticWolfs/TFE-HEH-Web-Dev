@@ -15,7 +15,6 @@ class QuestionSecurity
 
     questionVerification(question,res)
     {
-        console.log(question)
         if (question.length > 4)
         {
             let questionCharactersSup = ["-", " ", "?", ">", "<", "+", "-", "/", "*", "."];
@@ -64,7 +63,7 @@ class QuestionSecurity
 
     timeVerification(time, res)
     {
-        if (typeof time === 'number' && time < 600)
+        if (time < 600)
         {
             return false;
         }
