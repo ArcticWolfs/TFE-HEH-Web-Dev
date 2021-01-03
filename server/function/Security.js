@@ -384,20 +384,20 @@ class Security
                 let testName = goodNameCharacters.includes(name.charAt(c));
                 if (testName === false)
                 {
-                    error.errorMessage("400.12.0",res);
+                    error.errorMessage("400.15.0",res);
                     return true;
                 }
             }
             let isExist = await pool.query("SELECT * FROM table_class WHERE name = $1", [name]);
             if (isExist.rowCount>0) { 
-                error.errorMessage("400.12.2",res);
+                error.errorMessage("400.15.2",res);
                 return true;
             }
             else return false;
         }
         else
         {
-            error.errorMessage("400.12.1",res);
+            error.errorMessage("400.15.1",res);
             return true;
         }
     }
@@ -413,7 +413,7 @@ class Security
                 let testYearClass = goodYearClassCharacters.includes(yearClass.charAt(c));
                 if (testYearClass === false)
                 {
-                    error.errorMessage("400.13.0",res);
+                    error.errorMessage("400.16.0",res);
                     return true;
                 }
             }
@@ -421,7 +421,7 @@ class Security
         }
         else
         {
-            error.errorMessage("400.13.1",res);
+            error.errorMessage("400.16.1",res);
             return true;
         }
     }
