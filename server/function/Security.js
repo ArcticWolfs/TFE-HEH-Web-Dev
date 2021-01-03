@@ -8,6 +8,7 @@ const AllLetters = LowerCase.concat(UpperCase);
 const SpecialLetters = ["â","ä","à","á","é","è","ë","ê","ç","û","ü","ù","ú","ï","î","ö","ô"];
 const Numbers = ["0","1","2","3","4","5","6","7","8","9"];
 const saltRounds = 10;
+const NumbersClass = ["1","2","3","4","5","6"];
 
 class Security
 {
@@ -370,6 +371,58 @@ class Security
                 }
             }
             else error.errorMessage("400.3.4",res);
+        }
+    }
+
+    async nameClassVerification(name,res)
+    {
+        if (name.length === 2)
+        {
+            let goodNameCharacters = NumbersClass.concat(UpperCase);
+            for (let c=0;c<name.length;c++)
+            {
+                let testName = goodNameCharacters.includes(name.charAt(c));
+                if (testName === false)
+                {
+                    error.errorMessage("400.15.0",res);
+                    return true;
+                }
+            }
+            let isExist = await pool.query("SELECT * FROM table_class WHERE name = $1", [name]);
+            if (isExist.rowCount>0) { 
+                error.errorMessage("400.15.2",res);
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            error.errorMessage("400.15.1",res);
+            return true;
+        }
+    }
+
+    async yearClassVerification(yearClass,res)
+    {
+        if (yearClass.length === 9)
+        {
+            for (let c=0;c<yearClass.length;c++)
+            {
+                let yearClassCharactersSup = ["-"];
+                let goodYearClassCharacters = Numbers.concat(yearClassCharactersSup);
+                let testYearClass = goodYearClassCharacters.includes(yearClass.charAt(c));
+                if (testYearClass === false)
+                {
+                    error.errorMessage("400.16.0",res);
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.16.1",res);
+            return true;
         }
     }
 }

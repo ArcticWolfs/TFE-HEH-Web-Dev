@@ -11,6 +11,7 @@ import {Bulletin} from "./Bulletin";
 import {Administration} from "./Administration";
 import {GestionEmployee} from "./GestionEmployee";
 import {GestionUser} from "./GestionUser";
+import {GestionClass} from "./GestionClass";
 import {QuizzList} from "./QuizzList"
 
  
@@ -47,6 +48,7 @@ export class WebRoute extends Component {
                 <React.Fragment>
                     <Router>
                         <Switch>
+                            <Route path='/gestionClass' render={() => (<GestionClass/>)}></Route>
                             <Route path='/gestionUser' render={() => (<GestionUser/>)}></Route>
                             <Route path='/gestionEmployee' render={() => (<GestionEmployee/>)}></Route>
                             <Route path='/administration' render={() => (<Administration userId={this.state.id} employee={this.state.employee}/>)}></Route>

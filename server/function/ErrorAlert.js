@@ -107,6 +107,21 @@ class ErrorAlert
             case "400.14.0":
                 message = ("/!\\ Value of time is not valid or too high  /!\\");
                 break;
+            case "400.15.0":
+                message = ("/!\\ ClassName verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.15.1":
+                message = ("/!\\ ClassName verification went wrong because it's empty or too small or too long /!\\");
+                break;
+            case "400.15.2":
+                message = ("/!\\ ClassName already exist /!\\");
+                break;
+            case "400.16.0":
+                message = ("/!\\ Year verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.16.1":
+                message = ("/!\\ Year verification went wrong because it's empty or too small or too long /!\\");
+                break;
             default: break;
         }
         console.log("ERROR " + idError + " : " + message);

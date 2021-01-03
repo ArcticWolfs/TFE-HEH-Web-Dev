@@ -286,3 +286,33 @@ app.listen(5000, () =>
 {
     console.log("Server has started on port 5000");
 });
+
+app.get("/getAllStudents", async(req, res) =>
+{
+    await user.getAllStudents(req,res);
+});
+
+app.get("/getAllClass", async(req,res)=>
+{
+    await Class.getAllClass(req,res);
+});
+
+app.put("/changeClass/:id", async(req,res) =>
+{
+    await user.changeClass(req,res);
+})
+
+app.post("/createClass", async(req,res) =>
+{
+    await Class.createClass(req,res);
+})
+
+app.put("/modifyClass", async(req,res) =>
+{
+    await Class.modifyClass(req,res);
+})
+
+app.delete("/deleteClass/:id", async(req,res) =>
+{
+    await Class.deleteClass(req,res);
+})

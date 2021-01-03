@@ -132,8 +132,8 @@ export class GestionEmployee extends Component {
     setToModify = () => {
         this.setState({open: false }, () => {
             for (let i = 1; i <= LIST_ROW.length; i++) {
-                document.getElementById("modify"+i).onclick = this.toModify;
-                document.getElementById("delete"+i).onclick = this.handleClickOpen;
+                document.getElementById("modify"+LIST_ROW[i].id).onclick = this.toModify;
+                document.getElementById("delete"+LIST_ROW[i].id).onclick = this.handleClickOpen;
             }
         });   
     };

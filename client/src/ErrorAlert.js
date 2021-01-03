@@ -79,6 +79,18 @@ class ErrorAlert
             case "400.9.1":
                 message = ("/!\\ FunctionEmployee verification went wrong because it's empty or too small /!\\");
                 break;
+            case "400.12.0":
+                message = ("/!\\ ClassName verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.12.1":
+                message = ("/!\\ ClassName verification went wrong because it's empty or too small or too long /!\\");
+                break;
+            case "400.13.0":
+                message = ("/!\\ Year verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.13.1":
+                message = ("/!\\ Year verification went wrong because it's empty or too small or too long /!\\");
+                break;
             default: break;
 
         }

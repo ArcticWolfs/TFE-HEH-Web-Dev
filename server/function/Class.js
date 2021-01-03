@@ -1,6 +1,9 @@
 const index = require("../index.js");
 const pool = require("../database/db");
 
+const Security = require("./Security");
+const security = new Security;
+
 class Class
 {
     constructor()
@@ -113,6 +116,84 @@ class Class
         catch (error)
         {
             console.log("Error while getting a subject " + error);
+        }
+    }
+
+    async getAllClass(req,res)
+    {
+        try
+        {
+            const getAllClass = await pool.query("SELECT * FROM table_class");
+
+            //Allow us to see the response in postman
+            res.json(getAllClass.rows);
+        }
+        catch (err)
+        {
+            console.error("Error while getting all the class : " + err.message)
+        }
+    }
+
+    async createClass(req,res)
+    {
+        try {
+            
+            let { tutor_id } = req.body;
+            let { name } = req.body;
+            let { year } = req.body;
+
+            name = name.trim();
+            year = year.trim();
+            if (await security.nameClassVerification(name,res) === false) {
+                if (await security.yearClassVerification(year,res) === false) {
+                    const newClass = await pool.query(
+                        "INSERT INTO table_class (tutor_id, name, year) VALUES($1,$2,$3) RETURNING * ",
+                        [tutor_id,name,year]
+                    );
+                    res.json(newClass.rows[0]);
+                }
+            }
+        }
+        catch (err) {
+            console.error("Error while creating a class : " + err.message);
+        }
+    }
+
+    async modifyClass(req,res)
+    {
+        try {
+            
+            let { tutor_id } = req.body;
+            let { class_id } = req.body;
+            let { year } = req.body;
+
+            year = year.trim();
+
+            if (await security.yearClassVerification(year,res) === false) {
+                const updateClass = await pool.query(
+                    "UPDATE table_class SET tutor_id=$1, year=$2 WHERE class_id=$3",
+                    [tutor_id,year,class_id]
+                );
+                res.json("Class Updated");
+            }
+        }
+        catch (err) {
+            console.error("Error while modify a class : " + err.message);
+        }
+    }
+
+    async deleteClass(req,res)
+    {
+        try
+        {
+            const {id} = req.params;
+            const deleteClass = await pool.query("DELETE FROM table_class WHERE class_id = $1", [id]);
+
+            res.json("Class deleted")
+        }
+        catch (err)
+        {
+            console.error("Error while deleting a Class : " + err.message)
         }
     }
 }
