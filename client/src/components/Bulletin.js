@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
 
-
 export class Bulletin extends Component {
 
     constructor(props) {

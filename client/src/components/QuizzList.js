@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from "axios";
 import Modal from "react-modal";
 
+let LIST_ROW = [];
 
 export class QuizzList extends Component {
 
@@ -10,7 +11,6 @@ export class QuizzList extends Component {
         super(props)
         this.state = {
             isOpen: false,
-            isModifyOpen: false,
             questions: "",
             image: "",
             select_subject : "français",
@@ -20,9 +20,10 @@ export class QuizzList extends Component {
             bad_answer:"",
             bad_answer_2 :"",
             bad_answer_3 : "",
-            trueOrFalse_answer: 1
+            trueOrFalse_answer: 1,
+            entries : null
         }
-        //this.onLoadPage();
+        this.onLoadPage();
     }
 
     render() {
@@ -68,33 +69,9 @@ export class QuizzList extends Component {
                     <button className="boutonModal btn btn-outline-light"  onClick={this.handleClose}>Annuler</button>
                     <button className="boutonModal btn btn-outline-light" onClick={this.onCreateQuestion}>Créer la question</button>
                 </Modal>
-                <Modal
-                    isOpen={this.state.isModifyOpen}
-                    contentLabel="My dialog"
-                    className="mymodal"
-                    overlayClassName="myoverlay"
-                    closeTimeoutMS={500}>
-                    <div id="connectezvous">Modifier une interro</div>
-                    <p className="champConnect"><input class="champConnect" id="nameModify" placeholder="Nom de l'interro" name="nameModify" type="text" value={this.state.nameModify} onChange={this.onChange}/></p>
-                    <p className="champConnect"><input class="champConnect" id="totalModify" onKeyDown={this.onKeyDown} name="totalModify" type="text" value={this.state.totalModify}  onChange={this.onChange}/></p>
-                    <select className="custom-select my-1 mr-sm-2" id="modalSubModify" onChange={this.onSubjectChangeModify}/>
-                    <select className="custom-select my-1 mr-sm-2" id="modalSubSubModify" onChange={this.onSubSubjectChangeModify}/>
-                    <select className="custom-select my-1 mr-sm-2" id="modalClassModify" onChange={this.onClassChangeModify}/>
-                    <button className="boutonModal btn btn-outline-light"  onClick={this.handleCloseModify}>Annuler</button>
-                    <button className="boutonModal btn btn-outline-light" onClick={this.onModifyQuestion}>Modifier l'interro</button>
-                </Modal>
                 <div>
                     <h1>Question du Quizz</h1>
                     <button class="btn btn-primary" onClick={this.handleOpen}>Créer une question</button>
-                    <form className="form-inline">
-                        <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Matières</label>
-                        <select className="custom-select my-1 mr-sm-2" id="subFilter" onChange={this.onSubjectFilterChange}/>
-                        <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Sous-Matière</label>
-                        <select className="custom-select my-1 mr-sm-2" id="subSubFilter" onChange={this.onSubSubjectFilterChange}/>
-                        <input type="text"/>
-                        <button type="button" className="btn btn-primary mb-2" onClick={this.onFilter}>Filtrer
-                        </button>
-                    </form>
                 </div>
                 <div>
                     <table className="table table-sm table-dark">
@@ -102,7 +79,13 @@ export class QuizzList extends Component {
                         <tr>
                             <th scope="col">Question N°</th>
                             <th scope="col">Question</th>
+                            <th scope="col">Sujet</th>
                             <th scope="col">Temps</th>
+                            <th scope="col">Bonne réponse</th>
+                            <th scope="col">Mauvais réponse</th>
+                            <th scope="col">Mauvaise réponse 2</th>
+                            <th scope="col">Mauvaise réponse 3</th>
+                            <th scope="col">Delete</th>
                         </tr>
                         </thead>
                         <tbody id="table">
@@ -113,11 +96,10 @@ export class QuizzList extends Component {
         )
     }
 
-    /*onLoadPage = () => {
-        Axios.get(`http://localhost:5000/getSubject/${this.state.employee_id}`, {
+    onLoadPage = () => {
+        Axios.get(`http://localhost:5000/getAllQuestion`, {
 
         }).then((res ) => {
-            this.deleteChild("subFilter");
             try
             {
                 let tableRow = document.getElementById('table');
@@ -131,30 +113,6 @@ export class QuizzList extends Component {
                 console.log("le tableau est vide");
             }
 
-
-            for (let c = 0; c < (res.data).length; c++)
-            {
-                let option = document.createElement('option');
-                option.value = res.data[c].name;
-                option.innerHTML = res.data[c].name;
-                document.getElementById("subFilter").appendChild(option);
-            }
-            if ((res.data).length!==0){
-                this.setState({subject_nameFilter: res.data[0].name})
-                this.setState({selectSubjectIDFilter: res.data[0].subject_id},() => {
-
-                    Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectIDFilter}`, {
-
-                    }).then((res) => {
-                        this.createChildSubSub("subSubFilter",res)
-                    })
-                })
-            }
-        })
-
-        Axios.get(`http://localhost:5000/getInterro/${this.state.employee_id}`,{
-
-        }).then((res) => {
             let tableRow = document.getElementById("table");
             for (let i = 0; i < (res.data).length; i++)
             {
@@ -162,85 +120,111 @@ export class QuizzList extends Component {
                 let trTable = document.createElement('tr');
                 tableRow.appendChild(trTable);
 
-                //Tableau Name
-                let tdTableName = document.createElement('td');
-                tdTableName.innerHTML = res.data[i].name;
-                trTable.appendChild(tdTableName);
+                //Tableau Number
+                let tdTableNumber = document.createElement('td');
+                tdTableNumber.innerHTML = i+1;
+                trTable.appendChild(tdTableNumber);
 
-                //Tableau Classe
-                Axios.get(`http://localhost:5000/getClassById/${res.data[i].class_id}`,{
+                //Tableau Question
+                let tdTableQuestion = document.createElement('td');
+                trTable.appendChild(tdTableQuestion);
+                let inputQuestion = document.createElement('input');
+                inputQuestion.type = "text";
+                inputQuestion.value = res.data[i]["question"];
+                tdTableQuestion.appendChild(inputQuestion);
+
+                //Tableau Subject
+                let tdTableSubject = document.createElement('td');
+                tdTableSubject.innerHTML = res.data[i]["subject"];
+                trTable.appendChild(tdTableSubject);
+
+
+                //Tableau Temps
+                let tdTableTime = document.createElement('td');
+                trTable.appendChild(tdTableTime);
+                let inputTime = document.createElement('input');
+                inputTime.type = "text";
+                inputTime.value = res.data[i]["time"];
+                tdTableTime.appendChild(inputTime);
+
+                Axios.get(`http://localhost:5000/getGoodAnswerByQuestionID/${res.data[i]["question_id"]}`, {
 
                 }).then((res2) => {
-                    let tdTableClass = document.createElement('td');
-                    tdTableClass.innerHTML = res2.data[0].name;
-                    trTable.appendChild(tdTableClass);
+                    //Tableau Bonne réponse
+                    let tdTableGoodAnswer = document.createElement('td');
+                    trTable.appendChild(tdTableGoodAnswer);
+                    let inputGoodAnswer = document.createElement('input');
+                    inputGoodAnswer.type = "text";
+                    inputGoodAnswer.value = res2.data[0]["answer"];
+                    tdTableGoodAnswer.appendChild(inputGoodAnswer);
 
-                    //Tableau Matières
-                    Axios.get(`http://localhost:5000/getSubjectById/${res.data[i].subject_id}`,{
+                    Axios.get(`http://localhost:5000/getBadAnswerByQuestionID/${res.data[i]["question_id"]}`, {
 
                     }).then((res3) => {
-                        let tdTableSubject = document.createElement('td');
-                        tdTableSubject.innerHTML = res3.data[0].name;
-                        trTable.appendChild(tdTableSubject);
+                        if ((res3.data).length < 2)
+                        {
+                            //Tableau Mauvaise réponse
+                            let tdTableBadAnswer = document.createElement('td');
+                            trTable.appendChild(tdTableBadAnswer);
+                            let inputBadAnswer = document.createElement('input');
+                            inputBadAnswer.type = "text";
+                            inputBadAnswer.value = res3.data[0]["answer"];
+                            tdTableBadAnswer.appendChild(inputBadAnswer);
 
-                        //Tableau sous matière
-                        Axios.get(`http://localhost:5000/getSubSubjectById/${res.data[i].sub_subject_id}`,{
+                            //Tableau Mauvaise réponse 2
+                            let tdTableBadAnswer2 = document.createElement('td');
+                            tdTableBadAnswer2.innerHTML = "/";
+                            trTable.appendChild(tdTableBadAnswer2);
+                            let inputBadAnswer2 = document.createElement('input');
 
-                        }).then((res4) => {
-                            let tdTableSubSubject = document.createElement('td');
-                            tdTableSubSubject.innerHTML = res4.data[0].sub_subject_name;
-                            trTable.appendChild(tdTableSubSubject);
+                            //Tableau Mauvaise réponse 3
+                            let tdTableBadAnswer3 = document.createElement('td');
+                            tdTableBadAnswer3.innerHTML = "/";
+                            trTable.appendChild(tdTableBadAnswer3);
+                        }
+                        else
+                        {
+                            //Tableau Mauvaise réponse
+                            let tdTableBadAnswer = document.createElement('td');
+                            trTable.appendChild(tdTableBadAnswer);
+                            let inputBadAnswer = document.createElement('input');
+                            inputBadAnswer.type = "text";
+                            inputBadAnswer.value = res3.data[0]["answer"];
+                            tdTableBadAnswer.appendChild(inputBadAnswer);
 
-                            //Tableau Trimester
-                            let tdTableTrimester = document.createElement('td');
-                            tdTableTrimester.innerHTML = res.data[i].trimester;
-                            trTable.appendChild(tdTableTrimester);
+                            //Tableau Mauvaise réponse 2
+                            let tdTableBadAnswer2 = document.createElement('td');
+                            trTable.appendChild(tdTableBadAnswer2);
+                            let inputBadAnswer2 = document.createElement('input');
+                            inputBadAnswer2.type = "text";
+                            inputBadAnswer2.value = res3.data[1]["answer"];
+                            tdTableBadAnswer2.appendChild(inputBadAnswer2);
 
-                            //Tableau total
-                            let tdTableTotal = document.createElement('td');
-                            tdTableTotal.innerHTML = res.data[i].total;
-                            trTable.appendChild(tdTableTotal);
+                            //Tableau Mauvaise réponse 3
+                            let tdTableBadAnswer3 = document.createElement('td');
+                            trTable.appendChild(tdTableBadAnswer3);
+                            let inputBadAnswer3 = document.createElement('input');
+                            inputBadAnswer3.type = "text";
+                            inputBadAnswer3.value = res3.data[2]["answer"];
+                            tdTableBadAnswer3.appendChild(inputBadAnswer3);
+                        }
 
-                            //Tableau Note
-                            let tdTableNote = document.createElement('td');
-                            trTable.appendChild(tdTableNote);
-                            let buttonNote = document.createElement('a');
-                            buttonNote.textContent = "Points" ;
-                            buttonNote.className = "btn btn-primary"
-                            buttonNote.href = `/gradeList/${res.data[i].interro_id}`;
-                            tdTableNote.appendChild(buttonNote);
-
-                            //Tableau modify
-                            let tdTableModify = document.createElement('td');
-                            trTable.appendChild(tdTableModify);
-                            let buttonModify = document.createElement('button');
-                            buttonModify.textContent = "Modify" ;
-                            buttonModify.className = "btn btn-warning"
-                            buttonModify.value = res.data[i].interro_id;
-                            buttonModify.addEventListener("click",this.handleOpenModify)
-                            tdTableModify.appendChild(buttonModify);
-
-                            //Tableau delete
-                            let tdTableDelete = document.createElement('td');
-                            trTable.appendChild(tdTableDelete);
-                            let buttonDelete = document.createElement('button');
-                            buttonDelete.textContent = "Delete" ;
-                            buttonDelete.className = "btn btn-danger"
-                            buttonDelete.value = res.data[i].interro_id;
-                            buttonDelete.addEventListener("click",this.onDeleteInterro)
-                            tdTableDelete.appendChild(buttonDelete);
-                        })
+                        //Tableau Delete
+                        let tdTableDelete= document.createElement('td');
+                        trTable.appendChild(tdTableDelete);
+                        let buttonDelete = document.createElement('button');
+                        buttonDelete.textContent = "Delete" ;
+                        buttonDelete.className = "btn btn-danger"
+                        buttonDelete.value = res.data[i].question_id;
+                        buttonDelete.addEventListener("click",this.onDeleteQuestion)
+                        tdTableDelete.appendChild(buttonDelete);
                     })
                 })
             }
         })
-    }*/
+    }
 
     onCreateQuestion = (e) => {
-        console.log(this.state.questions)
-        console.log(this.state.select_subject)
-        console.log(this.state.time)
-        console.log(this.state.image)
         try{
             Axios.post(`http://localhost:5000/createQuestion`, {
                 question: this.state.questions,
@@ -264,7 +248,7 @@ export class QuizzList extends Component {
                                 question_id : res.data.question_id
                             }).then((res8) => {
                                 this.handleClose();
-                                //this.onLoadPage();
+                                this.onLoadPage();
                             })
                         })
                     }
@@ -288,11 +272,6 @@ export class QuizzList extends Component {
                 }
                 else
                 {
-                    console.log(this.state.good_answer)
-                    console.log(this.state.bad_answer)
-                    console.log(this.state.bad_answer_2)
-                    console.log(this.state.bad_answer_3)
-                    console.log(res.data.question_id)
                     Axios.post(`http://localhost:5000/createAnswer`, {
                         answer : this.state.good_answer,
                         trueanswerornot : true,
@@ -355,7 +334,7 @@ export class QuizzList extends Component {
         })
     }
 
-    onModifyInterro= () => {
+    onModifyQuestion= () => {
         Axios.put(`http://localhost:5000/modifyInterro`, {
             interro_id: this.state.interroIDModify,
             employee_id:this.state.employee_id,
@@ -392,80 +371,6 @@ export class QuizzList extends Component {
     handleClose = () => {
         this.setState({ isOpen: false });
         this.setState({select_subject : "français"});
-    };
-
-    handleOpenModify = (e) => {
-        this.setState({isModifyOpen : true})
-        Axios.get(`http://localhost:5000/getInterroByID/${e.path[0].value}`,{
-
-        }).then((res) => {
-            this.setState({nameModify: res.data[0].name})
-            this.setState({totalModify: res.data[0].total})
-            this.setState({interroIDModify: res.data[0].interro_id})
-
-            Axios.get(`http://localhost:5000/getSubject/${this.state.employee_id}`, {
-
-            }).then((res2) => {
-                for (let c = 0; c < (res2.data).length; c++) {
-                    let option = document.createElement('option');
-                    option.value = res2.data[c].name;
-                    option.innerHTML = res2.data[c].name;
-                    if (res2.data[c].subject_id === res.data[0].subject_id)
-                    {
-                        option.selected = true;
-                        this.setState({selectSubjectNameModify: res2.data[c].name})
-                        this.setState({selectSubjectIDModify: res2.data[c].subject_id})
-                    }
-                    document.getElementById("modalSubModify").appendChild(option);
-                }
-                Axios.get(`http://localhost:5000/getSubSubject/${this.state.selectSubjectIDModify}`, {
-
-                }).then((res3) => {
-
-                    let subSubjectSelect = document.getElementById("modalSubSubModify");
-
-                    for (let i = 0; i < (res3.data).length; i++)
-                    {
-                        let optionSubSub = document.createElement('option');
-                        optionSubSub.value = res3.data[i].sub_subject_name;
-                        optionSubSub.innerHTML = res3.data[i].sub_subject_name;
-
-                        if (res3.data[i].sub_subject_id === res.data[0].sub_subject_id)
-                        {
-                            optionSubSub.selected = true;
-                        }
-
-                        subSubjectSelect.appendChild(optionSubSub);
-                    }
-                    this.setState({selectSubSubjectNameModify: res3.data[0].name})
-                    this.setState({selectSubSubjectIDModify: res3.data[0].sub_subject_id})
-
-                    Axios.get(`http://localhost:5000/getClass/${this.state.employee_id}`, {
-
-                    }).then((res4) => {
-                        for (let c = 0; c < (res4.data).length; c++)
-                        {
-                            let optionClass = document.createElement('option');
-                            optionClass.value = res4.data[c].name;
-                            optionClass.innerHTML = res4.data[c].name;
-                            if (res4.data[c].class_id === res.data[0].class_id)
-                            {
-                                optionClass.selected = true;
-                            }
-                            document.getElementById("modalClassModify").appendChild(optionClass);
-                        }
-                        this.setState({selectClassNameModify: res4.data[0].name})
-                        this.setState({selectClassIDModify: res4.data[0].class_id})
-
-                    })
-                })
-            })
-        })
-    }
-
-    handleCloseModify = () => {
-        this.setState({ isModifyOpen: false },() => {
-        });
     };
 
     onSubjectChange = () => {
