@@ -22,6 +22,8 @@ const Sub_Subject = new Function.Sub_Subject();
 const Class = new Function.Class();
 const employee = new Function.Employee;
 const Grade = new Function.Grade();
+const Question = new Function.Question();
+const Answer = new Function.Answer();
 
      //////////
      // Test //
@@ -101,6 +103,11 @@ app.get("/getInterroByID/:interro_id",async(req, res) =>
     await interrogation.getInterroByID(req,res);
 });
 
+app.get("/getInterroByIDAndTrimester/:interro_id",async(req, res) =>
+{
+    await interrogation.getInterroByIDAndTrimester(req,res);
+});
+
 app.put("/modifyInterro",async(req, res) =>
 {
     await interrogation.modifyInterro(req,res);
@@ -129,6 +136,12 @@ app.get("/getGradeByInterroID/:interro_id",async(req, res) =>
 {
     await Grade.getGradeByInterroID(req,res);
 });
+
+app.get("/getGradeByUserID/:user_id",async(req, res) =>
+{
+    await Grade.getGradeByUserID(req,res);
+});
+
 
 app.get("/getGradeByID/:grade_id",async(req, res) =>
 {
@@ -244,6 +257,29 @@ app.put("/modifyEmployee_admin/:id", async(req, res) =>
 app.delete("/deleteEmployee/:id", async(req,res) =>
 {
     await employee.deleteEmployee(req,res);
+});
+
+        //////////////////////
+        //     Question     //
+        //////////////////////
+
+app.get("/getQuestion/:question_id", async(req,res) =>
+{
+    await Question.getQuestionByID(req,res);
+});
+
+app.post("/createQuestion", async(req,res) =>
+{
+    await Question.createQuestion(req,res);
+});
+
+        //////////////////////
+        //     Anwer     //
+        //////////////////////
+
+app.post("/createAnswer", async(req,res) =>
+{
+    await Answer.createAnswer(req,res);
 });
 
 app.listen(5000, () => 

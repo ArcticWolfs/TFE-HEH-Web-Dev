@@ -1,5 +1,7 @@
 const index = require("../index.js");
 const pool = require("../database/db");
+const securityQuestion = require("./QuestionSecurity");
+const securityQuestions = new securityQuestion();
 
 class Grade
 {
@@ -8,49 +10,57 @@ class Grade
 
     }
 
-    async addGrade(req, res)
+    async createQuestion(req, res)
     {
         try {
-            let {interro_id} = req.body;
-            let {user_id} = req.body;
-            let {grade} = req.body;
-            let {total} = req.body;
-            let {absent} = req.body;
-
+            let {question} = req.body;
+            let {image} = 0
+            if (req.body.image !== "")
+            {
+                image = req.body.image;
+            }
+            let {subject} = req.body;
+            let {time} = req.body;
 
             ////////////////
             //   REQUEST  //
             ////////////////
-            try {
-                const newGrade = await pool.query(
-                    "INSERT INTO table_grade (interro_id, user_id, grade, total, absent) VALUES($1,$2,$3,$4,$5) RETURNING * ",
-                    [interro_id, user_id, grade, total, absent]
-                );
-                //Allow us to see the response in postman
-                res.json(newGrade.rows[0]);
-            } catch (error) {
-                console.log("error while doing the querry" + error)
+            if (!securityQuestions.questionVerification(question,res))
+            {
+                if (!securityQuestions.subjectVerification(subject,res))
+                {
+                    if (!securityQuestions.timeVerification(time,res))
+                    {
+                        try {
+                            const newQuestion = await pool.query(
+                                "INSERT INTO table_question (question,image,subject,time) VALUES($1,$2,$3,$4) RETURNING * ",
+                                [question,image,subject,time]
+                            );
+                            //Allow us to see the response in postman
+                            res.json(newQuestion.rows[0]);
+                        } catch (error) {
+                            console.log("error while doing the querry" + error)
+                        }
+                    }
+                }
             }
-
-
         }
         catch (error){
             console.log("Can't create a grade")
         }
     }
 
-    async getGradeByInterroID(req,res)
+    async getAllQuestion(req,res)
     {
         try
         {
-            let { interro_id } = req.params;
 
             ////////////////
             //   REQUEST  //
             ////////////////
             try
             {
-                const allGrade = await pool.query("SELECT * FROM table_grade WHERE interro_id = $1", [interro_id]);
+                const allGrade = await pool.query("SELECT * FROM table_question");
                 //Allow us to see the response in postman
                 res.json(allGrade.rows);
             }
@@ -61,22 +71,22 @@ class Grade
         }
         catch (error)
         {
-            console.log("Error while getting the grade ! " + error);
+            console.log("Error while getting question ! " + error);
         }
     }
 
-    async getGradeByUserID(req,res)
+    async getQuestionByID(req,res)
     {
         try
         {
-            let { user_id } = req.params;
+            let { question_id } = req.params;
 
             ////////////////
             //   REQUEST  //
             ////////////////
             try
             {
-                const allGrade = await pool.query("SELECT * FROM table_grade WHERE user_id = $1", [user_id]);
+                const allGrade = await pool.query("SELECT * FROM table_question WHERE question_id = $1", [question_id]);
                 //Allow us to see the response in postman
                 res.json(allGrade.rows);
             }
@@ -87,33 +97,7 @@ class Grade
         }
         catch (error)
         {
-            console.log("Error while getting the grade ! " + error);
-        }
-    }
-
-    async getGradeByID(req,res)
-    {
-        try
-        {
-            let { grade_id } = req.params;
-
-            ////////////////
-            //   REQUEST  //
-            ////////////////
-            try
-            {
-                const Grade = await pool.query("SELECT * FROM table_grade WHERE grade_id = $1", [grade_id]);
-                //Allow us to see the response in postman
-                res.json(Grade.rows);
-            }
-            catch (error)
-            {
-                console.log("error while doing the querry" + error)
-            }
-        }
-        catch (error)
-        {
-            console.log("Error while getting the grade ! " + error);
+            console.log("Error while getting a question ! " + error);
         }
     }
 

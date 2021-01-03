@@ -187,7 +187,8 @@ CREATE TABLE IF NOT EXISTS table_interro(
     subject_id int NOT NULL,
     sub_subject_id int NOT NULL,
     name VARCHAR(60) NOT NULL,
-    total double precision NOT NULL
+    total double precision NOT NULL,
+    trimester int NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS table_grade(
@@ -201,8 +202,11 @@ CREATE TABLE IF NOT EXISTS table_grade(
 
 CREATE TABLE IF NOT EXISTS table_question(
     question_id SERIAL PRIMARY KEY,
+    question VARCHAR(500),
     image VARCHAR(100),
-    time int
+    subject VARCHAR(50)
+    time int,
+
 );
 
 CREATE TABLE IF NOT EXISTS table_answer(

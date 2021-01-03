@@ -6,6 +6,8 @@ const Sub_Subject = require("./Sub_Subject")
 const Class = require("./Class")
 const Employee = require("./Employee");
 const Grade = require("./Grade");
+const Question = require("./Question");
+const Answer = require("./Answer");
 
 
 module.exports =
@@ -18,4 +20,6 @@ module.exports =
         Class: Class,
         Employee: Employee,
         Grade: Grade,
+        Question: Question,
+        Answer : Answer
     }

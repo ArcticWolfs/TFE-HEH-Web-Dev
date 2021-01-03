@@ -1,56 +1,53 @@
 const index = require("../index.js");
 const pool = require("../database/db");
+const securityQuestion = require("./QuestionSecurity");
+const securityQuestions = new securityQuestion();
 
-class Grade
+class Answer
 {
     constructor()
     {
 
     }
 
-    async addGrade(req, res)
+    async createAnswer(req, res)
     {
         try {
-            let {interro_id} = req.body;
-            let {user_id} = req.body;
-            let {grade} = req.body;
-            let {total} = req.body;
-            let {absent} = req.body;
-
+            let {answer} = req.body;
+            let {trueanswerornot} = req.body;
+            let {question_id} = req.body;
 
             ////////////////
             //   REQUEST  //
             ////////////////
+
             try {
-                const newGrade = await pool.query(
-                    "INSERT INTO table_grade (interro_id, user_id, grade, total, absent) VALUES($1,$2,$3,$4,$5) RETURNING * ",
-                    [interro_id, user_id, grade, total, absent]
+                const newAnswer = await pool.query(
+                    "INSERT INTO table_answer (answer,trueanswerornot,question_id) VALUES($1,$2,$3) RETURNING * ",
+                    [answer,trueanswerornot,question_id]
                 );
                 //Allow us to see the response in postman
-                res.json(newGrade.rows[0]);
+                res.json(newAnswer.rows);
             } catch (error) {
                 console.log("error while doing the querry" + error)
             }
-
-
         }
         catch (error){
-            console.log("Can't create a grade")
+            console.log("Can't create an answer")
         }
     }
 
-    async getGradeByInterroID(req,res)
+    async getAllQuestion(req,res)
     {
         try
         {
-            let { interro_id } = req.params;
 
             ////////////////
             //   REQUEST  //
             ////////////////
             try
             {
-                const allGrade = await pool.query("SELECT * FROM table_grade WHERE interro_id = $1", [interro_id]);
+                const allGrade = await pool.query("SELECT * FROM table_question");
                 //Allow us to see the response in postman
                 res.json(allGrade.rows);
             }
@@ -61,22 +58,22 @@ class Grade
         }
         catch (error)
         {
-            console.log("Error while getting the grade ! " + error);
+            console.log("Error while getting question ! " + error);
         }
     }
 
-    async getGradeByUserID(req,res)
+    async getQuestionByID(req,res)
     {
         try
         {
-            let { user_id } = req.params;
+            let { question_id } = req.params;
 
             ////////////////
             //   REQUEST  //
             ////////////////
             try
             {
-                const allGrade = await pool.query("SELECT * FROM table_grade WHERE user_id = $1", [user_id]);
+                const allGrade = await pool.query("SELECT * FROM table_question WHERE question_id = $1", [question_id]);
                 //Allow us to see the response in postman
                 res.json(allGrade.rows);
             }
@@ -87,33 +84,7 @@ class Grade
         }
         catch (error)
         {
-            console.log("Error while getting the grade ! " + error);
-        }
-    }
-
-    async getGradeByID(req,res)
-    {
-        try
-        {
-            let { grade_id } = req.params;
-
-            ////////////////
-            //   REQUEST  //
-            ////////////////
-            try
-            {
-                const Grade = await pool.query("SELECT * FROM table_grade WHERE grade_id = $1", [grade_id]);
-                //Allow us to see the response in postman
-                res.json(Grade.rows);
-            }
-            catch (error)
-            {
-                console.log("error while doing the querry" + error)
-            }
-        }
-        catch (error)
-        {
-            console.log("Error while getting the grade ! " + error);
+            console.log("Error while getting a question ! " + error);
         }
     }
 
@@ -145,4 +116,4 @@ class Grade
     }
 }
 
-module.exports = Grade;
+module.exports = Answer;
