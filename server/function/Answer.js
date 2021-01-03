@@ -88,6 +88,58 @@ class Answer
         }
     }
 
+    async getGoodAnswerByID(req,res)
+    {
+        try
+        {
+            let { question_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const allGoodAnswer = await pool.query("SELECT * FROM table_answer WHERE question_id = $1 AND trueanswerornot = true", [question_id]);
+                //Allow us to see the response in postman
+                res.json(allGoodAnswer.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting a good answer ! " + error);
+        }
+    }
+
+    async getBadAnswerByID(req,res)
+    {
+        try
+        {
+            let { question_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const allBadAnswer = await pool.query("SELECT * FROM table_answer WHERE question_id = $1 AND trueanswerornot = false", [question_id]);
+                //Allow us to see the response in postman
+                res.json(allBadAnswer.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting a bad answer! " + error);
+        }
+    }
+
     async modifyGradeByID(req, res)
     {
         try {

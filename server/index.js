@@ -268,6 +268,11 @@ app.get("/getQuestion/:question_id", async(req,res) =>
     await Question.getQuestionByID(req,res);
 });
 
+app.get("/getAllQuestion", async(req,res) =>
+{
+    await Question.getAllQuestion(req,res);
+});
+
 app.post("/createQuestion", async(req,res) =>
 {
     await Question.createQuestion(req,res);
@@ -280,6 +285,16 @@ app.post("/createQuestion", async(req,res) =>
 app.post("/createAnswer", async(req,res) =>
 {
     await Answer.createAnswer(req,res);
+});
+
+app.get("/getGoodAnswerByQuestionID/:question_id", async(req,res) =>
+{
+    await Answer.getGoodAnswerByID(req,res);
+});
+
+app.get("/getBadAnswerByQuestionID/:question_id", async(req,res) =>
+{
+    await Answer.getBadAnswerByID(req,res);
 });
 
 app.listen(5000, () => 
