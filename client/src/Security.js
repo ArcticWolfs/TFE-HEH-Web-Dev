@@ -5,6 +5,7 @@ const UpperCase = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","
 const AllLetters = LowerCase.concat(UpperCase);
 const SpecialLetters = ["â","ä","à","á","é","è","ë","ê","ç","û","ü","ù","ú","ï","î","ö","ô"];
 const Numbers = ["0","1","2","3","4","5","6","7","8","9"];
+const NumbersClass = ["1","2","3","4","5","6"];
 
 class Security
 {
@@ -264,6 +265,53 @@ class Security
         else
         {
             error.errorMessage("400.9.1");
+            return true;
+        }
+    }
+
+    nameClassVerification(name)
+    {
+        if (name.length === 2)
+        {
+            let goodNameCharacters = NumbersClass.concat(UpperCase);
+            for (let c=0;c<name.length;c++)
+            {
+                let testName = goodNameCharacters.includes(name.charAt(c));
+                if (testName === false)
+                {
+                    error.errorMessage("400.12.0");
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.12.1");
+            return true;
+        }
+    }
+
+    yearClassVerification(yearClass)
+    {
+        if (yearClass.length === 9)
+        {
+            for (let c=0;c<yearClass.length;c++)
+            {
+                let yearClassCharactersSup = ["-"];
+                let goodYearClassCharacters = Numbers.concat(yearClassCharactersSup);
+                let testYearClass = goodYearClassCharacters.includes(yearClass.charAt(c));
+                if (testYearClass === false)
+                {
+                    error.errorMessage("400.13.0");
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            error.errorMessage("400.13.1");
             return true;
         }
     }

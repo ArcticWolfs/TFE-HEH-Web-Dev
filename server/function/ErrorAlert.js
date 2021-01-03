@@ -91,6 +91,21 @@ class ErrorAlert
                 break;
             case "400.11.0":
                 message = ("/!\\ Value of total is invalid (not between 0 and 100)  /!\\");
+            case "400.12.0":
+                message = ("/!\\ ClassName verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.12.1":
+                message = ("/!\\ ClassName verification went wrong because it's empty or too small or too long /!\\");
+                break;
+            case "400.12.2":
+                message = ("/!\\ ClassName already exist /!\\");
+                break;
+            case "400.13.0":
+                message = ("/!\\ Year verification went wrong because of invalid characters /!\\");
+                break;
+            case "400.13.1":
+                message = ("/!\\ Year verification went wrong because it's empty or too small or too long /!\\");
+                break;
             default: break;
         }
         console.log("ERROR " + idError + " : " + message);

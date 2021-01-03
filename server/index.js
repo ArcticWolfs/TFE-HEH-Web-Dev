@@ -265,3 +265,18 @@ app.put("/changeClass/:id", async(req,res) =>
 {
     await user.changeClass(req,res);
 })
+
+app.post("/createClass", async(req,res) =>
+{
+    await Class.createClass(req,res);
+})
+
+app.put("/modifyClass", async(req,res) =>
+{
+    await Class.modifyClass(req,res);
+})
+
+app.delete("/deleteClass/:id", async(req,res) =>
+{
+    await Class.deleteClass(req,res);
+})

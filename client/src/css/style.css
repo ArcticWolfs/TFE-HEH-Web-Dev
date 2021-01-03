@@ -406,3 +406,18 @@ tr {
 	color: #FFF;
 	background-color: rgba(0, 111, 123, 0.755);
 }
+
+#buttonGestionClass {
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+#buttonGestionClass .buttonGestionClass {
+	margin: 0 5em;
+	background-color: rgba(0,111,123,0.394);
+}
+
+#buttonGestionClass .buttonGestionClass:hover {
+	color: #FFF;
+	background-color: rgba(0,111,123,0.755);
+}
