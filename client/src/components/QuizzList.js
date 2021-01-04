@@ -12,16 +12,22 @@ export class QuizzList extends Component {
         this.state = {
             isOpen: false,
             questions: "",
+            question_modify: "",
             image: "",
+            image_modify: "",
             select_subject : "français",
             time : "",
+            time_modify : "",
             type : "TrueOrFalse",
             good_answer : "",
             bad_answer:"",
             bad_answer_2 :"",
             bad_answer_3 : "",
+            good_answer_modify : "",
+            bad_answer_modify:"",
+            bad_answer_2_modify :"",
+            bad_answer_3_modify : "",
             trueOrFalse_answer: 1,
-            entries : null
         }
         this.onLoadPage();
     }
@@ -81,6 +87,7 @@ export class QuizzList extends Component {
                             <th scope="col">Question</th>
                             <th scope="col">Sujet</th>
                             <th scope="col">Temps</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Bonne réponse</th>
                             <th scope="col">Mauvais réponse</th>
                             <th scope="col">Mauvaise réponse 2</th>
@@ -130,6 +137,9 @@ export class QuizzList extends Component {
                 trTable.appendChild(tdTableQuestion);
                 let inputQuestion = document.createElement('input');
                 inputQuestion.type = "text";
+                inputQuestion.name = "question_modify";
+                inputQuestion.id = res.data[i]["question_id"];
+                inputQuestion.addEventListener("focusout", this.onModifyQuestion);
                 inputQuestion.value = res.data[i]["question"];
                 tdTableQuestion.appendChild(inputQuestion);
 
@@ -144,8 +154,22 @@ export class QuizzList extends Component {
                 trTable.appendChild(tdTableTime);
                 let inputTime = document.createElement('input');
                 inputTime.type = "text";
+                inputTime.name = "time_modify";
+                inputTime.id = res.data[i]["question_id"];
+                inputTime.addEventListener("focusout", this.onModifyQuestion);
                 inputTime.value = res.data[i]["time"];
                 tdTableTime.appendChild(inputTime);
+
+                //Tableau Image
+                let tdTableImage = document.createElement('td');
+                trTable.appendChild(tdTableImage);
+                let inputImage = document.createElement('input');
+                inputImage.type = "text";
+                inputImage.name = "image_modify";
+                inputImage.id = res.data[i]["question_id"];
+                inputImage.addEventListener("focusout", this.onModifyQuestion);
+                inputImage.value = res.data[i]["image"];
+                tdTableImage.appendChild(inputImage);
 
                 Axios.get(`http://localhost:5000/getGoodAnswerByQuestionID/${res.data[i]["question_id"]}`, {
 
@@ -155,6 +179,9 @@ export class QuizzList extends Component {
                     trTable.appendChild(tdTableGoodAnswer);
                     let inputGoodAnswer = document.createElement('input');
                     inputGoodAnswer.type = "text";
+                    inputGoodAnswer.name = "good_answer_modify";
+                    inputGoodAnswer.id = res2.data[0]["question_id"];
+                    inputGoodAnswer.addEventListener("focusout", this.onModifyAnswer);
                     inputGoodAnswer.value = res2.data[0]["answer"];
                     tdTableGoodAnswer.appendChild(inputGoodAnswer);
 
@@ -168,6 +195,9 @@ export class QuizzList extends Component {
                             trTable.appendChild(tdTableBadAnswer);
                             let inputBadAnswer = document.createElement('input');
                             inputBadAnswer.type = "text";
+                            inputBadAnswer.name = "bad_answer_modify";
+                            inputBadAnswer.id = res3.data[0]["question_id"];
+                            inputBadAnswer.addEventListener("focusout", this.onModifyAnswer);
                             inputBadAnswer.value = res3.data[0]["answer"];
                             tdTableBadAnswer.appendChild(inputBadAnswer);
 
@@ -189,6 +219,9 @@ export class QuizzList extends Component {
                             trTable.appendChild(tdTableBadAnswer);
                             let inputBadAnswer = document.createElement('input');
                             inputBadAnswer.type = "text";
+                            inputBadAnswer.name = "bad_answer_modify";
+                            inputBadAnswer.id = res3.data[0]["question_id"];
+                            inputBadAnswer.addEventListener("focusout", this.onModifyAnswer);
                             inputBadAnswer.value = res3.data[0]["answer"];
                             tdTableBadAnswer.appendChild(inputBadAnswer);
 
@@ -197,6 +230,9 @@ export class QuizzList extends Component {
                             trTable.appendChild(tdTableBadAnswer2);
                             let inputBadAnswer2 = document.createElement('input');
                             inputBadAnswer2.type = "text";
+                            inputBadAnswer2.name = "bad_answer_2_modify";
+                            inputBadAnswer2.id = res3.data[1]["question_id"]
+                            inputBadAnswer2.addEventListener("focusout", this.onModifyAnswer);
                             inputBadAnswer2.value = res3.data[1]["answer"];
                             tdTableBadAnswer2.appendChild(inputBadAnswer2);
 
@@ -205,6 +241,9 @@ export class QuizzList extends Component {
                             trTable.appendChild(tdTableBadAnswer3);
                             let inputBadAnswer3 = document.createElement('input');
                             inputBadAnswer3.type = "text";
+                            inputBadAnswer3.name = "bad_answer_3_modify";
+                            inputBadAnswer3.id = res3.data[2]["question_id"]
+                            inputBadAnswer3.addEventListener("focusout", this.onModifyAnswer);
                             inputBadAnswer3.value = res3.data[2]["answer"];
                             tdTableBadAnswer3.appendChild(inputBadAnswer3);
                         }
@@ -334,19 +373,107 @@ export class QuizzList extends Component {
         })
     }
 
-    onModifyQuestion= () => {
-        Axios.put(`http://localhost:5000/modifyInterro`, {
-            interro_id: this.state.interroIDModify,
-            employee_id:this.state.employee_id,
-            class_id: this.state.selectClassIDModify,
-            subject_id: this.state.selectSubjectIDModify,
-            sub_subject_id: this.state.selectSubSubjectIDModify,
-            name : this.state.nameModify,
-            total : this.state.totalModify
-        }).then(() => {
-            this.onLoadPage();
+    onModifyQuestion= (e) => {
+        this.setState({[e.target.name]: e.target.value}, () =>
+        {
+            Axios.get(`http://localhost:5000/getQuestion/${e.target.id}`, {
+
+            }).then((res) => {
+                if (e.target.name === "question_modify")
+                {
+                    Axios.put(`http://localhost:5000/modifyQuestionByID`, {
+                        question_id: res.data[0]["question_id"],
+                        question: this.state.question_modify,
+                        time: res.data[0]["time"],
+                        image: res.data[0]["image"],
+                    }).then(() => {
+                        this.onLoadPage();
+                    })
+                }
+                if (e.target.name === "time_modify")
+                {
+                    Axios.put(`http://localhost:5000/modifyQuestionByID`, {
+                        question_id: res.data[0]["question_id"],
+                        question: res.data[0]["question"],
+                        time: this.state.time_modify,
+                        image: res.data[0]["image"],
+                    }).then(() => {
+                        this.onLoadPage();
+                    })
+                }
+                if (e.target.name === "image_modify")
+                {
+                    Axios.put(`http://localhost:5000/modifyQuestionByID`, {
+                        question_id: res.data[0]["question_id"],
+                        question: res.data[0]["question"],
+                        time: res.data[0]["time"],
+                        image: this.state.image_modify,
+                    }).then(() => {
+                        this.onLoadPage();
+                    })
+                }
+                else
+                {
+                    this.onLoadPage();
+                }
+            })
         })
-        this.handleCloseModify();
+    }
+
+    onModifyAnswer= (e) => {
+        this.setState({[e.target.name]: e.target.value}, () =>
+        {
+            Axios.get(`http://localhost:5000/getBadAnswerByQuestionID/${e.target.id}`, {
+
+            }).then((res) => {
+                if (e.target.name === "good_answer_modify")
+                {
+                    Axios.get(`http://localhost:5000/getGoodAnswerByQuestionID/${e.target.id}`, {
+
+                    }).then((res2) => {
+                        Axios.put(`http://localhost:5000/modifyGoodAnswerByID`, {
+                            answer_id : res2.data[0].answer_id,
+                            answer : this.state.good_answer_modify
+                        }).then(() =>
+                        {
+                            this.onLoadPage();
+                        })
+                    })
+
+                }
+                if (e.target.name === "bad_answer_modify")
+                {
+                    Axios.put(`http://localhost:5000/modifyBadAnswerByID`, {
+                        answer_id : res.data[0].answer_id,
+                        answer : this.state.bad_answer_modify
+                    }).then(() => {
+                        this.onLoadPage();
+                    })
+                }
+                if (e.target.name === "bad_answer_2_modify")
+                {
+                    Axios.put(`http://localhost:5000/modifyBadAnswerByID`, {
+                        answer_id : res.data[1].answer_id,
+                        answer : this.state.bad_answer_2_modify
+                    }).then(() => {
+                        this.onLoadPage();
+                    })
+                }
+                if (e.target.name === "bad_answer_3_modify")
+                {
+                    Axios.put(`http://localhost:5000/modifyBadAnswerByID`, {
+                        answer_id : res.data[2].answer_id,
+                        answer : this.state.bad_answer_3_modify
+                    }).then(() => {
+                        this.onLoadPage();
+                    })
+                }
+                else
+                {
+                    this.onLoadPage();
+                }
+            })
+        })
     }
 
     onDeleteInterro = (e) => {
@@ -361,6 +488,8 @@ export class QuizzList extends Component {
     onChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
+        },() => {
+            console.log(this.state.question_modify)
         })
     }
 
