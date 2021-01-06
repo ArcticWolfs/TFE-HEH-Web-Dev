@@ -127,6 +127,33 @@ class Grade
             console.log("Can't modify a question")
         }
     }
+
+    async deleteQuestionByID(req,res)
+    {
+        try
+        {
+            let { question_id } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const deleteQuestion = await pool.query("DELETE FROM table_question WHERE question_id = $1", [question_id]);
+                const deleteAnswer = await pool.query("DELETE FROM table_answer WHERE question_id = $1", [question_id]);
+                //Allow us to see the response in postman
+                res.json("Deleted");
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while modifying an interro ! " + error);
+        }
+    }
 }
 
 module.exports = Grade;

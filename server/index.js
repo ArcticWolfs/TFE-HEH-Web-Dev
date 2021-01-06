@@ -283,6 +283,11 @@ app.put("/modifyQuestionByID", async(req,res) =>
     await Question.modifyQuestionByID(req,res);
 });
 
+app.delete("/deleteQuestionByID/:question_id", async(req,res) =>
+{
+    await Question.deleteQuestionByID(req,res);
+});
+
         //////////////////////
         //     Answer     //
         //////////////////////
