@@ -476,9 +476,9 @@ export class QuizzList extends Component {
         })
     }
 
-    onDeleteInterro = (e) => {
+    onDeleteQuestion = (e) => {
         console.log(e.path[0].value)
-        Axios.delete(`http://localhost:5000/deleteInterroByID/${e.path[0].value}`,{
+        Axios.delete(`http://localhost:5000/deleteQuestionByID/${e.path[0].value}`,{
 
         }).then((res) => {
             this.onLoadPage();
