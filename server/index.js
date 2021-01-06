@@ -278,8 +278,13 @@ app.post("/createQuestion", async(req,res) =>
     await Question.createQuestion(req,res);
 });
 
+app.put("/modifyQuestionByID", async(req,res) =>
+{
+    await Question.modifyQuestionByID(req,res);
+});
+
         //////////////////////
-        //     Anwer     //
+        //     Answer     //
         //////////////////////
 
 app.post("/createAnswer", async(req,res) =>
@@ -295,6 +300,16 @@ app.get("/getGoodAnswerByQuestionID/:question_id", async(req,res) =>
 app.get("/getBadAnswerByQuestionID/:question_id", async(req,res) =>
 {
     await Answer.getBadAnswerByID(req,res);
+});
+
+app.put("/modifyGoodAnswerByID", async(req,res) =>
+{
+    await Answer.modifyGoodAnswerByID(req,res);
+});
+
+app.put("/modifyBadAnswerByID", async(req,res) =>
+{
+    await Answer.modifyBadAnswerByID(req,res);
 });
 
 app.listen(5000, () => 
@@ -315,7 +330,7 @@ app.get("/getAllClass", async(req,res)=>
 app.put("/changeClass/:id", async(req,res) =>
 {
     await user.changeClass(req,res);
-})
+});
 
 app.post("/createClass", async(req,res) =>
 {

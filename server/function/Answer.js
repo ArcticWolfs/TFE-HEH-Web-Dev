@@ -140,24 +140,47 @@ class Answer
         }
     }
 
-    async modifyGradeByID(req, res)
+    async modifyGoodAnswerByID(req, res)
     {
         try {
-            let {grade_id} = req.body;
-            let {grade} = req.body;
-            let {total} = req.body;
-            let {absent} = req.body;
+            let {answer_id} = req.body;
+            let {answer} = req.body;
 
             ////////////////
             //   REQUEST  //
             ////////////////
             try {
                 const modifyGrade = await pool.query(
-                    "UPDATE table_grade SET grade = $2, total = $3, absent = $4 WHERE grade_id = $1",
-                    [grade_id, grade,total,absent]
+                    "UPDATE table_answer SET answer = $2 WHERE answer_id = $1",
+                    [answer_id, answer]
                 );
                 //Allow us to see the response in postman
                 res.json(modifyGrade.rows[0]);
+            } catch (error) {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error){
+            console.log("Can't modify a grade")
+        }
+    }
+
+    async modifyBadAnswerByID(req, res)
+    {
+        try {
+            let {answer_id} = req.body
+            let {answer} = req.body;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try {
+                const modifyAnswer = await pool.query(
+                    "UPDATE table_answer SET answer = $2 WHERE answer_id = $1",
+                    [answer_id, answer]
+                );
+                //Allow us to see the response in postman
+                res.json(modifyAnswer.rows[0]);
             } catch (error) {
                 console.log("error while doing the querry" + error)
             }
