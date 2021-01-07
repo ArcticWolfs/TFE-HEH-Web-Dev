@@ -13,6 +13,7 @@ import {GestionEmployee} from "./GestionEmployee";
 import {GestionUser} from "./GestionUser";
 import {GestionClass} from "./GestionClass";
 import {QuizzList} from "./QuizzList"
+import {AttendanceBook} from './AttendanceBook';
 
  
 export class WebRoute extends Component {
@@ -48,6 +49,7 @@ export class WebRoute extends Component {
                 <React.Fragment>
                     <Router>
                         <Switch>
+                            <Route path='/attendanceBook' render={() => (<AttendanceBook userId={this.state.id}/>)}></Route>
                             <Route path='/gestionClass' render={() => (<GestionClass/>)}></Route>
                             <Route path='/gestionUser' render={() => (<GestionUser/>)}></Route>
                             <Route path='/gestionEmployee' render={() => (<GestionEmployee/>)}></Route>
