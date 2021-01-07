@@ -25,6 +25,7 @@ const Grade = new Function.Grade();
 const Question = new Function.Question();
 const Answer = new Function.Answer();
 const absence = new Function.Absence();
+const intertable = new Function.Intertable();
 
      //////////
      // Test //
@@ -366,4 +367,19 @@ app.get("/getAbsence/:params", async(req,res) =>
 app.delete("/deleteAbsence/:params", async(req,res) =>
 {
     await absence.deleteAbsence(req,res);
+})
+
+app.post("/createIntertable", async(req,res) =>
+{
+    await intertable.createIntertable(req,res);
+})
+
+app.get("/getIntertable/:params", async(req,res) =>
+{
+    await intertable.getIntertable(req,res);
+})
+
+app.delete("/deleteIntertable/:params", async(req,res) =>
+{
+    await intertable.deleteIntertable(req,res);
 })
