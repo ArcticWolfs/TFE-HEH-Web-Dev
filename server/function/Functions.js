@@ -8,6 +8,7 @@ const Employee = require("./Employee");
 const Grade = require("./Grade");
 const Question = require("./Question");
 const Answer = require("./Answer");
+const Absence = require("./Absence");
 
 
 module.exports =
@@ -21,5 +22,6 @@ module.exports =
         Employee: Employee,
         Grade: Grade,
         Question: Question,
-        Answer : Answer
+        Answer : Answer,
+        Absence: Absence
     }

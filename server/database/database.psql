@@ -1,6 +1,6 @@
 --CREATE DATABASE school_website;
 
-DROP TABLE IF EXISTS table_user, table_class, table_employee, table_interTable, table_subject, table_subsubject, table_interro, table_grade, table_question, table_answer;
+DROP TABLE IF EXISTS table_user, table_class, table_employee, table_interTable, table_subject, table_subsubject, table_interro, table_grade, table_question, table_answer, table_absence;
 
 CREATE TABLE IF NOT EXISTS table_user(
     user_id SERIAL PRIMARY KEY,
@@ -204,8 +204,8 @@ CREATE TABLE IF NOT EXISTS table_question(
     question_id SERIAL PRIMARY KEY,
     question VARCHAR(500),
     image VARCHAR(100),
-    subject VARCHAR(50)
-    time int,
+    subject VARCHAR(50),
+    time int
 
 );
 
@@ -215,3 +215,9 @@ CREATE TABLE IF NOT EXISTS table_answer(
     answer VARCHAR(100) NOT NULL,
     trueAnswerOrNot boolean
 );
+
+CREATE TABLE IF NOT EXISTS table_absence(
+    absence_id SERIAL PRIMARY KEY,
+    user_id int NOT NULL,
+    date VARCHAR(10) NOT NULL
+)

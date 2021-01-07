@@ -8,7 +8,7 @@ TFE d'un site web pour la HEH
 Création du répertoire comme un répertoire de projet node : "npm init"
 
 Création du répertoire comme un répertoire de projet React : "npx create-react-app client"
--> Dans le dossier client : "npm install axios" + "npm install react-router-dom" + "npm install react-bootstrap bootstrap" + "npm install react-modal" + "npm install react-bootstrap bootstrap"
+-> Dans le dossier client : "npm install axios" + "npm install react-router-dom" + "npm install react-bootstrap bootstrap" + "npm install react-modal" + "npm install react-bootstrap bootstrap" + "npm install react-datepicker --save"
 
 Installation de node postgresql et cors : "npm i express pg cors"
 

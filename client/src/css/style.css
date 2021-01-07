@@ -421,3 +421,8 @@ tr {
 	color: #FFF;
 	background-color: rgba(0,111,123,0.755);
 }
+
+.attendanceBookSelector {
+	display: inline-block;
+	margin: 0 7em 2em 7em;
+}
