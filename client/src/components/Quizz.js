@@ -9,7 +9,8 @@ export class Quizz extends Component {
         super(props)
 
         this.state = {
-            good_answer : ""
+            good_answer : "",
+            timer : ""
         }
         this.onLoadPage();
     }
@@ -105,7 +106,9 @@ export class Quizz extends Component {
                             answer4.hidden = true;
                             answer4.className = "element-animation1 btn btn-lg btn-dark btn-block btn-outline-light";
                         }
+                        let timeout  = setTimeout(this.timerDone,(res.data[random_question]["time"])*1000)
 
+                        this.setState({timer : timeout});
                     })
                 })
             })
@@ -153,6 +156,46 @@ export class Quizz extends Component {
             result.className = "text-danger text-center"
             result.innerHTML = "Mauvaise réponse !"
         }
+        clearTimeout(this.state.timer)
+        setTimeout(() => {
+            this.onLoadPage()
+            answer1.disabled = false;
+            answer2.disabled = false;
+            answer3.disabled = false;
+            answer4.disabled = false;
+            result.innerText = ""
+        }, 5000);
+    }
+
+    timerDone = () => {
+        let result = document.getElementById("result");
+        let answer1 = document.getElementById("answer_1");
+        let answer2 = document.getElementById("answer_2");
+        let answer3 = document.getElementById("answer_3");
+        let answer4 = document.getElementById("answer_4");
+        answer1.disabled = true;
+        answer2.disabled = true;
+        answer3.disabled = true;
+        answer4.disabled = true;
+
+        if (answer1.innerHTML === this.state.good_answer)
+        {
+            answer1.className = "element-animation1 btn btn-lg btn-success btn-block";
+        }
+        if (answer2.innerHTML === this.state.good_answer)
+        {
+            answer2.className = "element-animation1 btn btn-lg btn-success btn-block";
+        }
+        if (answer3.innerHTML === this.state.good_answer)
+        {
+            answer3.className = "element-animation1 btn btn-lg btn-success btn-block";
+        }
+        if (answer4.innerHTML === this.state.good_answer)
+        {
+            answer4.className = "element-animation1 btn btn-lg btn-success btn-block";
+        }
+        result.className = "text-danger text-center"
+        result.innerHTML = "Temps écoulé voila la bonne réponse :" + this.state.good_answer
         setTimeout(() => {
             this.onLoadPage()
             answer1.disabled = false;
