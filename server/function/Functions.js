@@ -9,6 +9,7 @@ const Grade = require("./Grade");
 const Question = require("./Question");
 const Answer = require("./Answer");
 const Absence = require("./Absence");
+const Intertable = require("./Intertable")
 
 
 module.exports =
@@ -23,5 +24,6 @@ module.exports =
         Grade: Grade,
         Question: Question,
         Answer : Answer,
-        Absence: Absence
+        Absence: Absence,
+        Intertable: Intertable
     }

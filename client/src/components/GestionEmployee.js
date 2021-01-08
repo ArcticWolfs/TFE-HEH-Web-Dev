@@ -11,6 +11,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Axios from 'axios'
 import CreateEmployee from './CreateEmployee';
 import ModifByAdmin from './ModifByAdmin';
+import AttributeClass from './AttributeClass';
 
 var LIST_ROW = []
 
@@ -23,6 +24,7 @@ export class GestionEmployee extends Component {
             isOpen: false,
             open: false,
             open2: false,
+            isOpen2: false,
             actualID: null,
             id: null,
             lastname: null,
@@ -31,7 +33,7 @@ export class GestionEmployee extends Component {
             address: null,
             phoneNumber: null,
             functionEmployee: null,
-            isAdmin: null
+            isAdmin: false
         }
 
         Axios.get(`http://localhost:5000/getAllEmployees`).then((res) => {
@@ -49,12 +51,13 @@ export class GestionEmployee extends Component {
     }
 
     render() {
-        if (this.state.isOpen === false && this.state.open===false) {
+        if (this.state.isOpen === false && this.state.open===false && this.state.isOpen2===false) {
             return (
                 <React.Fragment>
                     <div className="centerGestion">
                         <h1>Gestion du personnel</h1>
                         <button id="buttonCreateEmployee" className="boutonModal btn btn-outline-light" onClick={this.toCreate}>Ajouter un employé</button>
+                        <button id="buttonCreateEmployee" className="boutonModal btn btn-outline-light" onClick={this.toAttributeClass}>Attribuer les classes</button>
                     </div>
                     <div>
                         <table className="table table-sm table-dark EmployeeList">
@@ -99,17 +102,24 @@ export class GestionEmployee extends Component {
                 </React.Fragment>
             )
         }
-        else if (this.state.isOpen===true && this.state.open===false){
+        else if (this.state.isOpen===true && this.state.open===false && this.state.isOpen2===false){
             return (
                 <React.Fragment>
                     <CreateEmployee toCreate={this.setToCreate}></CreateEmployee>
                 </React.Fragment>
             )
         }
-        else if (this.state.isOpen===false && this.state.open===true){
+        else if (this.state.isOpen===false && this.state.open===true && this.state.isOpen2===false){
             return (
                 <React.Fragment>
                     <ModifByAdmin userId={this.state.actualID} toModify={this.setToModify} employee={true}></ModifByAdmin>
+                </React.Fragment>
+            )
+        }
+        else if (this.state.isOpen===false && this.state.open===false && this.state.isOpen2===true){
+            return (
+                <React.Fragment>
+                    <AttributeClass toAttributeClass={this.setToAttributeClass}></AttributeClass>
                 </React.Fragment>
             )
         }
@@ -121,6 +131,14 @@ export class GestionEmployee extends Component {
     setToCreate = () => {
         this.setState({ isOpen: false });
     };
+
+    toAttributeClass = () => {
+        this.setState({ isOpen2: true });
+    }
+
+    setToAttributeClass = () => {
+        this.setState({ isOpen2: false });
+    }
     
     toModify = (event) => {
         this.setState({ 
@@ -131,7 +149,7 @@ export class GestionEmployee extends Component {
 
     setToModify = () => {
         this.setState({open: false }, () => {
-            for (let i = 1; i <= LIST_ROW.length; i++) {
+            for (let i = 0; i < LIST_ROW.length; i++) {
                 document.getElementById("modify"+LIST_ROW[i].id).onclick = this.toModify;
                 document.getElementById("delete"+LIST_ROW[i].id).onclick = this.handleClickOpen;
             }

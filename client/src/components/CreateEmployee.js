@@ -137,7 +137,7 @@ export class CreateEmployee extends Component {
         let v_phoneNumber = this.state.phoneNumber;
         let v_password = this.state.password;
         let v_functionEmployee = this.state.functionEmployee;
-        let v_isAdmin = this.isAdmin;
+        let v_isAdmin = this.state.isAdmin;
 
         try
         {
@@ -192,7 +192,6 @@ export class CreateEmployee extends Component {
                     console.log(res.data.employee_id);
                     if(res.data.employee_id){
                         this.toggleModal()
-                        sessionStorage.setItem('userID', res.data.employee_id);
                         document.location.reload()
                     }
                     else {
