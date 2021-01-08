@@ -304,7 +304,7 @@ export class QuizzList extends Component {
                                 question_id : res.data.question_id
                             }).then((res7) => {
                                 this.handleClose();
-                                //this.onLoadPage();
+                                this.onLoadPage();
                             })
                         })
                     }
@@ -333,7 +333,7 @@ export class QuizzList extends Component {
                                     question_id : res.data.question_id
                                 }).then((res5) => {
                                     this.handleClose();
-                                    //this.onLoadPage();
+                                    this.onLoadPage();
                                 })
                             })
                         })
