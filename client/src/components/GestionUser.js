@@ -39,7 +39,7 @@ export class GestionUser extends Component {
             LIST_ROW=[];
             let nbUsers=res.data.length;
             for (let i = 0; i < nbUsers; i++) {
-                LIST_ROW.push({id: res.data[i]["user_id"],lastname: res.data[i]["lastname"],firstname: res.data[i]["firstname"],class_id: res.data[i]["class_id"],address: res.data[i]["address"],email: res.data[i]["emailaddress"],student: res.data[i]["student"].toString(),phoneNumberTutor1: res.data[i]["phoneNumberTutor1"],emailTutor1: res.data[i]["emailTutor1"],phoneNumberTutor2: res.data[i]["phoneNumberTutor2"],emailTutor2: res.data[i]["emailTutor2"]})
+                LIST_ROW.push({id: res.data[i]["user_id"],lastname: res.data[i]["lastname"],firstname: res.data[i]["firstname"],class_id: res.data[i]["class_id"],address: res.data[i]["address"],email: res.data[i]["emailaddress"],student: res.data[i]["student"].toString(),phoneNumberTutor1: res.data[i]["phonenumbertutor1"],emailTutor1: res.data[i]["emailtutor1"],phoneNumberTutor2: res.data[i]["phonenumbertutor2"],emailTutor2: res.data[i]["emailtutor2"]})
                 this.setState({ entries: true }, () => {
                     document.getElementById("modify"+res.data[i]["user_id"]).onclick = this.toModify;
                     document.getElementById("delete"+res.data[i]["user_id"]).onclick = this.handleClickOpen;
