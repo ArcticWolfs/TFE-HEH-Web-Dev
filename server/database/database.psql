@@ -1,6 +1,6 @@
 --CREATE DATABASE school_website;
 
-DROP TABLE IF EXISTS table_user, table_class, table_employee, table_interTable, table_subject, table_subsubject, table_interro, table_grade, table_question, table_answer, table_absence;
+DROP TABLE IF EXISTS table_user, table_class, table_employee, table_interTable, table_subject, table_subsubject, table_interro, table_grade, table_question, table_answer, table_absence, table_journalClass;
 
 CREATE TABLE IF NOT EXISTS table_user(
     user_id SERIAL PRIMARY KEY,
@@ -220,4 +220,12 @@ CREATE TABLE IF NOT EXISTS table_absence(
     absence_id SERIAL PRIMARY KEY,
     user_id int NOT NULL,
     date VARCHAR(10) NOT NULL
-)
+);
+
+CREATE TABLE IF NOT EXISTS table_journalClass(
+    classeJournal_id SERIAL PRIMARY KEY,
+    class_id int NOT NULL,
+    date VARCHAR(10) NOT NULL,
+    hour int NOT NULL,
+    activity TEXT
+);

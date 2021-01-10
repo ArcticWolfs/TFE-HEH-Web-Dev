@@ -426,3 +426,14 @@ tr {
 	display: inline-block;
 	margin: 0 7em 2em 7em;
 }
+
+.hourCenter {
+	margin-top: -25vh;
+ 	transform: translateY(25%);
+}
+
+.activityInput {
+	width: 75%;
+	height: auto;
+	resize: none;
+}

@@ -26,6 +26,7 @@ const Question = new Function.Question();
 const Answer = new Function.Answer();
 const absence = new Function.Absence();
 const intertable = new Function.Intertable();
+const journalClass = new Function.JournalClass();
 
      //////////
      // Test //
@@ -382,4 +383,24 @@ app.get("/getIntertable/:params", async(req,res) =>
 app.delete("/deleteIntertable/:params", async(req,res) =>
 {
     await intertable.deleteIntertable(req,res);
+})
+
+app.post("/createJournalClass", async(req,res) =>
+{
+    await journalClass.createJournalClass(req,res);
+})
+
+app.get("/getJournalClass/:params", async(req,res) =>
+{
+    await journalClass.getJournalClass(req,res);
+})
+
+app.put("/modifyJournalClass/:params", async(req,res) =>
+{
+    await journalClass.modifyJournalClass(req,res);
+})
+
+app.delete("/deleteJournalClass/:params", async(req,res) =>
+{
+    await journalClass.deleteJournalClass(req,res);
 })
