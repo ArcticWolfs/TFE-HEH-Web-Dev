@@ -10,6 +10,7 @@ const Question = require("./Question");
 const Answer = require("./Answer");
 const Absence = require("./Absence");
 const Intertable = require("./Intertable")
+const JournalClass = require("./JournalClass")
 
 
 module.exports =
@@ -25,5 +26,6 @@ module.exports =
         Question: Question,
         Answer : Answer,
         Absence: Absence,
-        Intertable: Intertable
+        Intertable: Intertable,
+        JournalClass: JournalClass
     }
