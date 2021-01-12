@@ -35,7 +35,7 @@ class NavBar extends Component {
                 </DropdownButton>
               </li>
               <li>
-              <DropdownButton id="dropdown-basic-button" title="Evaluation">
+              <DropdownButton id="dropdown-basic-button" title="Évaluation">
                   <Dropdown.Item className="Dropdown-nav" href="/interroList">Interrogations</Dropdown.Item>
                   <Dropdown.Item className="Dropdown-nav" href="/bulletinList">Bulletins</Dropdown.Item>
                 </DropdownButton>
@@ -44,7 +44,7 @@ class NavBar extends Component {
                 <DropdownButton id="dropdown-basic-button" title="Vie de classe">
                   <Dropdown.Item className="Dropdown-nav" href="/journalClass">Journal de classe</Dropdown.Item>
                   <Dropdown.Item className="Dropdown-nav" href="/attendanceBook">Présences</Dropdown.Item>
-                  <Dropdown.Item className="Dropdown-nav" href="/#">Gallerie</Dropdown.Item>
+                  <Dropdown.Item className="Dropdown-nav" href="/#">Galerie</Dropdown.Item>
                   <Dropdown.Item className="Dropdown-nav" href="/#">Remise en ordre</Dropdown.Item>
                 </DropdownButton>
               </li>
@@ -76,7 +76,7 @@ class NavBar extends Component {
               <li><a href="/bulletinList">Bulletin</a></li>
               <li>
                 <DropdownButton id="dropdown-basic-button" title="Vie de classe">
-                  <Dropdown.Item className="Dropdown-nav" href="/#">Gallerie</Dropdown.Item>
+                  <Dropdown.Item className="Dropdown-nav" href="/#">Galerie</Dropdown.Item>
                   <Dropdown.Item className="Dropdown-nav" href="/#">Remise en ordre</Dropdown.Item>
                 </DropdownButton>
               </li>
