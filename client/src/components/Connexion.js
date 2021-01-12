@@ -37,7 +37,7 @@ export class Connexion extends Component {
                     <div id="connectezvous">Connectez-vous</div>
                     <p className="champConnect"><input class="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange}/></p>
                     <p className="champConnect"><input class="champConnect" onKeyDown={this.onKeyDown} placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange }/></p>
-                    <p><input className="check" id="stayConnect" name="stayConnect" type="checkbox" value={this.state.stayConnect} />Rester connecter</p>
+                    <p><input className="check" id="stayConnect" name="stayConnect" type="checkbox" value={this.state.stayConnect} />Rester connecté</p>
                     <button className="boutonModal btn btn-outline-light" onClick={this.toInscription}>S'inscrire</button>
                     <button className="boutonModal btn btn-outline-light" onClick={this.onClick}>Se connecter</button>
                     <p id="passwordForgot"><a href="/#">Mot de passe oublié ?</a></p>
@@ -53,7 +53,7 @@ export class Connexion extends Component {
                     <div id="connectezvous">Connectez-vous</div>
                     <p className="champConnect"><input class="champConnect" placeholder="Email" name="emailAddress" type="email" value={this.state.emailAddress} onChange={this.onChange}/></p>
                     <p className="champConnect"><input class="champConnect" onKeyDown={this.onKeyDown} placeholder="Mot de passe" name="password" type="password" value={this.state.password} onChange={this.onChange }/></p>
-                    <p><input className="check" id="stayConnect" name="stayConnect" type="checkbox" value={this.state.stayConnect} />Rester connecter</p>
+                    <p><input className="check" id="stayConnect" name="stayConnect" type="checkbox" value={this.state.stayConnect} />Rester connecté</p>
                     <button className="boutonModal btn btn-outline-light" onClick={this.toInscription}>S'inscrire</button>
                     <button className="boutonModal btn btn-outline-light" onClick={this.onClick}>Se connecter</button>
                     <p id="passwordForgot"><a href="/#">Mot de passe oublié ?</a></p>
