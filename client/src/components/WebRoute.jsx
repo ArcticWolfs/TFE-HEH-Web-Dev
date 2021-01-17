@@ -16,6 +16,7 @@ import {QuizzList} from "./QuizzList";
 import {Quizz} from "./Quizz";
 import {AttendanceBook} from './AttendanceBook';
 import {JournalClass} from './JournalClass';
+import {QuizzChoice} from './QuizzChoice';
 
  
 export class WebRoute extends Component {
@@ -62,6 +63,7 @@ export class WebRoute extends Component {
                             <Route path='/gradeList' render={() => (<GradeList userId={this.state.id}/>)}></Route>
                             <Route path='/bulletinList' render={() => (<BulletinList userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/quizzList' render={() => (<QuizzList userId={this.state.id} employee={this.state.employee}/>)}></Route>
+                            <Route path='/quizzChoice' render={() => (<QuizzChoice userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/quizz' render={() => (<Quizz userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/bulletin' render={() => (<Bulletin userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/' render={() => (<HomePage/>)}></Route>
