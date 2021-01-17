@@ -75,6 +75,31 @@ class Grade
         }
     }
 
+    async getAllQuestionAndAnswer(req,res)
+    {
+        try
+        {
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const allGrade = await pool.query("SELECT * FROM table_question NATURAL JOIN table_answer");
+                //Allow us to see the response in postman
+                res.json(allGrade.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting question ! " + error);
+        }
+    }
+
     async getQuestionByID(req,res)
     {
         try
@@ -89,6 +114,32 @@ class Grade
                 const allGrade = await pool.query("SELECT * FROM table_question WHERE question_id = $1", [question_id]);
                 //Allow us to see the response in postman
                 res.json(allGrade.rows);
+            }
+            catch (error)
+            {
+                console.log("error while doing the querry" + error)
+            }
+        }
+        catch (error)
+        {
+            console.log("Error while getting a question ! " + error);
+        }
+    }
+
+    async getQuestionBySubject(req,res)
+    {
+        try
+        {
+            let { question_subject } = req.params;
+
+            ////////////////
+            //   REQUEST  //
+            ////////////////
+            try
+            {
+                const allQuestionBySubject = await pool.query("SELECT * FROM table_question WHERE subject = $1", [question_subject]);
+                //Allow us to see the response in postman
+                res.json(allQuestionBySubject.rows);
             }
             catch (error)
             {

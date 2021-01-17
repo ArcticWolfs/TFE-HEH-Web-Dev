@@ -271,9 +271,19 @@ app.get("/getQuestion/:question_id", async(req,res) =>
     await Question.getQuestionByID(req,res);
 });
 
+app.get("/getQuestionBySubject/:question_subject", async(req,res) =>
+{
+    await Question.getQuestionBySubject(req,res);
+});
+
 app.get("/getAllQuestion", async(req,res) =>
 {
     await Question.getAllQuestion(req,res);
+});
+
+app.get("/getAllQuestionAndAnswer", async(req,res) =>
+{
+    await Question.getAllQuestionAndAnswer(req,res);
 });
 
 app.post("/createQuestion", async(req,res) =>
