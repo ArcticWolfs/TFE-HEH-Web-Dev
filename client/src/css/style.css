@@ -437,3 +437,43 @@ tr {
 	height: auto;
 	resize: none;
 }
+
+
+#bulletin {
+	background: #FFF;
+	padding: 20px 30px;
+	margin: 1em auto;
+	width: 827px;
+	height: 1170px;
+	color: #000;
+	font-size: 14px;
+	text-align: center;
+}
+
+#titreBulletin {
+	margin-bottom: 15px;
+}
+
+.matiereBulletin {
+	margin: 0 auto 30px auto;
+	width: 600px;
+}
+
+.bulletin {
+	border: solid 1px #000;
+	width: 80px;
+	height: 80px;
+	vertical-align: middle;
+}
+
+.titre {
+	width: 280px;
+}
+
+.demi {
+	height: 40px;
+}
+
+.principal {
+	border-width: 2px;
+}
