@@ -3,6 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../css/style.css";
 import Axios from "axios";
 
+import jsPDF from 'jspdf';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+
 
 export class Bulletin extends Component {
 
@@ -29,96 +33,99 @@ export class Bulletin extends Component {
     render() {
         return (
             <React.Fragment>
-                <div id="bulletin">
-                    <h1 id="titreBulletin">Bulletin de {this.state.firstname} {this.state.lastname}</h1>
+                <a id="toPDF" onClick={this.exportPdf}>Télécharger en PDF</a>
+                <div id="bulletinCentrer">
+                    <div id="bulletin">
+                        <h1 id="titreBulletin">Bulletin de {this.state.firstname} {this.state.lastname}</h1>
 
-                    <div className="matiereBulletin">
-                        <tr>
-                            <th className="bulletin titre principal">Branches</th>
-                            <th className="bulletin principal">Maximum</th>
-                            <th className="bulletin principal">Période 1</th>
-                            <th className="bulletin principal">Période 2</th>
-                            <th className="bulletin principal">Période 3</th>
-                        </tr>
-                    </div>
-                    <div className="matiereBulletin">
-                        <tr>
-                            <th className="bulletin titre principal">Français</th>
-                            <th className="bulletin principal">/100</th>
-                            <th className="bulletin principal" id="français1"></th>
-                            <th className="bulletin principal" id="français2"></th>
-                            <th className="bulletin principal" id="français3"></th>
-                        </tr>
-                        <tr>
-                            <td className="bulletin titre">Lire, parler, écouter</td>
-                            <td className="bulletin">/40</td>
-                            <td className="bulletin" id="lire1"></td>
-                            <td className="bulletin" id="lire2"></td>
-                            <td className="bulletin" id="lire3"></td>
-                        </tr>
-                        <tr>
-                            <td className="bulletin titre">Écrire</td>
-                            <td className="bulletin">/60</td>
-                            <td className="bulletin" id="ecrire1"></td>
-                            <td className="bulletin" id="ecrire2"></td>
-                            <td className="bulletin" id="ecrire3"></td>
-                        </tr>
-                    </div>
-                    <div className="matiereBulletin">
-                        <tr>
-                            <th className="bulletin titre principal">Mathémathiques</th>
-                            <th className="bulletin principal">/100</th>
-                            <th className="bulletin principal" id="mathématiques1"></th>
-                            <th className="bulletin principal" id="mathématiques2"></th>
-                            <th className="bulletin principal" id="mathématiques3"></th>
-                        </tr>
-                        <tr>
-                            <td className="bulletin titre demi">Mesurer et structurer l'espace</td>
-                            <td rowSpan="2" className="bulletin">/50</td>
-                            <td rowSpan="2" className="bulletin" id="mesurer1"></td>
-                            <td rowSpan="2" className="bulletin" id="mesurer2"></td>
-                            <td rowSpan="2" className="bulletin" id="mesurer3"></td>
-                        </tr>
-                        <tr>
-                            <td className="bulletin titre demi">Établir des liens logiques</td>
-                        </tr>
-                        <tr>
-                            <td className="bulletin titre demi">Calculer et faire des opérations</td>
-                            <td rowSpan="2" className="bulletin">/50</td>
-                            <td rowSpan="2" className="bulletin" id="calculer1"></td>
-                            <td rowSpan="2" className="bulletin" id="calculer2"></td>
-                            <td rowSpan="2" className="bulletin" id="calculer3"></td>
-                        </tr>
-                        <tr>
-                            <td className="bulletin titre demi">Établir des liens logiques</td>
-                        </tr>
-                    </div>
-                    <div className="matiereBulletin">
-                        <tr>
-                            <th className="bulletin titre principal">Éveil</th>
-                            <th className="bulletin principal">/50</th>
-                            <th className="bulletin principal" id="eveil1"></th>
-                            <th className="bulletin principal" id="eveil2"></th>
-                            <th className="bulletin principal" id="eveil3"></th>
-                        </tr>
-                    </div>
-                    <div className="matiereBulletin">
-                        <tr>
-                            <th className="bulletin titre principal">Néerlandais</th>
-                            <th className="bulletin principal">/20</th>
-                            <th className="bulletin principal" id="neerlandais1"></th>
-                            <th className="bulletin principal" id="neerlandais2"></th>
-                            <th className="bulletin principal" id="neerlandais3"></th>
-                        </tr>
-                    </div>
-                    <div className="matiereBulletin">
-                        <tr>
-                            <th className="bulletin titre principal">Gymnastique</th>
-                            <th className="bulletin principal">/20</th>
-                            <th className="bulletin principal" id="gymnastique1"></th>
-                            <th className="bulletin principal" id="gymnastique2"></th>
-                            <th className="bulletin principal" id="gymnastique3"></th>
-                        </tr>
+                        <div className="matiereBulletin">
+                            <tr>
+                                <th className="bulletin titre principal">Branches</th>
+                                <th className="bulletin principal">Maximum</th>
+                                <th className="bulletin principal">Période 1</th>
+                                <th className="bulletin principal">Période 2</th>
+                                <th className="bulletin principal">Période 3</th>
+                            </tr>
+                        </div>
+                        <div className="matiereBulletin">
+                            <tr>
+                                <th className="bulletin titre principal">Français</th>
+                                <th className="bulletin principal">/100</th>
+                                <th className="bulletin principal" id="français1"></th>
+                                <th className="bulletin principal" id="français2"></th>
+                                <th className="bulletin principal" id="français3"></th>
+                            </tr>
+                            <tr>
+                                <td className="bulletin titre">Lire, parler, écouter</td>
+                                <td className="bulletin">/40</td>
+                                <td className="bulletin" id="lire1"></td>
+                                <td className="bulletin" id="lire2"></td>
+                                <td className="bulletin" id="lire3"></td>
+                            </tr>
+                            <tr>
+                                <td className="bulletin titre">Écrire</td>
+                                <td className="bulletin">/60</td>
+                                <td className="bulletin" id="ecrire1"></td>
+                                <td className="bulletin" id="ecrire2"></td>
+                                <td className="bulletin" id="ecrire3"></td>
+                            </tr>
+                        </div>
+                        <div className="matiereBulletin">
+                            <tr>
+                                <th className="bulletin titre principal">Mathémathiques</th>
+                                <th className="bulletin principal">/100</th>
+                                <th className="bulletin principal" id="mathématiques1"></th>
+                                <th className="bulletin principal" id="mathématiques2"></th>
+                                <th className="bulletin principal" id="mathématiques3"></th>
+                            </tr>
+                            <tr>
+                                <td className="bulletin titre demi">Mesurer et structurer l'espace</td>
+                                <td rowSpan="2" className="bulletin">/50</td>
+                                <td rowSpan="2" className="bulletin" id="mesurer1"></td>
+                                <td rowSpan="2" className="bulletin" id="mesurer2"></td>
+                                <td rowSpan="2" className="bulletin" id="mesurer3"></td>
+                            </tr>
+                            <tr>
+                                <td className="bulletin titre demi">Établir des liens logiques</td>
+                            </tr>
+                            <tr>
+                                <td className="bulletin titre demi">Calculer et faire des opérations</td>
+                                <td rowSpan="2" className="bulletin">/50</td>
+                                <td rowSpan="2" className="bulletin" id="calculer1"></td>
+                                <td rowSpan="2" className="bulletin" id="calculer2"></td>
+                                <td rowSpan="2" className="bulletin" id="calculer3"></td>
+                            </tr>
+                            <tr>
+                                <td className="bulletin titre demi">Établir des liens logiques</td>
+                            </tr>
+                        </div>
+                        <div className="matiereBulletin">
+                            <tr>
+                                <th className="bulletin titre principal">Éveil</th>
+                                <th className="bulletin principal">/50</th>
+                                <th className="bulletin principal" id="eveil1"></th>
+                                <th className="bulletin principal" id="eveil2"></th>
+                                <th className="bulletin principal" id="eveil3"></th>
+                            </tr>
+                        </div>
+                        <div className="matiereBulletin">
+                            <tr>
+                                <th className="bulletin titre principal">Néerlandais</th>
+                                <th className="bulletin principal">/20</th>
+                                <th className="bulletin principal" id="neerlandais1"></th>
+                                <th className="bulletin principal" id="neerlandais2"></th>
+                                <th className="bulletin principal" id="neerlandais3"></th>
+                            </tr>
+                        </div>
+                        <div className="matiereBulletin">
+                            <tr>
+                                <th className="bulletin titre principal">Gymnastique</th>
+                                <th className="bulletin principal">/20</th>
+                                <th className="bulletin principal" id="gymnastique1"></th>
+                                <th className="bulletin principal" id="gymnastique2"></th>
+                                <th className="bulletin principal" id="gymnastique3"></th>
+                            </tr>
+                        </div>
                     </div>
                 </div>
             </React.Fragment>
@@ -197,6 +204,17 @@ export class Bulletin extends Component {
     roundNumber = (number) => {
         let result = Math.round(number * 100) / 100
         return result
+    }
+
+    exportPdf = () => {
+        htmlToImage.toPng(document.getElementById('bulletin'), { quality: 0.95 })
+        .then((dataUrl) => {
+          var link = document.createElement('a');
+          link.download = 'my-image-name.jpeg';
+          const pdf = new jsPDF();          
+          pdf.addImage(dataUrl, 'PNG', 0, 0);
+          pdf.save("bulletin_"+this.state.lastname+this.state.firstname+".pdf"); 
+        });
     }
 }
 export default Bulletin
