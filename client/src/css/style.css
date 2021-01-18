@@ -438,13 +438,16 @@ tr {
 	resize: none;
 }
 
+#bulletinCentrer {
+	margin: 1em 25%;
+}
+
 
 #bulletin {
 	background: #FFF;
 	padding: 20px 30px;
-	margin: 1em auto;
-	width: 827px;
-	height: 1170px;
+	width: 210mm;
+	min-height: 297mm;
 	color: #000;
 	font-size: 14px;
 	text-align: center;
@@ -476,4 +479,20 @@ tr {
 
 .principal {
 	border-width: 2px;
+}
+
+#toPDF {
+	position: fixed;
+	padding: 0.2em 0.5em;
+	border: solid #000 0.1em;
+	border-radius: 1em;
+	color: #000;
+	background-color: rgba(0, 111, 123, 0.367);
+	left:80%;
+	top:10%;
+}
+
+#toPDF:hover {
+	background-color: rgba(0, 111, 123, 0.592);
+	cursor: pointer;
 }
