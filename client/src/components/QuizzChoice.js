@@ -6,6 +6,7 @@ import Sciences from "../images/science.jpg";
 import Geo from "../images/geography.png";
 import History from "../images/history.jpg";
 import CEB from "../images/CEB.jpg";
+import Axios from "axios";
 
 export class QuizzChoice extends Component {
 
@@ -14,6 +15,7 @@ export class QuizzChoice extends Component {
         this.state = {
 
         }
+        this.onLoadPage();
     }
 
     render() {
@@ -25,7 +27,7 @@ export class QuizzChoice extends Component {
                             <div className="card-body">
                                 <h5 className="card-title text-black-50">Quizz : Français</h5>
                                 <p className="card-text text-black-50">Un quizz pour testez ses connaissances en Français pour s'entrainer au CEB</p>
-                                <a href="Quizz/français" className="btn btn-primary">Passer le quizz de Français</a>
+                                <a href="Quizz/français" id="french" className="btn btn-primary" hidden>Passer le quizz de Français</a>
                             </div>
                     </div>
                     <div className="card w-25" >
@@ -33,7 +35,7 @@ export class QuizzChoice extends Component {
                         <div className="card-body">
                             <h5 className="card-title text-black-50">Quizz : Mathématiques</h5>
                             <p className="card-text text-black-50">Un quizz pour testez ses connaissances en Mathématiques pour s'entrainer au CEB</p>
-                            <a href="Quizz/mathématiques" className="btn btn-primary">Passer le quizz de Mathématiques</a>
+                            <a href="Quizz/mathématiques" id="math" className="btn btn-primary" hidden>Passer le quizz de Mathématiques</a>
                         </div>
                     </div>
                     <div className="card w-25" >
@@ -41,7 +43,7 @@ export class QuizzChoice extends Component {
                         <div className="card-body">
                             <h5 className="card-title text-black-50">Quizz : Science</h5>
                             <p className="card-text text-black-50">Un quizz pour testez ses connaissances en Science pour s'entrainer au CEB</p>
-                            <a href="Quizz/sciences" className="btn btn-primary">Passer le quizz de Science</a>
+                            <a href="Quizz/sciences" id="science" className="btn btn-primary" hidden>Passer le quizz de Science</a>
                         </div>
                     </div>
                 </div>
@@ -51,7 +53,7 @@ export class QuizzChoice extends Component {
                         <div className="card-body">
                             <h5 className="card-title text-black-50">Quizz : Géographie</h5>
                             <p className="card-text text-black-50">Un quizz pour testez ses connaissances en Géographie pour s'entrainer au CEB</p>
-                            <a href="Quizz/géographie" className="btn btn-primary">Passer le quizz de Géographie</a>
+                            <a href="Quizz/géographie" id="geo" className="btn btn-primary" hidden>Passer le quizz de Géographie</a>
                         </div>
                     </div>
                     <div className="card w-25" >
@@ -59,7 +61,7 @@ export class QuizzChoice extends Component {
                         <div className="card-body">
                             <h5 className="card-title text-black-50">Quizz : Histoire</h5>
                             <p className="card-text text-black-50">Un quizz pour testez ses connaissances en Histoire pour s'entrainer au CEB</p>
-                            <a href="Quizz/histoire" className="btn btn-primary">Passer le quizz d'histoire</a>
+                            <a href="Quizz/histoire" id="history" className="btn btn-primary" hidden>Passer le quizz d'histoire</a>
                         </div>
                     </div>
                     <div className="card w-25" >
@@ -67,12 +69,74 @@ export class QuizzChoice extends Component {
                         <div className="card-body">
                             <h5 className="card-title text-black-50">Quizz : Général</h5>
                             <p className="card-text text-black-50">Un quizz pour testez ses connaissances dans toutes les matières du CEB</p>
-                            <a href="Quizz/All" className="btn btn-primary">Passer le quizz Général</a>
+                            <a href="Quizz/All" id="ceb" className="btn btn-primary" hidden>Passer le quizz Général</a>
                         </div>
                     </div>
                 </div>
             </React.Fragment>
         )
+    }
+
+    onLoadPage() {
+        Axios.get(`http://localhost:5000/getAllQuestion`, {
+
+        }).then((res) => {
+            let science = 0;
+            let math = 0;
+            let geo = 0;
+            let history = 0;
+            let french = 0;
+
+            for (let c = 0; c < (res.data).length; c++)
+            {
+                if (res.data[c].subject === "français")
+                {
+                    french++;
+                }
+                if (res.data[c].subject === "mathématiques")
+                {
+                    math++;
+                }
+                if (res.data[c].subject === "géographie")
+                {
+                    geo++;
+                }
+                if (res.data[c].subject === "histoire")
+                {
+                    history++;
+                }
+                if (res.data[c].subject === "sciences")
+                {
+                    science++;
+                }
+            }
+
+
+            if ((res.data).length >= 10)
+            {
+                document.getElementById("ceb").hidden = false
+            }
+            if (french >= 10)
+            {
+                document.getElementById("french").hidden = false
+            }
+            if (math >= 10)
+            {
+                document.getElementById("math").hidden = false
+            }
+            if (geo >= 10)
+            {
+                document.getElementById("geo").hidden = false
+            }
+            if (history >= 10)
+            {
+                document.getElementById("history").hidden = false
+            }
+            if (science >= 10)
+            {
+                document.getElementById("science").hidden = false
+            }
+        });
     }
 }
 export default QuizzChoice

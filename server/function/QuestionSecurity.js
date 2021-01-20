@@ -17,7 +17,7 @@ class QuestionSecurity
     {
         if (question.length > 4)
         {
-            let questionCharactersSup = ["-", " ", "?", ">", "<", "+", "-", "/", "*", "."];
+            let questionCharactersSup = ["-", " ", "?", ">", "<", "+", "-", "/", "*", ".","=","'"];
             let goodQuestionCharacters = AllLetters.concat(questionCharactersSup.concat(Numbers.concat(SpecialLetters)));
             for (let c = 0; c < question.length; c++)
             {
