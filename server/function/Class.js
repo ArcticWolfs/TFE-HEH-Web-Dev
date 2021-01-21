@@ -182,6 +182,22 @@ class Class
         }
     }
 
+    async modifyDrive(req,res) {
+        try {
+            let {class_id} = req.params;
+            let { drive } = req.body;
+
+            const updateDrive = await pool.query(
+                "UPDATE table_class SET drive=$1 WHERE class_id=$2",
+                [drive, class_id]
+            );
+            res.json("Drive Updated")
+        }
+        catch(err) {
+            console.error("Error while update drive");
+        }
+    }
+
     async deleteClass(req,res)
     {
         try

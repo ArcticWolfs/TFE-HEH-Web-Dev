@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS table_class(
     class_id SERIAL PRIMARY KEY,
     tutor_id int,
     name VARCHAR(50),
-    year VARCHAR(50)
+    year VARCHAR(50),
+    drive TEXT
 );
 
 INSERT INTO table_class (tutor_id,name,year)

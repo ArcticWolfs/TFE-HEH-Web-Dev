@@ -17,6 +17,7 @@ import {Quizz} from "./Quizz";
 import {AttendanceBook} from './AttendanceBook';
 import {JournalClass} from './JournalClass';
 import {QuizzChoice} from './QuizzChoice';
+import {PutInOrder} from './PutInOrder';
 
  
 export class WebRoute extends Component {
@@ -52,6 +53,7 @@ export class WebRoute extends Component {
                 <React.Fragment>
                     <Router>
                         <Switch>
+                            <Route path='/putInOrder' render={() => (<PutInOrder userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/journalClass' render={() => (<JournalClass userId={this.state.id}/>)}></Route>
                             <Route path='/attendanceBook' render={() => (<AttendanceBook userId={this.state.id}/>)}></Route>
                             <Route path='/gestionClass' render={() => (<GestionClass/>)}></Route>
@@ -76,6 +78,8 @@ export class WebRoute extends Component {
                 <React.Fragment>
                     <Router>
                         <Switch>
+                            <Route path='/quizzChoice' render={() => (<QuizzChoice userId={this.state.id} employee={this.state.employee}/>)}></Route>
+                            <Route path='/putInOrder' render={() => (<PutInOrder userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/monCompte' render={() => (<AccountPage userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/bulletinList' render={() => (<BulletinList userId={this.state.id} employee={this.state.employee}/>)}></Route>
                             <Route path='/bulletin' render={() => (<Bulletin userId={this.state.id} employee={this.state.employee}/>)}></Route>
