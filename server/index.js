@@ -223,6 +223,10 @@ app.get("/getWholeClass/:class_id",async(req, res) =>
     await Class.getWholeClass(req,res);
 });
 
+app.put("/modifyDrive/:class_id",async(req,res)=> {
+    await Class.modifyDrive(req,res);
+})
+
         //////////////////////////
         // Create an employee ////
         //////////////////////////
